@@ -16,6 +16,10 @@ subprojects {
 
     test {
         useJUnitPlatform()
+        testLogging {
+            exceptionFormat = 'full'
+            showStackTraces = true
+        }
     }
 
     repositories {
@@ -29,9 +33,12 @@ subprojects {
 
         testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
 		testImplementation "org.spockframework:spock-core"
+        testImplementation 'org.exparity:hamcrest-date:2.0.7'
 		testImplementation "org.hamcrest:hamcrest-core:2.2"
-		testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.0"
-	}
+        testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
+        testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.0"
+
+    }
 }
 
 dependencies {

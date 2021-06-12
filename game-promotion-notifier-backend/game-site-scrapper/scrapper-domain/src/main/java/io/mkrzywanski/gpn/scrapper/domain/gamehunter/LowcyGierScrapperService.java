@@ -20,10 +20,14 @@ public final class LowcyGierScrapperService {
     private final LowcyGierScrapper lowcyGierScrapper;
     private final int minimalDaysInterval = 2;
 
-    public LowcyGierScrapperService(final String baseUrl,
-                                    final PostRepository postRepository) {
+    LowcyGierScrapperService(final LowcyGierScrapper lowcyGierScrapper,
+                             final PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.lowcyGierScrapper = new LowcyGierScrapper(new LowcyGierClient(baseUrl), new LowcyGierParser());
+        this.lowcyGierScrapper = lowcyGierScrapper;
+    }
+
+    public static LowcyGierScrapperService newInstance(final String serviceUrl, final PostRepository postRepository) {
+        return new LowcyGierScrapperService(new LowcyGierScrapper(new LowcyGierClient(serviceUrl), new LowcyGierParser()), postRepository);
     }
 
     public void scrap() {

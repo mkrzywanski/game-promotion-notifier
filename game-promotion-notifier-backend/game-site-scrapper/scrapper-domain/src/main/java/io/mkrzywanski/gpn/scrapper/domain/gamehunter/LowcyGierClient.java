@@ -9,6 +9,7 @@ import java.net.http.HttpResponse;
 class LowcyGierClient {
 
     private static final String PAGE_REQUEST_FORMAT = "%s/page/%s/";
+    private static final int OK = 200;
     private final String baseUrl;
     private final HttpClient httpClient;
 
@@ -24,9 +25,17 @@ class LowcyGierClient {
                 .uri(uri)
                 .build();
         try {
-            return httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            return doSend(request);
         } catch (IOException | InterruptedException e) {
             throw new LowcyGierClientException();
         }
+    }
+
+    private String doSend(final HttpRequest request) throws IOException, InterruptedException, LowcyGierClientException {
+        final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != OK) {
+            throw new LowcyGierClientException();
+        }
+        return response.body();
     }
 }

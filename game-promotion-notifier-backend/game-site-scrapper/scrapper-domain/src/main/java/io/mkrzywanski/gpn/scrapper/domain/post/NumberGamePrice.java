@@ -7,8 +7,8 @@ import java.util.Map;
 public class NumberGamePrice implements GamePrice {
 
     private static final Map<String, Currency> SUPPORTED_CURRENCIES = Map.of(
-            "€", Currency.getInstance("EUR"),
-            "zł", Currency.getInstance("PLN")
+            "€", Currencies.EUR,
+            "zł", Currencies.PLN
     );
 
     private final Currency currency;

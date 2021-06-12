@@ -17,6 +17,6 @@ class Config {
 
     @Bean
     LowcyGierScrapperService lowcyGierScrapperFacade(final PostRepository postRepository) {
-        return new LowcyGierScrapperService(lowcyGierUrl, postRepository);
+        return LowcyGierScrapperService.newInstance(lowcyGierUrl, postRepository);
     }
 }

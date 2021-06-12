@@ -20,9 +20,6 @@ class LowcyGierScrapperAdapterSpec extends Specification {
     private static final Duration TWO_SECONDS = Duration.ofSeconds(2)
 
     @Autowired
-    LowcyGierScrapperAdapter lowcyGierScrapperAdapter
-
-    @Autowired
     LowcyGierScrapperService lowcyGierScrapperService;
 
     def "should invoked scrap"() {

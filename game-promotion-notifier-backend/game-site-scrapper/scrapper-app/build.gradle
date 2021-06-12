@@ -8,4 +8,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation group: 'org.spockframework', name: 'spock-spring'
+    testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
+
+
 }

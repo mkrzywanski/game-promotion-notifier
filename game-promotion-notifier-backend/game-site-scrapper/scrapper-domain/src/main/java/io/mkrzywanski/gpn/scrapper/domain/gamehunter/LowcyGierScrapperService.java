@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class LowcyGierScrapperService {
+public class LowcyGierScrapperService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LowcyGierScrapperService.class);
 

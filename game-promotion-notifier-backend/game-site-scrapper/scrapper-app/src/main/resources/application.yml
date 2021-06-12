@@ -1,5 +1,5 @@
 gpn:
-  lowcy:
+  gamehunter:
     url: http://lowcygier.pl
   scheduling:
     cron: "0 * * * * *"

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Document(collection = "posts")
 class PostModel {
+
     @Id
     private UUID id;
 

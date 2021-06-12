@@ -1,6 +1,6 @@
 package io.mkrzywanski.gpn.scrapper.app.infra;
 
-import io.mkrzywanski.gpn.scrapper.domain.gamehunter.LowcyGierScrapperService;
+import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrapperService;
 import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class Config {
 
-    private final String lowcyGierUrl;
+    private final String gameHunterUrl;
 
-    Config(@Value("${gpn.lowcy.url}") final String lowcyGierUrl) {
-        this.lowcyGierUrl = lowcyGierUrl;
+    Config(@Value("${gpn.gamehunter.url}") final String gameHunterUrl) {
+        this.gameHunterUrl = gameHunterUrl;
     }
 
     @Bean
-    LowcyGierScrapperService lowcyGierScrapperFacade(final PostRepository postRepository) {
-        return LowcyGierScrapperService.newInstance(lowcyGierUrl, postRepository);
+    GameHunterScrapperService gameHunterScrapperService(final PostRepository postRepository) {
+        return GameHunterScrapperService.newInstance(gameHunterUrl, postRepository);
     }
 }

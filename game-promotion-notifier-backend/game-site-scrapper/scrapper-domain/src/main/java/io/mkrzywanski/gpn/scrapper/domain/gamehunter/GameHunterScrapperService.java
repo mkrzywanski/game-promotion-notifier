@@ -12,22 +12,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class LowcyGierScrapperService {
+public class GameHunterScrapperService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LowcyGierScrapperService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrapperService.class);
 
     private final PostRepository postRepository;
-    private final LowcyGierScrapper lowcyGierScrapper;
+    private final GameHunterScrapper gameHunterScrapper;
     private final int minimalDaysInterval = 2;
 
-    LowcyGierScrapperService(final LowcyGierScrapper lowcyGierScrapper,
-                             final PostRepository postRepository) {
+    GameHunterScrapperService(final GameHunterScrapper gameHunterScrapper,
+                              final PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.lowcyGierScrapper = lowcyGierScrapper;
+        this.gameHunterScrapper = gameHunterScrapper;
     }
 
-    public static LowcyGierScrapperService newInstance(final String serviceUrl, final PostRepository postRepository) {
-        return new LowcyGierScrapperService(new LowcyGierScrapper(new LowcyGierClient(serviceUrl), new LowcyGierParser()), postRepository);
+    public static GameHunterScrapperService newInstance(final String serviceUrl, final PostRepository postRepository) {
+        return new GameHunterScrapperService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository);
     }
 
     public void scrap() {
@@ -71,7 +71,7 @@ public class LowcyGierScrapperService {
     }
 
     private List<Post> scrapPage(final int pageNumber) {
-        return lowcyGierScrapper.scrap(pageNumber)
+        return gameHunterScrapper.scrap(pageNumber)
                 .stream()
                 .filter(this::isNotTooOld)
                 .toList();

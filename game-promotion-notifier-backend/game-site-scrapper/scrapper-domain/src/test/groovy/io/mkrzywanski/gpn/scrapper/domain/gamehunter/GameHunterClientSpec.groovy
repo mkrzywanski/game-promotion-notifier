@@ -8,14 +8,14 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 
-class LowcyGierClientSpec extends Specification {
+class GameHunterClientSpec extends Specification {
 
     final WireMockServer wireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
-    def lowcyGierClient
+    def gameHunterClient
 
     void setup() {
         wireMockServer.start()
-        lowcyGierClient = new LowcyGierClient("http://localhost:%s".formatted(wireMockServer.port()))
+        gameHunterClient = new GameHunterClient("http://localhost:%s".formatted(wireMockServer.port()))
     }
 
     void cleanup() {
@@ -29,7 +29,7 @@ class LowcyGierClientSpec extends Specification {
         wireMockServer.stubFor(stub.willReturn(response))
 
         when:
-        def result = lowcyGierClient.getPage(1)
+        def result = gameHunterClient.getPage(1)
 
         then:
         result == 'test'
@@ -42,9 +42,9 @@ class LowcyGierClientSpec extends Specification {
         wireMockServer.stubFor(stub.willReturn(response))
 
         when:
-        lowcyGierClient.getPage(1)
+        gameHunterClient.getPage(1)
 
         then:
-        thrown(LowcyGierClientException)
+        thrown(GameHunterClientException)
     }
 }

@@ -10,16 +10,16 @@ import static io.mkrzywanski.gpn.scrapper.domain.matchers.PostMatchers.containsV
 import static org.hamcrest.Matchers.hasSize
 import static spock.util.matcher.HamcrestSupport.that
 
-class LowcyGierParserSpec extends Specification {
+class GameHunterParserSpec extends Specification {
 
-    LowcyGierParser lowcyGierParser = new LowcyGierParser()
+    GameHunterParser gameHunterParser = new GameHunterParser()
 
     def "should parse page"() {
         given:
-        def html = Files.readString(Paths.get("src/test/resources/lowcy/index.html"))
+        def html = Files.readString(Paths.get("src/test/resources/gamehunter/index.html"))
 
         when:
-        def posts = lowcyGierParser.parse(html)
+        def posts = gameHunterParser.parse(html)
 
         then:
         posts hasSize(20)

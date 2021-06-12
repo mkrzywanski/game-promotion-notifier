@@ -3,11 +3,11 @@ package io.mkrzywanski.gpn.scrapper.domain.gamehunter
 import io.mkrzywanski.gpn.scrapper.domain.post.PostObjectMother
 import spock.lang.Specification
 
-class LowcyGierScrapperSpec extends Specification {
+class GameHunterScrapperSpec extends Specification {
 
-    def client = Stub(LowcyGierClient)
-    def parser = Mock(LowcyGierParser)
-    def scrapper = new LowcyGierScrapper(client, parser)
+    def client = Stub(GameHunterClient)
+    def parser = Mock(GameHunterParser)
+    def scrapper = new GameHunterScrapper(client, parser)
 
     def "should scrap"() {
         given:
@@ -34,10 +34,9 @@ class LowcyGierScrapperSpec extends Specification {
 
     private void clientThrowsException() {
         client.getPage(_ as Integer) >> {
-            throw new LowcyGierClientException()
+            throw new GameHunterClientException("error")
         }
     }
-
 
     private void parserReturnsPostsWhenParsingHtml(def posts, def html) {
         parser.parse(html) >> posts

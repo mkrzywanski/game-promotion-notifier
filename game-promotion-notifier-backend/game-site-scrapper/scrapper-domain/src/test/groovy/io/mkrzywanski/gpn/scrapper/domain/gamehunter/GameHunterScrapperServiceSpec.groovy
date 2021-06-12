@@ -1,17 +1,17 @@
 package io.mkrzywanski.gpn.scrapper.domain.gamehunter
 
-import io.mkrzywanski.gpn.scrapper.domain.post.Hash
+
 import io.mkrzywanski.gpn.scrapper.domain.post.PostObjectMother
 import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository
 import spock.lang.Specification
 
 import java.time.ZonedDateTime
 
-class LowcyGierScrapperServiceSpec extends Specification {
+class GameHunterScrapperServiceSpec extends Specification {
 
-    def stub = Stub(LowcyGierScrapper)
+    def stub = Stub(GameHunterScrapper)
     def postRepository = Mock(PostRepository)
-    def service = new LowcyGierScrapperService(stub, postRepository)
+    def service = new GameHunterScrapperService(stub, postRepository)
 
     def "should scrap new posts from first page"() {
         given:

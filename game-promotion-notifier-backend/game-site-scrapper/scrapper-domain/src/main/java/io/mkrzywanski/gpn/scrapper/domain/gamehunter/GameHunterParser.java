@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class LowcyGierParser {
+class GameHunterParser {
 
     private static final Evaluator.Tag ARTICLE = new Evaluator.Tag("article");
 
@@ -22,7 +22,7 @@ class LowcyGierParser {
         final Document document = Jsoup.parse(html);
         final Elements articlesContents = document.select(ARTICLE);
 
-        return articlesContents.stream().map(LowcyGierParser::extractPostInfo).collect(Collectors.toList());
+        return articlesContents.stream().map(GameHunterParser::extractPostInfo).collect(Collectors.toList());
     }
 
     private static Post extractPostInfo(final Element element) {
@@ -31,11 +31,11 @@ class LowcyGierParser {
                 .select("ul > li > strong");
         final ZonedDateTime postDateTime = extractPostTime(element);
         final List<GameOffer> gameOffers = offersForArticle.stream()
-                .map(LowcyGierParser::extractGameOffer)
+                .map(GameHunterParser::extractGameOffer)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-        return new Post(Hash.compute(element.text()), "lowcy-gier", gameOffers, postDateTime);
+        return new Post(Hash.compute(element.text()), "game-hunter", gameOffers, postDateTime);
     }
 
     private static ZonedDateTime extractPostTime(final Element element) {
@@ -53,7 +53,7 @@ class LowcyGierParser {
             final Element aTag = aTags.first();
             final String gameName = aTag.ownText();
             final String link = aTag.attr("href");
-            return Optional.of(new GameOffer(gameName, LowcyGierPriceParser.parse(price), link));
+            return Optional.of(new GameOffer(gameName, GameHunterPriceParser.parse(price), link));
         }
     }
 }

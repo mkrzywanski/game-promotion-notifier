@@ -13,14 +13,14 @@ import static org.hamcrest.core.AllOf.allOf
 import static org.hamcrest.core.IsEqual.equalTo
 import static org.hamcrest.core.IsInstanceOf.instanceOf
 
-class LowcyGierPriceParserSpec extends Specification {
+class GameHunterPriceParserSpec extends Specification {
 
     def "should parse price composite game price"() {
         given:
         def input = "20 zł, 30 €"
 
         when:
-        def gamePrice = LowcyGierPriceParser.parse(input)
+        def gamePrice = GameHunterPriceParser.parse(input)
 
         then:
         gamePrice instanceOf(CompositeGamePrice)
@@ -34,7 +34,7 @@ class LowcyGierPriceParserSpec extends Specification {
 
     def "should parse empty game price"() {
         when:
-        def gamePrice = LowcyGierPriceParser.parse(input)
+        def gamePrice = GameHunterPriceParser.parse(input)
 
         then:
         gamePrice instanceOf(EmptyGamePrice)
@@ -50,7 +50,7 @@ class LowcyGierPriceParserSpec extends Specification {
 
     def "should parse single price"() {
         when:
-        def gamePrice = LowcyGierPriceParser.parse(input)
+        def gamePrice = GameHunterPriceParser.parse(input)
 
         then:
         gamePrice instanceOf(NumberGamePrice)

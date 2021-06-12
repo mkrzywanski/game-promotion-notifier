@@ -1,0 +1,16 @@
+gpn:
+  gamehunter:
+    url: http://lowcygier.pl
+  scheduling:
+    cron: "0 * * * * *"
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: test
+      username: root
+      password: example
+      authentication-database: admin
+      auto-index-creation: true

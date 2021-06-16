@@ -6,17 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Clock;
+
 @Configuration
-class Config {
-
-    private final String gameHunterUrl;
-
-    Config(@Value("${gpn.gamehunter.url}") final String gameHunterUrl) {
-        this.gameHunterUrl = gameHunterUrl;
-    }
+public class Config {
 
     @Bean
-    GameHunterScrapperService gameHunterScrapperService(final PostRepository postRepository) {
-        return GameHunterScrapperService.newInstance(gameHunterUrl, postRepository);
+    GameHunterScrapperService gameHunterScrapperService(final @Value("${gpn.gamehunter.url}") String gameHunterUrl,
+                                                        final PostRepository postRepository) {
+        return GameHunterScrapperService.newInstance(gameHunterUrl, postRepository, Clock.systemDefaultZone());
     }
 }

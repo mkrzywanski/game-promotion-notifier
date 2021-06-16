@@ -1,0 +1,12 @@
+gpn:
+  scheduling:
+    cron: "*/1 * * * * *"
+
+spring:
+  data:
+    mongodb:
+      database: posts
+      username: root
+      password: example
+      authentication-database: admin
+      auto-index-creation: true

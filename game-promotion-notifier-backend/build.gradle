@@ -3,6 +3,9 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
 
+allprojects {
+    apply plugin: 'idea'
+}
 
 subprojects {
 
@@ -19,7 +22,9 @@ subprojects {
         testLogging {
             exceptionFormat = 'full'
             showStackTraces = true
+            showStandardStreams = true
         }
+
     }
 
     repositories {

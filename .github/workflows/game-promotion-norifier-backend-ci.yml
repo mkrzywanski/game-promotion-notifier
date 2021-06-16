@@ -17,3 +17,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       working-directory: ./game-promotion-notifier-backend
+    - name: Run integration tests
+      run: ./gradlew integTest
+      working-directory: ./game-promotion-notifier-backend

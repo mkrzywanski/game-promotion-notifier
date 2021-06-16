@@ -1,6 +1,6 @@
 package io.mkrzywanski.gpn.scrapper.app.domain.adapters.outgoing.posts;
 
-enum PriceType {
+public enum PriceType {
     MULTI,
     SINGLE,
     FREE,

@@ -5,16 +5,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-class GameHunterScrapperAdapter {
+public class GameHunterScrapperAdapter {
 
     private final GameHunterScrapperService gameHunterScrapperService;
 
-    GameHunterScrapperAdapter(final GameHunterScrapperService gameHunterScrapperService) {
+    public GameHunterScrapperAdapter(final GameHunterScrapperService gameHunterScrapperService) {
         this.gameHunterScrapperService = gameHunterScrapperService;
     }
 
     @Scheduled(cron = "${gpn.scheduling.cron}")
-    void scrap() {
+//    @Scheduled(fixedRate = 100)
+    public void scrap() {
         gameHunterScrapperService.scrap();
     }
 }

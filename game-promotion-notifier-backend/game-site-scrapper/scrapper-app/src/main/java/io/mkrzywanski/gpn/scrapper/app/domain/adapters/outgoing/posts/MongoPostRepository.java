@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-class MongoPostRepository implements PostRepository {
+public class MongoPostRepository implements PostRepository {
 
     private final MongoOperations mongoOperations;
 
-    MongoPostRepository(final MongoOperations mongoOperations) {
+    public MongoPostRepository(final MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
     }
 

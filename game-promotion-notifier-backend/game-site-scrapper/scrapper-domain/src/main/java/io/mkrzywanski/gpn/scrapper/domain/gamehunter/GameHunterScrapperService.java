@@ -6,6 +6,7 @@ import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,15 +20,18 @@ public class GameHunterScrapperService {
     private final PostRepository postRepository;
     private final GameHunterScrapper gameHunterScrapper;
     private final int minimalDaysInterval = 2;
+    private final Clock clock;
 
     GameHunterScrapperService(final GameHunterScrapper gameHunterScrapper,
-                              final PostRepository postRepository) {
+                              final PostRepository postRepository,
+                              final Clock clock) {
         this.postRepository = postRepository;
         this.gameHunterScrapper = gameHunterScrapper;
+        this.clock = clock;
     }
 
-    public static GameHunterScrapperService newInstance(final String serviceUrl, final PostRepository postRepository) {
-        return new GameHunterScrapperService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository);
+    public static GameHunterScrapperService newInstance(final String serviceUrl, final PostRepository postRepository, final Clock clock) {
+        return new GameHunterScrapperService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository, clock);
     }
 
     public void scrap() {
@@ -54,12 +58,17 @@ public class GameHunterScrapperService {
                     .filter(post -> !alreadySavedPosts.contains(post.getHash()))
                     .toList();
 
-            LOGGER.info("New posts to be saged from page {} : {}", pageNumber, newPostsFromCurrentPage);
+            LOGGER.info("New posts to be saved from page {} : {}", pageNumber, newPostsFromCurrentPage);
             allNewPosts.addAll(newPostsFromCurrentPage);
+
+            final boolean currentPageIsPartiallyScrapped = alreadySavedPosts.size() > 0;
+            if (currentPageIsPartiallyScrapped) {
+                break;
+            }
 
             pageNumber++;
 
-        } while (!newPostHashes.isEmpty());
+        } while (true);
 
         postRepository.saveAll(allNewPosts);
     }
@@ -78,6 +87,6 @@ public class GameHunterScrapperService {
     }
 
     private boolean isNotTooOld(final Post post) {
-        return post.isYoungerThan(minimalDaysInterval);
+        return post.isYoungerThan(minimalDaysInterval, clock);
     }
 }

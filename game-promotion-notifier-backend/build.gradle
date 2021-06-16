@@ -12,6 +12,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
 
     group = 'io.mkrzywanski'
     version = '0.0.1-SNAPSHOT'
@@ -43,5 +44,24 @@ subprojects {
         testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
         testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.0"
 
+    }
+    
+    task codeCoverageReport(type: JacocoReport) {
+        executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+        subprojects.each {
+            sourceSets it.sourceSets.main
+        }
+
+        reports {
+            xml.enabled true
+            xml.destination file("${buildDir}/reports/jacoco/report.xml")
+            html.enabled false
+            csv.enabled false
+        }
+    }
+
+    codeCoverageReport.dependsOn {
+        subprojects*.test
     }
 }

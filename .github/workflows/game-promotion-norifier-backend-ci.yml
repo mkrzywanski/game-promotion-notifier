@@ -20,3 +20,9 @@ jobs:
     - name: Run integration tests
       run: ./gradlew integTest
       working-directory: ./game-promotion-notifier-backend
+    - name: Generate coverage report
+      run: ./gradlew codeCoverageReport
+      working-directory: ./game-promotion-notifier-backend
+    - name: Upload coverage report
+      run: bash <(curl -s https://codecov.io/bash)
+      working-directory: ./game-promotion-notifier-backend

@@ -1,5 +1,6 @@
 package io.mkrzywanski.gpn.scrapper.domain.post;
 
+import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
@@ -42,7 +43,7 @@ public class Post {
         return datePosted;
     }
 
-    public boolean isYoungerThan(final int days) {
-        return ChronoUnit.DAYS.between(datePosted, ZonedDateTime.now()) < days;
+    public boolean isYoungerThan(final int days, final Clock clock) {
+        return ChronoUnit.DAYS.between(datePosted, ZonedDateTime.now(clock)) < days;
     }
 }

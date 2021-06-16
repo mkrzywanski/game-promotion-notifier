@@ -8,13 +8,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class PriceInfo {
+public class PriceInfo {
 
     private final Map<Currency, BigDecimal> prices;
     private final String stringValue;
     private final PriceType priceType;
 
-    PriceInfo(final Map<Currency, BigDecimal> prices, final String stringValue, final PriceType priceType) {
+    public PriceInfo(final Map<Currency, BigDecimal> prices, final String stringValue, final PriceType priceType) {
         this.prices = prices;
         this.stringValue = stringValue;
         this.priceType = priceType;

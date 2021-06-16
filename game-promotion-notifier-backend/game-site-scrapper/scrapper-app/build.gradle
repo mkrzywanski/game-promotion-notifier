@@ -3,6 +3,22 @@ plugins {
     id 'io.spring.dependency-management'
 }
 
+sourceSets {
+    integTest {
+        groovy {
+            srcDirs = ["${projectDir}/src/integTest/groovy"]
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
+            resources.srcDirs = ["${projectDir}/src/integTest/resources"]
+        }
+    }
+}
+
+configurations {
+    integTestImplementation.extendsFrom testImplementation
+    integTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
 dependencies {
     implementation project(":game-site-scrapper:scrapper-domain")
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -10,6 +26,28 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
+    integTestImplementation "org.testcontainers:testcontainers:1.15.3"
 
+}
 
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform()
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    testLogging {
+
+        events("passed", "skipped", "failed")
+        showStackTraces = true
+        exceptionFormat = 'full'
+    }
+}
+
+idea {
+    module {
+        sourceDirs -= project.sourceSets.integTest.groovy.srcDirs
+        testSourceDirs += project.sourceSets.integTest.groovy.srcDirs
+    }
 }

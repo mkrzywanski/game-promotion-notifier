@@ -7,13 +7,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Document(collection = "posts")
-class PostModel {
+public class PostModel {
 
     @Id
     private UUID id;
@@ -23,12 +24,14 @@ class PostModel {
 
     private String source;
     private Collection<GameOfferModel> gameOfferEntities;
+    private Instant datePosted;
 
-    PostModel(final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities) {
+    public PostModel(final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities, final Instant datePosted) {
         this.id = UUID.randomUUID();
         this.hash = hash;
         this.source = source;
         this.gameOfferEntities = gameOfferEntities;
+        this.datePosted = datePosted;
     }
 
     String getHash() {
@@ -43,12 +46,16 @@ class PostModel {
         return gameOfferEntities;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     static PostModel fromDomain(final Post post) {
         final List<GameOfferModel> gameOffers = post.getGameOffers()
                 .stream()
                 .map(GameOfferModel::fromDomain)
                 .collect(Collectors.toList());
-        return new PostModel(post.getHash().asString(), post.getSource(), gameOffers);
+        return new PostModel(post.getHash().asString(), post.getSource(), gameOffers, post.getDatePosted().toInstant());
     }
 
     @Override

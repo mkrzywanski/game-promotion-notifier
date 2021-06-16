@@ -3,6 +3,13 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
 
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'jacoco'
+    repositories {
+        mavenCentral()
+    }
+}
 
 subprojects {
 
@@ -19,11 +26,9 @@ subprojects {
         testLogging {
             exceptionFormat = 'full'
             showStackTraces = true
+            showStandardStreams = true
         }
-    }
 
-    repositories {
-        mavenCentral()
     }
 
 	dependencies {
@@ -39,4 +44,23 @@ subprojects {
         testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.0"
 
     }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }

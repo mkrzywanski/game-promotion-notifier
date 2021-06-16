@@ -26,11 +26,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
-    integTestImplementation "org.testcontainers:mongodb:1.15.3"
+    integTestImplementation "org.testcontainers:testcontainers:1.15.3"
 
 }
-print "${projectDir}/src/integTest/groovy"
-
 
 tasks.register('integrationTest', Test) {
     useJUnitPlatform()

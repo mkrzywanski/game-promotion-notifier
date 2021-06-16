@@ -18,7 +18,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import java.time.ZonedDateTime
 
 @SpringBootTest(classes = [IntegrationTestConfig])
-class GameHunterScrapperIntegSpec extends Specification {
+class GameHunterScrapperIntegrationSpec extends Specification {
 
     @Autowired
     WireMockServer wireMockServer

@@ -33,11 +33,12 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @Import([GameHunterScrapperAdapter, SpringConfig, MongoPostRepository])
 class IntegrationTestConfig {
 
+    private static final Instant ONE_DAY_AFTER_SCRAPING = LocalDate.of(2021, 6, 7).atStartOfDay().toInstant(ZoneOffset.UTC)
+
+    private final Clock clock = Clock.fixed(ONE_DAY_AFTER_SCRAPING, ZoneId.of("UTC"))
+
     @Autowired
     private Environment environment
-
-    private static final Instant ONE_DAY_AFTER_SCRAPING = LocalDate.of(2021, 6, 7).atStartOfDay().toInstant(ZoneOffset.UTC)
-    private final Clock clock = Clock.fixed(ONE_DAY_AFTER_SCRAPING, ZoneId.of("UTC"))
 
     @Bean
     GenericContainer<?> mongoDBContainer() {

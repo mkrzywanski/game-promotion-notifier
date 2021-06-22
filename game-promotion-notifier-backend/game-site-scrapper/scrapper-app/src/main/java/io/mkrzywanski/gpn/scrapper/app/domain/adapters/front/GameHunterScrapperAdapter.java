@@ -14,7 +14,6 @@ public class GameHunterScrapperAdapter {
     }
 
     @Scheduled(cron = "${gpn.scheduling.cron}")
-//    @Scheduled(fixedRate = 100)
     public void scrap() {
         gameHunterScrapperService.scrap();
     }

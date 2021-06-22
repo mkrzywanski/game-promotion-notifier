@@ -2,3 +2,9 @@ rootProject.name = 'game-promotion-notifier'
 
 include ':game-site-scrapper:scrapper-app'
 include ':game-site-scrapper:scrapper-domain'
+
+include ':user-service:user-app'
+include ':user-service:user-domain'
+
+include ':subscription-service:subscription-app'
+include ':subscription-service:subscription-domain'

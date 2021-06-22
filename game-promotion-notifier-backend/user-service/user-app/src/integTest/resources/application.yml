@@ -1,0 +1,10 @@
+database:
+  driver: org.postgresql.Driver
+  host: localhost
+  username: test
+  password: test
+  database: test
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create

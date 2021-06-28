@@ -13,7 +13,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 
 @SpringBootTest(classes = [IntegrationTestConfig])
 @AutoConfigureMockMvc
-class Test extends Specification{
+class UserAppIntegrationTest extends Specification{
 
     @Autowired
     MockMvc mockMvc
@@ -21,23 +21,19 @@ class Test extends Specification{
     @Autowired
     ObjectMapper objectMapper
 
-    @Autowired
-    ApplicationContext applicationContext
-
     def "app"() {
-        given: "aa"
+        given: "request"
         CreateUserRequest createUserRequest = new CreateUserRequest("name", "username", "email")
 
         def request = MockMvcRequestBuilders.post("/v1/users")
                 .content(json(createUserRequest))
                 .contentType(APPLICATION_JSON_VALUE)
-        .accept(APPLICATION_JSON_VALUE)
-        when:
-        def perform = mockMvc.perform(request)
+                .accept(APPLICATION_JSON_VALUE)
+        when: "request is sent"
+        def response = mockMvc.perform(request)
+
         then:
-        applicationContext != null
-        println "aaaaaa" + perform.andReturn().response.contentAsString
-        perform.andExpect(status().isCreated())
+        response.andExpect(status().isCreated())
     }
 
     private String json(Object obj) {

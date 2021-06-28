@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.scrapper.app.domain.adapters.outgoing.posts;
+package io.mkrzywanski.gpn.scrapper.app.adapters.persistance;
 
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash;
 import io.mkrzywanski.gpn.scrapper.domain.post.Post;

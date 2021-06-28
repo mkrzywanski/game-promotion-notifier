@@ -8,14 +8,12 @@ import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
 import org.springframework.data.elasticsearch.client.ClientConfiguration
 import org.springframework.data.elasticsearch.client.RestClients
-import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration
-import org.springframework.data.elasticsearch.core.RefreshPolicy
 import org.testcontainers.elasticsearch.ElasticsearchContainer
 import org.testcontainers.utility.DockerImageName
 
 @Configuration
 @Import(SubscriptionServiceApp)
-class IntegTestConfig {
+class IntegrationTestConfig {
 
     public static final String ELASTICSEARCH_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:7.13.2"
 

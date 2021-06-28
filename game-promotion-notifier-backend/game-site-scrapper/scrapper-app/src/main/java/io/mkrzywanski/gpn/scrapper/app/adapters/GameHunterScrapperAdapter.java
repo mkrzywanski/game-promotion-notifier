@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.scrapper.app.domain.adapters.front;
+package io.mkrzywanski.gpn.scrapper.app.adapters;
 
 import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrapperService;
 import org.springframework.scheduling.annotation.Scheduled;

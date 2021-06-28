@@ -1,8 +1,8 @@
 package io.mkrzywanski.gpn.scrapper.app.integ
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import io.mkrzywanski.gpn.scrapper.app.domain.adapters.outgoing.posts.GameOfferModel
-import io.mkrzywanski.gpn.scrapper.app.domain.adapters.outgoing.posts.PostModel
+import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.GameOfferModel
+import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.mongodb.core.MongoTemplate

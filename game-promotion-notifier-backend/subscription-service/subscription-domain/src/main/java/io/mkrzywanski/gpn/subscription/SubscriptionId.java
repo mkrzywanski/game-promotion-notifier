@@ -9,4 +9,8 @@ public class SubscriptionId {
     public SubscriptionId(final UUID uuid) {
         this.uuid = uuid;
     }
+
+    public UUID asUuid() {
+        return uuid;
+    }
 }

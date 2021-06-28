@@ -11,4 +11,9 @@ public class SubscriptionService {
     public SubscriptionId createSubscription(final SubscriptionCreateInfo subscriptionCreateInfo) {
         return subscriptionRepository.create(subscriptionCreateInfo);
     }
+
+
+    public SubscriptionMatchingResult match(final MatchingRequest matchingRequest) {
+        return subscriptionRepository.match(matchingRequest);
+    }
 }

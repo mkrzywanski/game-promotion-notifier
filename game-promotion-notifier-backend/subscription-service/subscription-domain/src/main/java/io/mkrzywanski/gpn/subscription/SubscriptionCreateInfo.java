@@ -1,6 +1,7 @@
 package io.mkrzywanski.gpn.subscription;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SubscriptionCreateInfo {
 
@@ -12,11 +13,15 @@ public class SubscriptionCreateInfo {
         this.subscriptionEntrySet = subscriptionEntrySet;
     }
 
-    UserId getUserId() {
+    public UserId getUserId() {
         return userId;
     }
 
-    Set<SubscriptionEntry> getSubscriptionEntrySet() {
+    public Set<SubscriptionEntry> getSubscriptionEntrySet() {
         return subscriptionEntrySet;
+    }
+
+    public Set<String> entriesAsStrings() {
+        return subscriptionEntrySet.stream().map(SubscriptionEntry::asString).collect(Collectors.toSet());
     }
 }

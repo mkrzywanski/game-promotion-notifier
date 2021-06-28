@@ -6,4 +6,8 @@ public class SubscriptionEntry {
     public SubscriptionEntry(final String value) {
         this.value = value;
     }
+
+    public String asString() {
+        return value;
+    }
 }

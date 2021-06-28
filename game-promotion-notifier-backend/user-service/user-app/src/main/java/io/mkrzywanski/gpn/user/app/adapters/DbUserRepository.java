@@ -4,9 +4,11 @@ import io.mkrzywanski.gpn.user.NewUserDetails;
 import io.mkrzywanski.gpn.user.User;
 import io.mkrzywanski.gpn.user.UserId;
 import io.mkrzywanski.gpn.user.UserRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class DbUserRepository implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;

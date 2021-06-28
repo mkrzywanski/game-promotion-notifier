@@ -1,5 +1,7 @@
 package io.mkrzywanski.gpn.user.app.adapters;
 
+import io.mkrzywanski.gpn.user.app.api.CreateUserRequest;
+import io.mkrzywanski.gpn.user.app.api.UserCreatedResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +12,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/v1/users")
-public class UserEndpoint {
+class UserEndpoint {
 
     private final UserFacade userFacade;
 
-    public UserEndpoint(final UserFacade userFacade) {
+    UserEndpoint(final UserFacade userFacade) {
         this.userFacade = userFacade;
     }
 

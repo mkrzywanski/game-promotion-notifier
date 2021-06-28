@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.user.app.adapters;
+package io.mkrzywanski.gpn.user.app.api;
 
 public class UserCreatedResponse {
     private String userId;

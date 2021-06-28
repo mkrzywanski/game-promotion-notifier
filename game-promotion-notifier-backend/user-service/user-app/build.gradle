@@ -22,7 +22,6 @@ configurations {
 dependencies {
     implementation project(":user-service:user-domain")
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
@@ -52,4 +51,3 @@ idea {
         testSourceDirs += project.sourceSets.integTest.groovy.srcDirs
     }
 }
-

@@ -1,5 +1,6 @@
 package io.mkrzywanski.gpn.scrapper.app.domain.adapters.front
 
+import io.mkrzywanski.gpn.scrapper.app.adapters.GameHunterScrapperAdapter
 import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrapperService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

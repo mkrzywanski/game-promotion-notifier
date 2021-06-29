@@ -17,10 +17,6 @@ public class SubscriptionCreateInfo {
         return userId;
     }
 
-    public Set<SubscriptionEntry> getSubscriptionEntrySet() {
-        return subscriptionEntrySet;
-    }
-
     public Set<String> entriesAsStrings() {
         return subscriptionEntrySet.stream().map(SubscriptionEntry::asString).collect(Collectors.toSet());
     }

@@ -19,10 +19,6 @@ public class UserId {
         return new UserId(UUID.fromString(value));
     }
 
-    static UserId generate() {
-        return new UserId(UUID.randomUUID());
-    }
-
     public String asString() {
         return this.uuid.toString();
     }

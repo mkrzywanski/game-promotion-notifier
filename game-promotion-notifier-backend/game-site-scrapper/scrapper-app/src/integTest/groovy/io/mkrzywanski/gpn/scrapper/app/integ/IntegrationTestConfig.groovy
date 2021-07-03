@@ -4,8 +4,10 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.mongodb.ConnectionString
 import io.mkrzywanski.gpn.scrapper.app.adapters.GameHunterScrapperAdapter
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.MongoPostRepository
+import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostTransactionalOutboxMongoRepository
 import io.mkrzywanski.gpn.scrapper.app.infra.SpringConfig
 import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrapperService
+import io.mkrzywanski.gpn.scrapper.domain.post.PostTransactionalOutboxRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
@@ -72,6 +74,6 @@ class IntegrationTestConfig {
 
     @Bean
     GameHunterScrapperService scrapperService(WireMockServer wireMockServer, MongoOperations mongoOperations) {
-        return GameHunterScrapperService.newInstance("http://localhost:" + wireMockServer.port(), new MongoPostRepository(mongoOperations), clock)
+        return GameHunterScrapperService.newInstance("http://localhost:" + wireMockServer.port(), new MongoPostRepository(mongoOperations), new PostTransactionalOutboxMongoRepository(mongoOperations), clock)
     }
 }

@@ -1,26 +1,30 @@
 package io.mkrzywanski.gpn.user.app.api;
 
+import io.mkrzywanski.gpn.user.UserConstraints;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class CreateUserRequest {
 
-    private final String firstName;
-    private final String userName;
-    private final String email;
+    @NotBlank
+    @Max(UserConstraints.MAX_FIRSTNAME_LENGTH)
+    private String firstName;
 
-    public CreateUserRequest(final String firstName, final String userName, final String email) {
-        this.firstName = firstName;
-        this.userName = userName;
-        this.email = email;
-    }
+    @NotBlank
+    @Max(UserConstraints.MAX_USERNAME_LENGTH)
+    private String userName;
 
-    public String getEmail() {
-        return email;
-    }
+    @NotBlank
+    @Email
+    private String email;
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
 }

@@ -1,11 +1,12 @@
-package io.mkrzywanski.gpn.user.app.adapters;
+package io.mkrzywanski.gpn.user.app.adapters.persistance;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface JpaUserRepository extends JpaRepository<UserEntity, Long> {
-    UserEntity getByUniqueId(UUID uniqueId);
+    Optional<UserEntity> getByUniqueId(UUID uniqueId);
 }

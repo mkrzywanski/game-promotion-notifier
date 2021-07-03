@@ -35,11 +35,11 @@ class UserObjectMother {
     }
 
     User build() {
-        return User.Builder.user()
-                .withEmail(emailAddress)
-                .withUsername(userName)
-                .withUserId(userId)
-                .withFirstName(firstName)
+        return User.builder()
+                .emailAddress(emailAddress)
+                .username(userName)
+                .userId(userId)
+                .firstName(firstName)
                 .build();
     }
 }

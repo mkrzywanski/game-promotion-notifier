@@ -2,6 +2,7 @@ package io.mkrzywanski.gpn.scrapper.domain.gamehunter;
 
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash;
 import io.mkrzywanski.gpn.scrapper.domain.post.Post;
+import io.mkrzywanski.gpn.scrapper.domain.post.PostTransactionalOutboxRepository;
 import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,20 +19,22 @@ public class GameHunterScrapperService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrapperService.class);
 
     private final PostRepository postRepository;
+    private final PostTransactionalOutboxRepository postTransactionalOutboxRepository;
     private final GameHunterScrapper gameHunterScrapper;
     private final int minimalDaysInterval = 2;
     private final Clock clock;
 
     GameHunterScrapperService(final GameHunterScrapper gameHunterScrapper,
                               final PostRepository postRepository,
-                              final Clock clock) {
+                              final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
         this.postRepository = postRepository;
         this.gameHunterScrapper = gameHunterScrapper;
+        this.postTransactionalOutboxRepository = postTransactionalOutboxRepository;
         this.clock = clock;
     }
 
-    public static GameHunterScrapperService newInstance(final String serviceUrl, final PostRepository postRepository, final Clock clock) {
-        return new GameHunterScrapperService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository, clock);
+    public static GameHunterScrapperService newInstance(final String serviceUrl, final PostRepository postRepository, final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
+        return new GameHunterScrapperService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository, postTransactionalOutboxRepository, clock);
     }
 
     public void scrap() {

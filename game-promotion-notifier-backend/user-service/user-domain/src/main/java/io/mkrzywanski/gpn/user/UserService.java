@@ -1,5 +1,7 @@
 package io.mkrzywanski.gpn.user;
 
+import java.util.Optional;
+
 public class UserService {
 
     private final UserRepository userRepository;
@@ -10,5 +12,9 @@ public class UserService {
 
     public UserId create(final NewUserDetails newUserDetails) {
         return userRepository.save(newUserDetails);
+    }
+
+    public Optional<User> get(final UserId userId) {
+        return userRepository.getById(userId);
     }
 }

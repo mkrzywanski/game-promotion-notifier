@@ -15,18 +15,17 @@ import java.util.stream.Stream;
 public class PriceInfo {
 
     private final Map<Currency, BigDecimal> prices;
-    private final String stringValue;
     private final PriceType priceType;
 
-    public PriceInfo(final Map<Currency, BigDecimal> prices, final String stringValue, final PriceType priceType) {
+    public PriceInfo(final Map<Currency, BigDecimal> prices, final PriceType priceType) {
         this.prices = prices;
-        this.stringValue = stringValue;
+
         this.priceType = priceType;
     }
 
     static PriceInfo fromDomain(final GamePrice gamePrice) {
         final PriceType priceType = GamePriceToPriceType.forGamePrice(gamePrice);
-        return new PriceInfo(gamePrice.asMap(), gamePrice.asString(), priceType);
+        return new PriceInfo(gamePrice.asMap(), priceType);
     }
 
     GamePrice toDomain() {

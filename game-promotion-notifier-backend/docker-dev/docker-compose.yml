@@ -17,30 +17,24 @@ services:
 #    environment:
 #      ME_CONFIG_MONGODB_ADMINUSERNAME: root
 #      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-#  postgresql-user-service:
-#    image: postgres:13
-#    ports:
-#      - 5432:5432
-#    environment:
-#      POSTGRES_USER: test
-#      POSTGRES_PASSWORD: test
-#      POSTGRES_DB: users
-  elasticsearch:
-    image: elasticsearch:7.13.2
+  postgresql-user-service:
+    image: postgres:13
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - 5432:5432
     environment:
-      - "discovery.type=single-node"
-#    networks:
-#      - elk-net
-    volumes:
-      - type: volume
-        source: elastic-data-vol
-        target: /usr/share/elasticsearch/data
-#      - type: bind
-#        source: ./elasticsearch/config/elasticsearch.yml
-#        target: /usr/share/elasticsearch/config/elasticsearch.yml
-#        read_only: true
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: users
+#  elasticsearch:
+#    image: elasticsearch:7.13.2
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+#    environment:
+#      - "discovery.type=single-node"
+#    volumes:
+#      - type: volume
+#        source: elastic-data-vol
+#        target: /usr/share/elasticsearch/data
 volumes:
   elastic-data-vol:

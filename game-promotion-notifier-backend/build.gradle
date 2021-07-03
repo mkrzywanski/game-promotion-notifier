@@ -43,6 +43,12 @@ subprojects {
         testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
         testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.0"
 
+        implementation 'org.projectlombok:lombok:1.18.20'
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+        testImplementation 'org.projectlombok:lombok:1.18.20'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+
     }
 }
 

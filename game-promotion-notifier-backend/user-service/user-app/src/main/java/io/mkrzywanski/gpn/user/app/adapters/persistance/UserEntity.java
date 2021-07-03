@@ -1,15 +1,19 @@
-package io.mkrzywanski.gpn.user.app.adapters;
+package io.mkrzywanski.gpn.user.app.adapters.persistance;
 
 import io.mkrzywanski.gpn.user.EmailAddress;
 import io.mkrzywanski.gpn.user.User;
 import io.mkrzywanski.gpn.user.UserId;
+import lombok.Getter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import java.util.UUID;
 
-import static io.mkrzywanski.gpn.user.User.Builder.*;
-
 @Entity
+@Getter
 public class UserEntity {
 
     @Id
@@ -28,39 +32,19 @@ public class UserEntity {
     private UserEntity() {
     }
 
-    private UserEntity(final UUID uniqueId, final String userName, final String firstName, final String email) {
+    public UserEntity(final UUID uniqueId, final String userName, final String firstName, final String email) {
         this.uniqueId = uniqueId;
         this.userName = userName;
         this.firstName = firstName;
         this.email = email;
     }
 
-    Long getId() {
-        return id;
-    }
-
-    String getUserName() {
-        return userName;
-    }
-
-    String getFirstName() {
-        return firstName;
-    }
-
-    String getEmail() {
-        return email;
-    }
-
-    UUID getUniqueId() {
-        return uniqueId;
-    }
-
     User toDomain() {
-        return user()
-                .withUserId(UserId.of(uniqueId))
-                .withUsername(userName)
-                .withFirstName(firstName)
-                .withEmail(EmailAddress.of(email))
+        return User.builder()
+                .userId(UserId.of(uniqueId))
+                .username(userName)
+                .firstName(firstName)
+                .emailAddress(EmailAddress.of(email))
                 .build();
     }
 

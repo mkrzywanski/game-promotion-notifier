@@ -3,6 +3,8 @@ package io.mkrzywanski.gpn.scrapper.app.adapters.persistance;
 import io.mkrzywanski.gpn.scrapper.domain.post.GameOffer;
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash;
 import io.mkrzywanski.gpn.scrapper.domain.post.Post;
+import io.mkrzywanski.gpn.scrapper.domain.post.PostId;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +16,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Document(collection = "posts")
+@Getter
 public class PostModel {
 
     @Id
@@ -32,22 +35,6 @@ public class PostModel {
         this.source = source;
         this.gameOfferEntities = gameOfferEntities;
         this.datePosted = datePosted;
-    }
-
-    String getHash() {
-        return hash;
-    }
-
-    String getSource() {
-        return source;
-    }
-
-    Collection<GameOfferModel> getGameOffers() {
-        return gameOfferEntities;
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     static PostModel fromDomain(final Post post) {
@@ -72,6 +59,6 @@ public class PostModel {
         final List<GameOffer> gameOffers = postModel.gameOfferEntities.stream()
                 .map(GameOfferModel::toDomain)
                 .toList();
-        return new Post(hash, postModel.source, gameOffers, null);
+        return new Post(PostId.from(postModel.id), hash, postModel.source, gameOffers, null);
     }
 }

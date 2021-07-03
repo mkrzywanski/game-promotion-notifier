@@ -3,6 +3,7 @@ package io.mkrzywanski.gpn.scrapper.domain.gamehunter
 
 import io.mkrzywanski.gpn.scrapper.domain.post.PostObjectMother
 import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository
+import io.mkrzywanski.gpn.scrapper.domain.post.PostTransactionalOutboxRepository
 import spock.lang.Specification
 
 import java.time.Clock
@@ -12,7 +13,8 @@ class GameHunterScrapperServiceSpec extends Specification {
 
     def stub = Stub(GameHunterScrapper)
     def postRepository = Mock(PostRepository)
-    def service = new GameHunterScrapperService(stub, postRepository, Clock.systemUTC())
+    def pub = Mock(PostTransactionalOutboxRepository)
+    def service = new GameHunterScrapperService(stub, postRepository, pub, Clock.systemUTC())
 
     def "should scrap new posts from first page"() {
         given:

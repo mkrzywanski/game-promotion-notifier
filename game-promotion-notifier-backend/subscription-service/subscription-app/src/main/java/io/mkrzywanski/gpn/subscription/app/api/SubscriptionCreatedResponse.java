@@ -10,7 +10,7 @@ public class SubscriptionCreatedResponse {
         this.subscriptionId = subscriptionId;
     }
 
-    public UUID asUuid() {
+    public UUID getSubscriptionId() {
         return subscriptionId;
     }
 }

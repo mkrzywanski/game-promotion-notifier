@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -16,11 +16,11 @@ import javax.validation.constraints.NotBlank;
 public class CreateUserRequest {
 
     @NotBlank
-    @Max(UserConstraints.MAX_FIRSTNAME_LENGTH)
+    @Size(max = UserConstraints.MAX_FIRSTNAME_LENGTH)
     private String firstName;
 
     @NotBlank
-    @Max(UserConstraints.MAX_USERNAME_LENGTH)
+    @Size(max = UserConstraints.MAX_USERNAME_LENGTH)
     private String userName;
 
     @NotBlank

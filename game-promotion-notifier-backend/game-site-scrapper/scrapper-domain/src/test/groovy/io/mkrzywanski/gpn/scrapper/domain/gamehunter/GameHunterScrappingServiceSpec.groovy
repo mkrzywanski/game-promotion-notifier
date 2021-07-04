@@ -9,12 +9,12 @@ import spock.lang.Specification
 import java.time.Clock
 import java.time.ZonedDateTime
 
-class GameHunterScrapperServiceSpec extends Specification {
+class GameHunterScrappingServiceSpec extends Specification {
 
     def stub = Stub(GameHunterScrapper)
     def postRepository = Mock(PostRepository)
     def pub = Mock(PostTransactionalOutboxRepository)
-    def service = new GameHunterScrapperService(stub, postRepository, pub, Clock.systemUTC())
+    def service = new GameHunterScrappingService(stub, postRepository, pub, Clock.systemUTC())
 
     def "should scrap new posts from first page"() {
         given:

@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.user.app.adapters;
+package io.mkrzywanski.gpn.user.app.adapters.web;
 
 import io.mkrzywanski.gpn.user.app.api.CreateUserRequest;
 import io.mkrzywanski.gpn.user.app.api.UserCreatedResponse;

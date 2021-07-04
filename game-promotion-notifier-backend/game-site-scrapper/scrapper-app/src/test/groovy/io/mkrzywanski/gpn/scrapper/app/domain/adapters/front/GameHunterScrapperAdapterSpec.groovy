@@ -1,7 +1,7 @@
 package io.mkrzywanski.gpn.scrapper.app.domain.adapters.front
 
 import io.mkrzywanski.gpn.scrapper.app.adapters.GameHunterScrapperAdapter
-import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrapperService
+import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Bean
@@ -19,7 +19,7 @@ class GameHunterScrapperAdapterSpec extends Specification {
     private static final Duration TWO_SECONDS = Duration.ofSeconds(2)
 
     @Autowired
-    GameHunterScrapperService gameHunterScrapperService;
+    GameHunterScrappingService gameHunterScrapperService;
 
     def "should invoke scrapper"() {
         when: "scheduler is started"
@@ -36,12 +36,12 @@ class GameHunterScrapperAdapterSpec extends Specification {
     @EnableScheduling
     static class TestConfig {
         @Bean
-        GameHunterScrapperService gameHunterScrapperServiceMock() {
-            mock(GameHunterScrapperService)
+        GameHunterScrappingService gameHunterScrapperServiceMock() {
+            mock(GameHunterScrappingService)
         }
 
         @Bean
-        GameHunterScrapperAdapter gameHunterScrapperAdapter(GameHunterScrapperService gameHunterScrapperService) {
+        GameHunterScrapperAdapter gameHunterScrapperAdapter(GameHunterScrappingService gameHunterScrapperService) {
             new GameHunterScrapperAdapter(gameHunterScrapperService)
         }
     }

@@ -23,6 +23,8 @@ dependencies {
     implementation project(":game-site-scrapper:scrapper-domain")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'

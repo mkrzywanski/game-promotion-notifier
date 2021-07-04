@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Document(collection = "posts")
 @Getter
-public class PostModel {
+public class PostMongoModel {
 
     @Id
     private UUID id;
@@ -29,7 +29,7 @@ public class PostModel {
     private Collection<GameOfferModel> gameOfferEntities;
     private Instant datePosted;
 
-    public PostModel(final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities, final Instant datePosted) {
+    public PostMongoModel(final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities, final Instant datePosted) {
         this.id = UUID.randomUUID();
         this.hash = hash;
         this.source = source;
@@ -37,12 +37,12 @@ public class PostModel {
         this.datePosted = datePosted;
     }
 
-    static PostModel fromDomain(final Post post) {
+    static PostMongoModel fromDomain(final Post post) {
         final List<GameOfferModel> gameOffers = post.getGameOffers()
                 .stream()
                 .map(GameOfferModel::fromDomain)
                 .collect(Collectors.toList());
-        return new PostModel(post.getHash().asString(), post.getSource(), gameOffers, post.getDatePosted().toInstant());
+        return new PostMongoModel(post.getHash().asString(), post.getSource(), gameOffers, post.getDatePosted().toInstant());
     }
 
     @Override
@@ -54,11 +54,11 @@ public class PostModel {
                 '}';
     }
 
-    static Post toDomain(final PostModel postModel) {
-        final Hash hash = Hash.fromString(postModel.hash);
-        final List<GameOffer> gameOffers = postModel.gameOfferEntities.stream()
+    Post toDomain() {
+        final Hash hash = Hash.fromString(this.hash);
+        final List<GameOffer> gameOffers = this.gameOfferEntities.stream()
                 .map(GameOfferModel::toDomain)
                 .toList();
-        return new Post(PostId.from(postModel.id), hash, postModel.source, gameOffers, null);
+        return new Post(PostId.from(this.id), hash, this.source, gameOffers, null);
     }
 }

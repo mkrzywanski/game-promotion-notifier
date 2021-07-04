@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  elasticsearch:
+    image: elasticsearch:7.13.2
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - type: volume
+        source: elastic-data-vol
+        target: /usr/share/elasticsearch/data
+volumes:
+  elastic-data-vol:

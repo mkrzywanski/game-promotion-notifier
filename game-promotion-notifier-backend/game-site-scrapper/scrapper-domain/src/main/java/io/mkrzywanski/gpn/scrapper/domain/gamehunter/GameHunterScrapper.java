@@ -9,7 +9,7 @@ import java.util.List;
 
 class GameHunterScrapper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrapperService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrappingService.class);
 
     private final GameHunterClient gameHunterClient;
     private final GameHunterParser gameHunterParser;

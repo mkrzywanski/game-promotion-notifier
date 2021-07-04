@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class GameHunterScrapperService {
+public class GameHunterScrappingService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrapperService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrappingService.class);
 
     private final PostRepository postRepository;
     private final PostTransactionalOutboxRepository postTransactionalOutboxRepository;
@@ -24,17 +24,17 @@ public class GameHunterScrapperService {
     private final int minimalDaysInterval = 2;
     private final Clock clock;
 
-    GameHunterScrapperService(final GameHunterScrapper gameHunterScrapper,
-                              final PostRepository postRepository,
-                              final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
+    GameHunterScrappingService(final GameHunterScrapper gameHunterScrapper,
+                               final PostRepository postRepository,
+                               final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
         this.postRepository = postRepository;
         this.gameHunterScrapper = gameHunterScrapper;
         this.postTransactionalOutboxRepository = postTransactionalOutboxRepository;
         this.clock = clock;
     }
 
-    public static GameHunterScrapperService newInstance(final String serviceUrl, final PostRepository postRepository, final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
-        return new GameHunterScrapperService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository, postTransactionalOutboxRepository, clock);
+    public static GameHunterScrappingService newInstance(final String serviceUrl, final PostRepository postRepository, final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
+        return new GameHunterScrappingService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository, postTransactionalOutboxRepository, clock);
     }
 
     public void scrap() {

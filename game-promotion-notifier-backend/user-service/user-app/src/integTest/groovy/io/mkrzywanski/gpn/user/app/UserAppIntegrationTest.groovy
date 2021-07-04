@@ -1,3 +1,5 @@
+package io.mkrzywanski.gpn.user.app
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.mkrzywanski.gpn.user.app.adapters.persistance.JpaUserRepository
 import io.mkrzywanski.gpn.user.app.adapters.persistance.UserEntity
@@ -34,7 +36,7 @@ class UserAppIntegrationTest extends Specification {
 
     def "should create user"() {
         given: "request"
-        def createUserRequest = new CreateUserRequest("name", "username", "email")
+        def createUserRequest = new CreateUserRequest("name", "username", "email@google.com")
         def request = post("/v1/users")
                 .content(json(createUserRequest))
                 .contentType(APPLICATION_JSON_VALUE)

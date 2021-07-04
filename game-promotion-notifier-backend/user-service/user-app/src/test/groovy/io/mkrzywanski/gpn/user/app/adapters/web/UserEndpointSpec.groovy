@@ -1,8 +1,11 @@
-package io.mkrzywanski.gpn.user.app.adapters
+package io.mkrzywanski.gpn.user.app.adapters.web
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.mkrzywanski.gpn.user.app.adapters.web.UserFacade
 import io.mkrzywanski.gpn.user.app.api.CreateUserRequest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType

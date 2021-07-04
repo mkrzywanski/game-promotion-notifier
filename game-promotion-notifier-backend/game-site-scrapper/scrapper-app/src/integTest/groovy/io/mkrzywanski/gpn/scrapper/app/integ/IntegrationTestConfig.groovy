@@ -6,8 +6,7 @@ import io.mkrzywanski.gpn.scrapper.app.adapters.GameHunterScrapperAdapter
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.MongoPostRepository
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostTransactionalOutboxMongoRepository
 import io.mkrzywanski.gpn.scrapper.app.infra.SpringConfig
-import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrapperService
-import io.mkrzywanski.gpn.scrapper.domain.post.PostTransactionalOutboxRepository
+import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
@@ -73,7 +72,7 @@ class IntegrationTestConfig {
     }
 
     @Bean
-    GameHunterScrapperService scrapperService(WireMockServer wireMockServer, MongoOperations mongoOperations) {
-        return GameHunterScrapperService.newInstance("http://localhost:" + wireMockServer.port(), new MongoPostRepository(mongoOperations), new PostTransactionalOutboxMongoRepository(mongoOperations), clock)
+    GameHunterScrappingService scrapperService(WireMockServer wireMockServer, MongoOperations mongoOperations) {
+        return GameHunterScrappingService.newInstance("http://localhost:" + wireMockServer.port(), new MongoPostRepository(mongoOperations), new PostTransactionalOutboxMongoRepository(mongoOperations), clock)
     }
 }

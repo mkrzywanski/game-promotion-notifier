@@ -3,6 +3,8 @@ gpn:
     url: http://lowcygier.pl
   scheduling:
     cron: "0 * * * * *"
+  queue:
+    name: posts
 
 spring:
   data:

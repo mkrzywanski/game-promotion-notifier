@@ -2,7 +2,7 @@ package io.mkrzywanski.gpn.scrapper.app.integ
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.GameOfferModel
-import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostModel
+import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostMongoModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -35,13 +35,13 @@ class GameHunterScrapperIntegrationSpec extends Specification {
         when: "scrapper is invoked"
 
         then:
-        def savedPosts = mongoTemplate.findAll(PostModel)
+        def savedPosts = mongoTemplate.findAll(PostMongoModel)
         savedPosts.size() == 20
     }
 
     private def prepareAlreadySavedPost() {
         List<GameOfferModel> of = List.of()
-        PostModel postModel = new PostModel("Lj7tmcaPPsUW0BuSwWWkdLYnh6z045XL8KR5PcjtzhQ=", "game-hunter", of, ZonedDateTime.parse("2021-06-05T10:35Z").toInstant())
+        PostMongoModel postModel = new PostMongoModel("Lj7tmcaPPsUW0BuSwWWkdLYnh6z045XL8KR5PcjtzhQ=", "game-hunter", of, ZonedDateTime.parse("2021-06-05T10:35Z").toInstant())
         mongoTemplate.save(postModel)
     }
 

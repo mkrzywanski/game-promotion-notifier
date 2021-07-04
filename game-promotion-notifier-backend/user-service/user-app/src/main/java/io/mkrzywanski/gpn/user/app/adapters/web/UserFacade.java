@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.user.app.adapters;
+package io.mkrzywanski.gpn.user.app.adapters.web;
 
 import io.mkrzywanski.gpn.user.*;
 import io.mkrzywanski.gpn.user.app.api.CreateUserRequest;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-class UserFacade {
+public class UserFacade {
 
     private final UserService userService;
 

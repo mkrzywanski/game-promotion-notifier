@@ -2,7 +2,12 @@ gpn:
   gamehunter:
     url: http://lowcygier.pl
   scheduling:
-    cron: "0 * * * * *"
+    scrapping:
+      cron: "*/2 * * * * *"
+    publishing:
+      cron: "*/2 * * * * *"
+  queue:
+    name: posts
 
 spring:
   data:
@@ -14,3 +19,10 @@ spring:
       password: example
       authentication-database: admin
       auto-index-creation: true
+      uuid-representation: standard
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: test
+    password: test
+

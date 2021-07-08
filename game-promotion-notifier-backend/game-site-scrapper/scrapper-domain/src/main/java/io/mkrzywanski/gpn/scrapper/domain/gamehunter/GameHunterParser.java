@@ -3,6 +3,7 @@ package io.mkrzywanski.gpn.scrapper.domain.gamehunter;
 import io.mkrzywanski.gpn.scrapper.domain.post.GameOffer;
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash;
 import io.mkrzywanski.gpn.scrapper.domain.post.Post;
+import io.mkrzywanski.gpn.scrapper.domain.post.PostId;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -35,7 +36,8 @@ class GameHunterParser {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-        return new Post(Hash.compute(element.text()), "game-hunter", gameOffers, postDateTime);
+        final Hash hash = Hash.compute(element.text());
+        return new Post(PostId.generate(), hash, "game-hunter", gameOffers, postDateTime);
     }
 
     private static ZonedDateTime extractPostTime(final Element element) {

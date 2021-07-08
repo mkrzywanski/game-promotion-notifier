@@ -59,9 +59,12 @@ class GameHunterPriceParserSpec extends Specification {
         assertThat numberGamePrice.asMap(), allOf(hasEntry(currency, value), aMapWithSize(1))
 
         where:
-        input   | output   | currency       | value
-        "20 zł" | "20 PLN" | Currencies.PLN | BigDecimal.valueOf(20)
-        "20 €"  | "20 EUR" | Currencies.EUR | BigDecimal.valueOf(20)
+        input      | output      | currency       | value
+        "20 zł"    | "20 PLN"    | Currencies.PLN | BigDecimal.valueOf(20)
+        "20 €"     | "20 EUR"    | Currencies.EUR | BigDecimal.valueOf(20)
+        "20,23 zł" | "20.23 PLN" | Currencies.PLN | new BigDecimal("20.23")
 
     }
+
+
 }

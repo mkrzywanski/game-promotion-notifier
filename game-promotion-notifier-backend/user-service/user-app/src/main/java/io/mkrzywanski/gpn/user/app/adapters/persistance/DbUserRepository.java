@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.user.app.adapters;
+package io.mkrzywanski.gpn.user.app.adapters.persistance;
 
 import io.mkrzywanski.gpn.user.NewUserDetails;
 import io.mkrzywanski.gpn.user.User;
@@ -6,6 +6,7 @@ import io.mkrzywanski.gpn.user.UserId;
 import io.mkrzywanski.gpn.user.UserRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -30,8 +31,8 @@ public class DbUserRepository implements UserRepository {
     }
 
     @Override
-    public User getById(final UserId userId) {
-        return jpaUserRepository.getByUniqueId(UUID.fromString(userId.asString()))
-                .toDomain();
+    public Optional<User> getById(final UserId userId) {
+        return jpaUserRepository.getByUniqueId(userId.asUuid())
+                .map(UserEntity::toDomain);
     }
 }

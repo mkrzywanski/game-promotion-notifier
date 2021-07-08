@@ -1,6 +1,7 @@
 package io.mkrzywanski.gpn.user.app.api;
 
 public class UserCreatedResponse {
+
     private String userId;
 
     public UserCreatedResponse(final String userId) {

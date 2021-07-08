@@ -2,36 +2,39 @@ package io.mkrzywanski.gpn.scrapper.domain.gamehunter;
 
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash;
 import io.mkrzywanski.gpn.scrapper.domain.post.Post;
+import io.mkrzywanski.gpn.scrapper.domain.post.PostTransactionalOutboxRepository;
 import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class GameHunterScrapperService {
+public class GameHunterScrappingService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrapperService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameHunterScrappingService.class);
 
     private final PostRepository postRepository;
+    private final PostTransactionalOutboxRepository postTransactionalOutboxRepository;
     private final GameHunterScrapper gameHunterScrapper;
     private final int minimalDaysInterval = 2;
     private final Clock clock;
 
-    GameHunterScrapperService(final GameHunterScrapper gameHunterScrapper,
-                              final PostRepository postRepository,
-                              final Clock clock) {
+    GameHunterScrappingService(final GameHunterScrapper gameHunterScrapper,
+                               final PostRepository postRepository,
+                               final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
         this.postRepository = postRepository;
         this.gameHunterScrapper = gameHunterScrapper;
+        this.postTransactionalOutboxRepository = postTransactionalOutboxRepository;
         this.clock = clock;
     }
 
-    public static GameHunterScrapperService newInstance(final String serviceUrl, final PostRepository postRepository, final Clock clock) {
-        return new GameHunterScrapperService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository, clock);
+    public static GameHunterScrappingService newInstance(final String serviceUrl, final PostRepository postRepository, final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
+        return new GameHunterScrappingService(new GameHunterScrapper(new GameHunterClient(serviceUrl), new GameHunterParser()), postRepository, postTransactionalOutboxRepository, clock);
     }
 
     public void scrap() {
@@ -70,7 +73,12 @@ public class GameHunterScrapperService {
 
         } while (true);
 
-        postRepository.saveAll(allNewPosts);
+        final Set<Post> distinctByHash = allNewPosts.stream()
+                .filter(distinctByKey(Post::getHash))
+                .collect(Collectors.toSet());
+
+        postRepository.saveAll(distinctByHash);
+        postTransactionalOutboxRepository.put(new HashSet<>(distinctByHash));
     }
 
     private Set<Hash> extractHashes(final List<Post> scrappedPosts) {
@@ -88,5 +96,11 @@ public class GameHunterScrapperService {
 
     private boolean isNotTooOld(final Post post) {
         return post.isYoungerThan(minimalDaysInterval, clock);
+    }
+
+    private static <T> Predicate<T> distinctByKey(final Function<? super T, ?> keyExtractor) {
+
+        final Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 }

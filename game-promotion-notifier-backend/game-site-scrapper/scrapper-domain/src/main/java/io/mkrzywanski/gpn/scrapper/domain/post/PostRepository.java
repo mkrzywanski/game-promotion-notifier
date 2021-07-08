@@ -7,4 +7,5 @@ import java.util.Set;
 public interface PostRepository {
     List<Hash> findByHashIn(Set<Hash> hashes);
     List<Post> saveAll(Collection<Post> postEntities);
+    List<Post> findByIds(Set<PostId> postIds);
 }

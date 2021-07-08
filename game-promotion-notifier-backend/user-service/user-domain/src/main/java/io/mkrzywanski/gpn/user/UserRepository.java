@@ -1,7 +1,9 @@
 package io.mkrzywanski.gpn.user;
 
+import java.util.Optional;
+
 public interface UserRepository {
     UserId save(NewUserDetails newUserDetails);
 
-    User getById(UserId userId);
+    Optional<User> getById(UserId userId);
 }

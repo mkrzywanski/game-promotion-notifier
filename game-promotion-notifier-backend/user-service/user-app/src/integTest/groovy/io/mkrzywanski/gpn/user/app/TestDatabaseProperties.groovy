@@ -1,3 +1,5 @@
+package io.mkrzywanski.gpn.user.app
+
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("database")

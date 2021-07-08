@@ -19,8 +19,8 @@ public class UserId {
         return new UserId(UUID.fromString(value));
     }
 
-    public String asString() {
-        return this.uuid.toString();
+    public UUID asUuid() {
+        return uuid;
     }
 
     @Override

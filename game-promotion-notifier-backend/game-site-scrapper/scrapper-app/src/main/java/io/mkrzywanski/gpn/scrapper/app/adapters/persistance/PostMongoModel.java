@@ -3,6 +3,8 @@ package io.mkrzywanski.gpn.scrapper.app.adapters.persistance;
 import io.mkrzywanski.gpn.scrapper.domain.post.GameOffer;
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash;
 import io.mkrzywanski.gpn.scrapper.domain.post.Post;
+import io.mkrzywanski.gpn.scrapper.domain.post.PostId;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +16,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Document(collection = "posts")
-public class PostModel {
+@Getter
+public class PostMongoModel {
 
     @Id
     private UUID id;
@@ -26,36 +29,20 @@ public class PostModel {
     private Collection<GameOfferModel> gameOfferEntities;
     private Instant datePosted;
 
-    public PostModel(final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities, final Instant datePosted) {
-        this.id = UUID.randomUUID();
+    public PostMongoModel(final UUID id, final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities, final Instant datePosted) {
+        this.id = id;
         this.hash = hash;
         this.source = source;
         this.gameOfferEntities = gameOfferEntities;
         this.datePosted = datePosted;
     }
 
-    String getHash() {
-        return hash;
-    }
-
-    String getSource() {
-        return source;
-    }
-
-    Collection<GameOfferModel> getGameOffers() {
-        return gameOfferEntities;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    static PostModel fromDomain(final Post post) {
+    static PostMongoModel fromDomain(final Post post) {
         final List<GameOfferModel> gameOffers = post.getGameOffers()
                 .stream()
                 .map(GameOfferModel::fromDomain)
                 .collect(Collectors.toList());
-        return new PostModel(post.getHash().asString(), post.getSource(), gameOffers, post.getDatePosted().toInstant());
+        return new PostMongoModel(post.getPostId().getId(), post.getHash().asString(), post.getSource(), gameOffers, post.getDatePosted().toInstant());
     }
 
     @Override
@@ -67,11 +54,15 @@ public class PostModel {
                 '}';
     }
 
-    static Post toDomain(final PostModel postModel) {
-        final Hash hash = Hash.fromString(postModel.hash);
-        final List<GameOffer> gameOffers = postModel.gameOfferEntities.stream()
+    Post toDomain() {
+        final Hash hash = Hash.fromString(this.hash);
+        final List<GameOffer> gameOffers = this.gameOfferEntities.stream()
                 .map(GameOfferModel::toDomain)
                 .toList();
-        return new Post(hash, postModel.source, gameOffers, null);
+        return new Post(PostId.from(this.id), hash, this.source, gameOffers, null);
     }
+
+//    UUID getId() {
+//        return UUID.fromString(id);
+//    }
 }

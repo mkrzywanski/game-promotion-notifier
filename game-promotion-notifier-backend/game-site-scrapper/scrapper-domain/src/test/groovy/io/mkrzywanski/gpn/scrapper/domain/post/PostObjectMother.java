@@ -4,6 +4,7 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 public class PostObjectMother {
 
@@ -13,12 +14,14 @@ public class PostObjectMother {
     private static final int MINUTE = 10;
     private static final int YEAR = 2020;
 
+    private PostId postId;
     private String source;
     private Hash hash;
     private Collection<GameOffer> gameOffers;
     private ZonedDateTime datePosted;
 
     private PostObjectMother() {
+        this.postId = PostId.from(UUID.fromString("d01d7fe4-540c-4f19-badc-87b60c0c83b9"));
         this.source = "index";
         this.hash = Hash.compute(source);
         this.datePosted = ZonedDateTime.of(LocalDate.of(YEAR, MONTH, DAY_OF_MONTH), LocalTime.of(HOUR, MINUTE), ZoneId.systemDefault());
@@ -41,6 +44,6 @@ public class PostObjectMother {
     }
 
     public Post build() {
-        return new Post(hash, source, gameOffers, datePosted);
+        return new Post(postId, hash, source, gameOffers, datePosted);
     }
 }

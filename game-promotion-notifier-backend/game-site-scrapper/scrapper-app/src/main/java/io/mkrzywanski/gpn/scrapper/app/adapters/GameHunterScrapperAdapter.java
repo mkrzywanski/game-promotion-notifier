@@ -1,20 +1,20 @@
 package io.mkrzywanski.gpn.scrapper.app.adapters;
 
-import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrapperService;
+import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameHunterScrapperAdapter {
 
-    private final GameHunterScrapperService gameHunterScrapperService;
+    private final GameHunterScrappingService gameHunterScrappingService;
 
-    public GameHunterScrapperAdapter(final GameHunterScrapperService gameHunterScrapperService) {
-        this.gameHunterScrapperService = gameHunterScrapperService;
+    public GameHunterScrapperAdapter(final GameHunterScrappingService gameHunterScrappingService) {
+        this.gameHunterScrappingService = gameHunterScrappingService;
     }
 
-    @Scheduled(cron = "${gpn.scheduling.cron}")
+    @Scheduled(cron = "${gpn.scheduling.scrapping.cron}")
     public void scrap() {
-        gameHunterScrapperService.scrap();
+        gameHunterScrappingService.scrap();
     }
 }

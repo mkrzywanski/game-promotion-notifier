@@ -23,6 +23,8 @@ dependencies {
     implementation project(":subscription-service:subscription-domain")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     integTestImplementation "org.testcontainers:elasticsearch:1.15.3"

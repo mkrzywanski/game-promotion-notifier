@@ -3,25 +3,29 @@ package io.mkrzywanski.gpn.scrapper.domain.gamehunter
 
 import io.mkrzywanski.gpn.scrapper.domain.post.PostObjectMother
 import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository
+import io.mkrzywanski.gpn.scrapper.domain.post.PostTransactionalOutboxRepository
 import spock.lang.Specification
 
 import java.time.Clock
 import java.time.ZonedDateTime
 
-class GameHunterScrapperServiceSpec extends Specification {
+class GameHunterScrappingServiceSpec extends Specification {
 
     def stub = Stub(GameHunterScrapper)
     def postRepository = Mock(PostRepository)
-    def service = new GameHunterScrapperService(stub, postRepository, Clock.systemUTC())
+    def newPostsOutbox = Mock(PostTransactionalOutboxRepository)
+    def service = new GameHunterScrappingService(stub, postRepository, newPostsOutbox, Clock.systemUTC())
 
     def "should scrap new posts from first page"() {
         given:
-        def post1 = PostObjectMother.newInstance().withSource("source1").withDatePosted(ZonedDateTime.now()).build()
+        def post1 = PostObjectMother.newInstance()
+                .withSource("source1")
+                .withDatePosted(ZonedDateTime.now()).build()
         def post2 = PostObjectMother.newInstance().withSource("source2").withDatePosted(ZonedDateTime.now()).build()
         def post3 = PostObjectMother.newInstance().withSource("source3").withDatePosted(ZonedDateTime.now()).build()
         def postsFromScrapper = List.of(post1, post2, post3)
         def postsAlreadyInDb = List.of(post2, post3)
-        def newPosts = postsFromScrapper - postsAlreadyInDb
+        def newPosts = postsFromScrapper - postsAlreadyInDb as Set
 
         stub.scrap(1) >> postsFromScrapper
 
@@ -33,6 +37,7 @@ class GameHunterScrapperServiceSpec extends Specification {
 
         then:
         1 * postRepository.saveAll(newPosts)
+        1 * newPostsOutbox.put(newPosts)
     }
 
     def "should scrap two pages when first page contains all new posts and second one new and already existing"() {
@@ -50,7 +55,7 @@ class GameHunterScrapperServiceSpec extends Specification {
         def postsFromPage2 = List.of(post4, post5, post6)
 
         def postsFromPage2AlreadyInDb = List.of(post5, post6)
-        def newPostsPage2 = postsFromPage2 - postsFromPage2AlreadyInDb
+        def newPostsFromPage2 = postsFromPage2 - postsFromPage2AlreadyInDb
 
         stub.scrap(1) >> postsFromPage1
         stub.scrap(2) >> postsFromPage2
@@ -61,10 +66,13 @@ class GameHunterScrapperServiceSpec extends Specification {
         def page2postHashes = postsFromPage2*.hash as HashSet
         postRepository.findByHashIn(page2postHashes) >> postsFromPage2AlreadyInDb*.hash
 
+        def expectedPostsToBeSaved = (postsFromPage1 + newPostsFromPage2) as HashSet
+
         when:
         service.scrap()
 
         then:
-        1 * postRepository.saveAll(postsFromPage1 + newPostsPage2)
+        1 * postRepository.saveAll(expectedPostsToBeSaved)
+        1 * newPostsOutbox.put(expectedPostsToBeSaved)
     }
 }

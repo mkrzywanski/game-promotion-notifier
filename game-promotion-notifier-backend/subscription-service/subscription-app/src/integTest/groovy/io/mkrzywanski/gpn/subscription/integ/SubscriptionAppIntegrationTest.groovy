@@ -34,9 +34,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class SubscriptionAppIntegrationTest extends Specification {
 
     @Autowired
-    ApplicationContext applicationContext
-
-    @Autowired
     ElasticsearchOperations elasticsearchOperations
 
     @Autowired
@@ -64,7 +61,6 @@ class SubscriptionAppIntegrationTest extends Specification {
         def response = mockMvc.perform(post("/v1/subscriptions/match", content))
 
         then:
-        applicationContext != null
         response.andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                {

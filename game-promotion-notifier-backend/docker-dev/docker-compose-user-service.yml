@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  postgresql-user-service:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: users

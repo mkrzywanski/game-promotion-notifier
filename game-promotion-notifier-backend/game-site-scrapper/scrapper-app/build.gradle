@@ -3,6 +3,10 @@ plugins {
     id 'io.spring.dependency-management'
 }
 
+ext {
+    testcontainersVersion = '1.15.3'
+}
+
 sourceSets {
     integTest {
         groovy {
@@ -23,10 +27,13 @@ dependencies {
     implementation project(":game-site-scrapper:scrapper-domain")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
-    testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
-    integTestImplementation "org.testcontainers:testcontainers:1.15.3"
+    integTestImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
+    integTestImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
+    integTestImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
 
 }
 

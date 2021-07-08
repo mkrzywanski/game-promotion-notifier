@@ -23,10 +23,12 @@ dependencies {
     implementation project(":user-service:user-domain")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.22'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     integTestImplementation "org.testcontainers:postgresql:1.15.3"
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.22'
 
 }
 
@@ -38,7 +40,6 @@ tasks.register('integrationTest', Test) {
     testClassesDirs = sourceSets.integTest.output.classesDirs
     classpath = sourceSets.integTest.runtimeClasspath
     testLogging {
-
         events("passed", "skipped", "failed")
         showStackTraces = true
         exceptionFormat = 'full'

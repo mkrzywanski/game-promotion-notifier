@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 class GameHunterPriceParser {
 
-    private static final Pattern PATTERN = Pattern.compile("(\\d+(?:\\.\\d{1,2})?)\\s(([\\€])|(zł))");
+    private static final Pattern PATTERN = Pattern.compile("(\\d+(?:(\\.|\\,)\\d{1,2})?)\\s(([\\€])|(zł))");
     private static final String FREE = "za darmo";
 
     static GamePrice parse(final String input) {

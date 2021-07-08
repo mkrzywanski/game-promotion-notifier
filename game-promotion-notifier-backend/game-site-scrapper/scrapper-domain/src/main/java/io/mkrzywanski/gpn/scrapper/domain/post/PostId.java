@@ -15,4 +15,9 @@ public class PostId {
     public static PostId generate() {
         return new PostId(UUID.randomUUID());
     }
+
+    @Override
+    public String toString() {
+        return id.toString();
+    }
 }

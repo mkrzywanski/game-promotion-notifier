@@ -13,7 +13,7 @@ public class GameHunterScrapperAdapter {
         this.gameHunterScrappingService = gameHunterScrappingService;
     }
 
-    @Scheduled(cron = "${gpn.scheduling.cron}")
+    @Scheduled(cron = "${gpn.scheduling.scrapping.cron}")
     public void scrap() {
         gameHunterScrappingService.scrap();
     }

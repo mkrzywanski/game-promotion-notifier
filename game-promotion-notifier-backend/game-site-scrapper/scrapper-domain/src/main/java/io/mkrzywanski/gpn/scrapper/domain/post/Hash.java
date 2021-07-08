@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.Base64;
 
 public class Hash {
+
     private static final String SHA_256 = "SHA256";
 
     private static final MessageDigest MESSAGE_DIGEST;
     private final byte[] hash;
-
 
     static {
         try {

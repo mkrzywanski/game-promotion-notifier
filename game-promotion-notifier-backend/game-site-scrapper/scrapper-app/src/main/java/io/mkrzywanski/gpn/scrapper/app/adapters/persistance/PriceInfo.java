@@ -19,7 +19,6 @@ public class PriceInfo {
 
     public PriceInfo(final Map<Currency, BigDecimal> prices, final PriceType priceType) {
         this.prices = prices;
-
         this.priceType = priceType;
     }
 

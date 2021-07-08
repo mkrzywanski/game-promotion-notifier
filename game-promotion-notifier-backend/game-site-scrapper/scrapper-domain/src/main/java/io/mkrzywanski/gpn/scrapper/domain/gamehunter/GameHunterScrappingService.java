@@ -8,10 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class GameHunterScrappingService {
@@ -73,7 +73,12 @@ public class GameHunterScrappingService {
 
         } while (true);
 
-        postRepository.saveAll(allNewPosts);
+        final Set<Post> distinctByHash = allNewPosts.stream()
+                .filter(distinctByKey(Post::getHash))
+                .collect(Collectors.toSet());
+
+        postRepository.saveAll(distinctByHash);
+        postTransactionalOutboxRepository.put(new HashSet<>(distinctByHash));
     }
 
     private Set<Hash> extractHashes(final List<Post> scrappedPosts) {
@@ -91,5 +96,11 @@ public class GameHunterScrappingService {
 
     private boolean isNotTooOld(final Post post) {
         return post.isYoungerThan(minimalDaysInterval, clock);
+    }
+
+    private static <T> Predicate<T> distinctByKey(final Function<? super T, ?> keyExtractor) {
+
+        final Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 }

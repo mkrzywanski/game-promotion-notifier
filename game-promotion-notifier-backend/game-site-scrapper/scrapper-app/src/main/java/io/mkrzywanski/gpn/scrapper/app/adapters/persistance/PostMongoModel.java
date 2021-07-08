@@ -29,8 +29,8 @@ public class PostMongoModel {
     private Collection<GameOfferModel> gameOfferEntities;
     private Instant datePosted;
 
-    public PostMongoModel(final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities, final Instant datePosted) {
-        this.id = UUID.randomUUID();
+    public PostMongoModel(final UUID id, final String hash, final String source, final Collection<GameOfferModel> gameOfferEntities, final Instant datePosted) {
+        this.id = id;
         this.hash = hash;
         this.source = source;
         this.gameOfferEntities = gameOfferEntities;
@@ -42,7 +42,7 @@ public class PostMongoModel {
                 .stream()
                 .map(GameOfferModel::fromDomain)
                 .collect(Collectors.toList());
-        return new PostMongoModel(post.getHash().asString(), post.getSource(), gameOffers, post.getDatePosted().toInstant());
+        return new PostMongoModel(post.getPostId().getId(), post.getHash().asString(), post.getSource(), gameOffers, post.getDatePosted().toInstant());
     }
 
     @Override
@@ -61,4 +61,8 @@ public class PostMongoModel {
                 .toList();
         return new Post(PostId.from(this.id), hash, this.source, gameOffers, null);
     }
+
+//    UUID getId() {
+//        return UUID.fromString(id);
+//    }
 }

@@ -16,7 +16,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
-public class MongoPostRepository implements PostRepository {
+public final class MongoPostRepository implements PostRepository {
 
     private final MongoOperations mongoOperations;
 
@@ -46,7 +46,9 @@ public class MongoPostRepository implements PostRepository {
 
     @Override
     public List<Post> findByIds(final Set<PostId> postIds) {
-        final Set<UUID> rawPostIds = postIds.stream().map(PostId::getId).collect(Collectors.toSet());
+        final Set<UUID> rawPostIds = postIds.stream()
+                .map(PostId::getId)
+                .collect(Collectors.toSet());
         final Query query = Query.query(Criteria.where("id").in(rawPostIds));
         return mongoOperations.find(query, PostMongoModel.class)
                 .stream()

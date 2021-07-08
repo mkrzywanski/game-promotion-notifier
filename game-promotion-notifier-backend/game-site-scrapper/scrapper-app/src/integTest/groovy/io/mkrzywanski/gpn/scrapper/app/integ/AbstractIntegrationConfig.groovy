@@ -1,45 +1,23 @@
-package io.mkrzywanski.gpn.scrapper.app.integ
+package io.mkrzywanski.gpn.scrapper.app.integ;
 
-import com.github.tomakehurst.wiremock.WireMockServer
 import com.mongodb.ConnectionString
-import io.mkrzywanski.gpn.scrapper.app.adapters.GameHunterScrapperAdapter
-import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.MongoPostRepository
-import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostTransactionalOutboxMongoRepository
-import io.mkrzywanski.gpn.scrapper.app.infra.SpringConfig
-import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
 import org.springframework.core.env.Environment
-import org.springframework.data.mongodb.core.MongoOperations
-import org.springframework.scheduling.annotation.EnableScheduling
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait
 
-import java.time.Clock
 import java.time.Duration
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZoneOffset
-
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 
 @Configuration
 @EnableAutoConfiguration
-@EnableScheduling
-@Import([GameHunterScrapperAdapter, SpringConfig, MongoPostRepository])
-class IntegrationTestConfig {
-
-    private static final Instant ONE_DAY_AFTER_SCRAPING = LocalDate.of(2021, 6, 7).atStartOfDay().toInstant(ZoneOffset.UTC)
-
-    private final Clock clock = Clock.fixed(ONE_DAY_AFTER_SCRAPING, ZoneId.of("UTC"))
+abstract class AbstractIntegrationConfig {
 
     @Autowired
-    private Environment environment
+    protected Environment environment
 
     @Bean
     GenericContainer<?> mongoDBContainer() {
@@ -62,17 +40,5 @@ class IntegrationTestConfig {
         def database = environment.getProperty("spring.data.mongodb.database")
         def connectionString = new ConnectionString(String.format("mongodb://localhost:%s/%s", mongoDBContainer.getFirstMappedPort(), database))
         return (settings) -> settings.applyConnectionString(connectionString)
-    }
-
-    @Bean
-    WireMockServer wireMockServer() {
-        def wireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
-        wireMockServer.start()
-        wireMockServer
-    }
-
-    @Bean
-    GameHunterScrappingService scrapperService(WireMockServer wireMockServer, MongoOperations mongoOperations) {
-        return GameHunterScrappingService.newInstance("http://localhost:" + wireMockServer.port(), new MongoPostRepository(mongoOperations), new PostTransactionalOutboxMongoRepository(mongoOperations), clock)
     }
 }

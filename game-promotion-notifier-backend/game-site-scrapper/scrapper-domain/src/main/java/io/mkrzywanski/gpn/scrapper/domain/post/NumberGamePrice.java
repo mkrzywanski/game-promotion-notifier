@@ -22,8 +22,13 @@ public class NumberGamePrice implements GamePrice {
     public static NumberGamePrice fromString(final String input) {
         final String[] split = input.split(" ");
         final Currency currency = SUPPORTED_CURRENCIES.get(split[1]);
-        final BigDecimal value = new BigDecimal(split[0]);
-        return new NumberGamePrice(currency, value);
+        final String priceString = sanitize(split[0]);
+        final BigDecimal price = new BigDecimal(priceString);
+        return new NumberGamePrice(currency, price);
+    }
+
+    private static String sanitize(final String price) {
+        return price.contains(",") ? price.replace(",", ".") : price;
     }
 
     @Override

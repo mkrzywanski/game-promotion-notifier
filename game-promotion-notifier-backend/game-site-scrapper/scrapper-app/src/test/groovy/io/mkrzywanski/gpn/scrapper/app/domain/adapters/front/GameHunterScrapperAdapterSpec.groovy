@@ -13,7 +13,7 @@ import java.time.Duration
 
 import static org.mockito.Mockito.*
 
-@SpringBootTest(properties = ["gpn.scheduling.cron=*/1 * * * * *"])
+@SpringBootTest(properties = ["gpn.scheduling.scrapping.cron=*/1 * * * * *"])
 class GameHunterScrapperAdapterSpec extends Specification {
 
     private static final Duration TWO_SECONDS = Duration.ofSeconds(2)

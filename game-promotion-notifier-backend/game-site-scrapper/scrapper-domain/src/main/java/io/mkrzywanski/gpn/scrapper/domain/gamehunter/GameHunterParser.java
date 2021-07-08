@@ -36,7 +36,8 @@ class GameHunterParser {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-        return new Post(PostId.generate(), Hash.compute(element.text()), "game-hunter", gameOffers, postDateTime);
+        final Hash hash = Hash.compute(element.text());
+        return new Post(PostId.generate(), hash, "game-hunter", gameOffers, postDateTime);
     }
 
     private static ZonedDateTime extractPostTime(final Element element) {

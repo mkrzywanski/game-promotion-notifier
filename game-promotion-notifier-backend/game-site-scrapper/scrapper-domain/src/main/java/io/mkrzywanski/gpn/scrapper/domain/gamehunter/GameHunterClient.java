@@ -15,7 +15,9 @@ class GameHunterClient {
 
     GameHunterClient(final String baseUrl) {
         this.baseUrl = baseUrl;
-        this.httpClient = HttpClient.newHttpClient();
+        this.httpClient = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
     }
 
     public String getPage(final int pageNumber) throws GameHunterClientException {

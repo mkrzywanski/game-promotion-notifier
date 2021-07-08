@@ -5,4 +5,6 @@ import java.util.Set;
 public interface PostTransactionalOutboxRepository {
     void put(Set<Post> newPosts);
     Set<PostId> poll();
+
+    void delete(Set<PostId> newPostsIds);
 }

@@ -5,7 +5,7 @@ import io.mkrzywanski.gpn.scrapper.domain.post.*;
 import java.util.Map;
 import java.util.Optional;
 
-class GamePriceToPriceType {
+final class GamePriceToPriceType {
 
     private static final Map<Class<? extends GamePrice>, PriceType> PRICE_TYPES = Map.of(
             CompositeGamePrice.class, PriceType.MULTI,

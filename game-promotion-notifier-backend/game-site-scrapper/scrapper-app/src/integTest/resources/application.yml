@@ -12,7 +12,7 @@ spring:
     mongodb:
       database: posts
       username: root
-      password: example
+      password: password
       authentication-database: admin
       auto-index-creation: true
   rabbitmq:

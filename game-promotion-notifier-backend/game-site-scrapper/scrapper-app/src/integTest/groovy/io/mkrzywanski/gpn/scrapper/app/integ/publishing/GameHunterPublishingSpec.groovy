@@ -1,8 +1,10 @@
-package io.mkrzywanski.gpn.scrapper.app.integ
+package io.mkrzywanski.gpn.scrapper.app.integ.publishing
 
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.NewPostOutboxMessage
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostMongoModel
 import io.mkrzywanski.gpn.scrapper.app.adapters.publishing.NewPostsPublisherAdapter
+import io.mkrzywanski.gpn.scrapper.app.integ.publishing.NewPostConsumer
+import io.mkrzywanski.gpn.scrapper.app.integ.publishing.NewPostPublishingITConfig
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

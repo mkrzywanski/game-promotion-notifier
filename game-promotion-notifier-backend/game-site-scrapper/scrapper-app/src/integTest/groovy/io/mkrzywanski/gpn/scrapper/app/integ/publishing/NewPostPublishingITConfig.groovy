@@ -1,8 +1,10 @@
-package io.mkrzywanski.gpn.scrapper.app.integ
+package io.mkrzywanski.gpn.scrapper.app.integ.publishing
 
 
 import io.mkrzywanski.gpn.scrapper.app.infra.JacksonConfig
 import io.mkrzywanski.gpn.scrapper.app.infra.QueueConfig
+import io.mkrzywanski.gpn.scrapper.app.integ.AbstractIntegrationConfig
+import io.mkrzywanski.gpn.scrapper.app.integ.publishing.NewPostConsumer
 import io.mkrzywanski.gpn.scrapper.domain.post.NewPostPublishing
 import io.mkrzywanski.gpn.scrapper.domain.post.PostPublisher
 import io.mkrzywanski.gpn.scrapper.domain.post.PostRepository

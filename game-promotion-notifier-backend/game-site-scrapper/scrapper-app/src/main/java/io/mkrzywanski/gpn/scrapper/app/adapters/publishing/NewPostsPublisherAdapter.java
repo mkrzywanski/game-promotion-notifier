@@ -19,9 +19,4 @@ public class NewPostsPublisherAdapter {
     public void publish() {
         newPostPublishing.publish();
     }
-
-//    @RabbitListener(queues = "posts")
-//    public void consume(String message) {
-//        System.out.println("consuming message " + message);
-//    }
 }

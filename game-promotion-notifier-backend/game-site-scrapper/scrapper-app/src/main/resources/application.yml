@@ -9,6 +9,9 @@ gpn:
   queue:
     name: posts
 
+mongodb:
+  replicaSet: replicaset
+
 spring:
   data:
     mongodb:

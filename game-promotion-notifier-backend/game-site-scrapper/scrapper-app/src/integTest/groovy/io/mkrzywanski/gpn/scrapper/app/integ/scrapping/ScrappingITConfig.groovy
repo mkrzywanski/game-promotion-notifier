@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.scrapper.app.integ
+package io.mkrzywanski.gpn.scrapper.app.integ.scrapping
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import io.mkrzywanski.gpn.scrapper.app.adapters.GameHunterScrapperAdapter
@@ -6,6 +6,7 @@ import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.MongoPostRepository
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostTransactionalOutboxMongoRepository
 import io.mkrzywanski.gpn.scrapper.app.infra.JacksonConfig
 import io.mkrzywanski.gpn.scrapper.app.infra.SchedulingConfig
+import io.mkrzywanski.gpn.scrapper.app.integ.AbstractIntegrationConfig
 import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.Bean

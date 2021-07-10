@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.scrapper.app.integ;
+package io.mkrzywanski.gpn.scrapper.app.integ.publishing;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;

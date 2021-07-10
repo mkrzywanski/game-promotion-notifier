@@ -2,11 +2,15 @@ version: '3.7'
 
 services:
   mongo:
-    image: mongo
+    image: bitnami/mongodb:4.4
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+#      MONGODB_USERNAME: my_user
+#      MONGODB_PASSWORD: password123
+      MONGODB_ROOT_PASSWORD: example
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_KEY: somekey1
+      MONGODB_DATABASE: posts
     ports:
       - 27017:27017
   mongo-express:
@@ -17,6 +21,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    depends_on:
+      - mongo
   rabitmq:
     image: bitnami/rabbitmq:3.8.18
     restart: always

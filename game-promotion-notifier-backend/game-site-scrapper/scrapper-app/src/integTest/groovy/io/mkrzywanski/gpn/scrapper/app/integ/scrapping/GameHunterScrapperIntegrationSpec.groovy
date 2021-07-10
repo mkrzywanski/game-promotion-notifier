@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.scrapper.app.integ
+package io.mkrzywanski.gpn.scrapper.app.integ.scrapping
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.GameOfferModel

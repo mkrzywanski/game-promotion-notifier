@@ -3,6 +3,7 @@ package io.mkrzywanski.gpn.scrapper.app.adapters;
 import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class GameHunterScrapperAdapter {
@@ -14,6 +15,7 @@ public class GameHunterScrapperAdapter {
     }
 
     @Scheduled(cron = "${gpn.scheduling.scrapping.cron}")
+    @Transactional
     public void scrap() {
         gameHunterScrappingService.scrap();
     }

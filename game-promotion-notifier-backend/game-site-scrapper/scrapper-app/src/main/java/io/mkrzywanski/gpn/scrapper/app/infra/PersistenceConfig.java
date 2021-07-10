@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 @Configuration
-public class PersistanceConfig {
+public class PersistenceConfig {
 
     @Autowired
     private MongoProperties mongoProperties;
@@ -23,11 +23,7 @@ public class PersistanceConfig {
         final String database = mongoProperties.getDatabase();
         final String host = mongoProperties.getHost();
         final int port = mongoProperties.getPort();
-//        String username = environment.getProperty("spring.data.mongodb.username");
-//        String password = environment.getProperty("spring.data.mongodb.password");
         final String connectionString = String.format("mongodb://%s:%s/%s?replicaSet=%s", host, port, database, replicaSet);
-        return clientSettingsBuilder -> {
-            clientSettingsBuilder.applyConnectionString(new ConnectionString(connectionString));
-        };
+        return settings -> settings.applyConnectionString(new ConnectionString(connectionString));
     }
 }

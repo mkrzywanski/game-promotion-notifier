@@ -1,0 +1,23 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: promotionnotificationsapp@gmail.com
+    password: testApp2021
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: test
+    password: test
+
+gpn:
+  queueName : new-offers-matches

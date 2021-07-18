@@ -15,9 +15,7 @@ import org.testcontainers.utility.DockerImageName
 import javax.sql.DataSource
 
 @Configuration
-//@EnableAutoConfiguration
 @Import([UserServiceApplication])
-//@EnableJpaRepositories
 @EnableConfigurationProperties(TestDatabaseProperties.class)
 class IntegrationTestConfig {
 

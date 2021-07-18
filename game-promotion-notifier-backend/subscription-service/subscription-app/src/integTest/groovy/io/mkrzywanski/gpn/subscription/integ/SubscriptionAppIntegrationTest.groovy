@@ -57,7 +57,7 @@ class SubscriptionAppIntegrationTest extends Specification {
         def matchingRequest = post()
         def content = objectMapper.writeValueAsString(matchingRequest)
 
-        when: ""
+        when: "request is preformed"
         def response = mockMvc.perform(post("/v1/subscriptions/match", content))
 
         then:

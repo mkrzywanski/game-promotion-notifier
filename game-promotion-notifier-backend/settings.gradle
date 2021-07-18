@@ -8,3 +8,5 @@ include ':user-service:user-domain'
 
 include ':subscription-service:subscription-app'
 include ':subscription-service:subscription-domain'
+
+include ':email-service'

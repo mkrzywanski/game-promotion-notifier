@@ -19,4 +19,8 @@ spring:
     password: test
 
 gpn:
-  queueName : new-offers-matches
+  rabbitmq :
+    exchange : new-offers-exchange
+    queue : new-offers-matches
+    dead-letter-exchange : new-offers-exchange-dead-letter
+    dead-letter-queue : new-offers-matches-dead-letter

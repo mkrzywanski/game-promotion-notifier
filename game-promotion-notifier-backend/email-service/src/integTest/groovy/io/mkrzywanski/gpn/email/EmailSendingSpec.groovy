@@ -7,6 +7,7 @@ import io.mkrzywanski.gpn.email.api.UserData
 import io.mkrzywanski.gpn.email.config.IntegrationTestConfig
 import io.mkrzywanski.gpn.email.domain.Currencies
 import io.mkrzywanski.gpn.email.domain.Price
+import io.mkrzywanski.gpn.email.infra.RabbitInfrastructureProperties
 import io.mkrzywanski.gpn.email.matchers.MimeMessageContentMatcher
 import io.mkrzywanski.gpn.email.smtp.SmtpServer
 import org.springframework.amqp.rabbit.core.RabbitTemplate
@@ -32,8 +33,8 @@ class EmailSendingSpec extends Specification {
     @Autowired
     RabbitTemplate rabbitTemplate
 
-    @Value('${gpn.queueName}')
-    String queueName
+    @Autowired
+    RabbitInfrastructureProperties rabbitInfrastructureProperties
 
     @Autowired
     SmtpServer smtpServer
@@ -65,7 +66,7 @@ class EmailSendingSpec extends Specification {
         UserData userData = new UserData("aaa", "bbb")
         List<PostData> postData = List.of(new PostData(List.of(new OfferData("aaa", Set.of(Price.of(Currencies.PLN, BigDecimal.ONE))))))
         newOffersNotificationData = new NewOffersNotificationData(userData, "test@test.com.pl", postData)
-        rabbitTemplate.convertAndSend(queueName, newOffersNotificationData)
+        rabbitTemplate.convertAndSend(rabbitInfrastructureProperties.getExchange(), rabbitInfrastructureProperties.getQueue(), newOffersNotificationData)
         await().atMost(Duration.ofSeconds(10)).until(anyEmailIsReceived())
     }
 

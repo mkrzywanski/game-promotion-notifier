@@ -1,7 +1,9 @@
 package io.mkrzywanski.gpn.email.config
 
+import io.mkrzywanski.gpn.email.infra.RabbitInfrastructureProperties
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
@@ -9,6 +11,7 @@ import org.testcontainers.containers.RabbitMQContainer
 import org.testcontainers.utility.DockerImageName
 
 @Configuration
+@EnableConfigurationProperties(RabbitInfrastructureProperties)
 class RabbitMQIntegConfig {
 
     private static final RABBIT_MQ_IMAGE = "bitnami/rabbitmq:3.8.18"

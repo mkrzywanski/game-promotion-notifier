@@ -18,21 +18,25 @@ jobs:
       run: ./gradlew build
       working-directory: ./game-promotion-notifier-backend
 
-    - name: Run email-service integration tests
-      run: ./gradlew email-service:integTest
+    - name: Run integration tests
+      run: ./gradlew integTest
       working-directory: ./game-promotion-notifier-backend
 
-    - name: Run game-site-scrapper integration tests
-      run: ./gradlew game-site-scrapper:integTest
-      working-directory: ./game-promotion-notifier-backend
+    # - name: Run email-service integration tests
+    #   run: ./gradlew email-service:integTest
+    #   working-directory: ./game-promotion-notifier-backend
 
-    - name: Run subscription-service integration tests
-      run: ./gradlew subscription-service:integTest
-      working-directory: ./game-promotion-notifier-backend
+    # - name: Run game-site-scrapper integration tests
+    #   run: ./gradlew game-site-scrapper:integTest
+    #   working-directory: ./game-promotion-notifier-backend
 
-    - name: Run user-service integration tests
-      run: ./gradlew user-service:integTest
-      working-directory: ./game-promotion-notifier-backend
+    # - name: Run subscription-service integration tests
+    #   run: ./gradlew subscription-service:integTest
+    #   working-directory: ./game-promotion-notifier-backend
+
+    # - name: Run user-service integration tests
+    #   run: ./gradlew user-service:integTest
+    #   working-directory: ./game-promotion-notifier-backend
 
     - name: Generate coverage report
       run: ./gradlew codeCoverageReport

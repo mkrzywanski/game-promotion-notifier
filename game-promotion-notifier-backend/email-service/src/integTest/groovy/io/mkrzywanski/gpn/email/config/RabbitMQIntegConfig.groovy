@@ -21,7 +21,7 @@ class RabbitMQIntegConfig {
     @Autowired
     Environment environment
 
-    @Bean
+    @Bean(destroyMethod = "")
     RabbitMQContainer rabbitMQContainer() {
         def username = environment.getProperty("spring.rabbitmq.username")
         def password = environment.getProperty("spring.rabbitmq.password")
@@ -29,6 +29,7 @@ class RabbitMQIntegConfig {
         RabbitMQContainer rabbitMQContainer = new RabbitMQContainer(RABBIT_IMAGE)
                 .withEnv("RABBITMQ_USERNAME", username)
                 .withEnv("RABBITMQ_PASSWORD", password)
+        .withReuse(true)
         rabbitMQContainer.start()
         rabbitMQContainer
     }

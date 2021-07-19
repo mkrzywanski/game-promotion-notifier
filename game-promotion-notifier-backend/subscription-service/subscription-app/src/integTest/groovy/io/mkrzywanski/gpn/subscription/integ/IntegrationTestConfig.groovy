@@ -17,10 +17,11 @@ class IntegrationTestConfig {
 
     public static final String ELASTICSEARCH_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:7.13.2"
 
-    @Bean
+    @Bean(destroyMethod = "")
     ElasticsearchContainer elasticsearchContainer() {
         def container = new ElasticsearchContainer(DockerImageName.parse(ELASTICSEARCH_IMAGE))
                 .withEnv("discovery.type", "single-node")
+                .withReuse(true)
         container.start()
         container
     }

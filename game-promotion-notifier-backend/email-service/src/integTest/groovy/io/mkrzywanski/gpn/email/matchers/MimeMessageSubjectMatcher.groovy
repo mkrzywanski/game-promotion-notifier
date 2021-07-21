@@ -18,17 +18,17 @@ class MimeMessageSubjectMatcher extends TypeSafeMatcher<MimeMessage> {
     }
 
     @Override
-    protected boolean matchesSafely(MimeMessage item) {
+    protected boolean matchesSafely(final MimeMessage item) {
         return item.subject == subject
     }
 
     @Override
-    void describeMismatchSafely(MimeMessage item, Description mismatchDescription) {
+    void describeMismatchSafely(final MimeMessage item, final Description mismatchDescription) {
         mismatchDescription.appendValue(subject).appendText(" is not ").appendValue(item.subject)
     }
 
     @Override
-    void describeTo(Description description) {
+    void describeTo(final Description description) {
         description.appendText("hasSubject(").appendValue(subject).appendText(")");
     }
 }

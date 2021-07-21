@@ -22,27 +22,27 @@ class RabbitMQIntegConfig {
     Environment environment
 
     @Bean(destroyMethod = "")
-    RabbitMQContainer rabbitMQContainer() {
+    def rabbitMQContainer() {
         def username = environment.getProperty("spring.rabbitmq.username")
         def password = environment.getProperty("spring.rabbitmq.password")
 
         RabbitMQContainer rabbitMQContainer = new RabbitMQContainer(RABBIT_IMAGE)
                 .withEnv("RABBITMQ_USERNAME", username)
                 .withEnv("RABBITMQ_PASSWORD", password)
-        .withReuse(true)
+                .withReuse(true)
         rabbitMQContainer.start()
         rabbitMQContainer
     }
 
     @Bean
-    CachingConnectionFactory connectionFactory() {
+    def connectionFactory() {
         def username = environment.getProperty("spring.rabbitmq.username")
         def password = environment.getProperty("spring.rabbitmq.password")
 
         def factory = new CachingConnectionFactory("localhost", rabbitMQContainer().firstMappedPort)
-
         factory.setUsername(username)
         factory.setPassword(password)
+
         factory
 
     }

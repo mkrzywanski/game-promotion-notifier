@@ -16,10 +16,11 @@ public class NewOffersNotificationData {
     @Valid
     private UserData userData;
 
-    @NotNull
+    @NotEmpty
     @Email
     private String email;
 
     @NotEmpty
+    @Valid
     private List<PostData> postDataList;
 }

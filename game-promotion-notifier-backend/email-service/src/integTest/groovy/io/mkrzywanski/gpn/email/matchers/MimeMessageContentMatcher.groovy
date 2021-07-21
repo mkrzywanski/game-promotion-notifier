@@ -9,7 +9,7 @@ class MimeMessageContentMatcher extends TypeSafeMatcher<MimeMessage> {
 
     private final String expectedContent
 
-    static MimeMessageContentMatcher contentContains(String content) {
+    static MimeMessageContentMatcher contentContains(final String content) {
         return new MimeMessageContentMatcher(content)
     }
 
@@ -18,18 +18,18 @@ class MimeMessageContentMatcher extends TypeSafeMatcher<MimeMessage> {
     }
 
     @Override
-    protected boolean matchesSafely(MimeMessage item) {
+    protected boolean matchesSafely(final MimeMessage item) {
         item.content != null && sanitized(item.content.toString())
                 .contains(sanitized(expectedContent))
     }
 
-    private static String sanitized(String input) {
+    private static String sanitized(final String input) {
         input.replaceAll("\\s+", "")
                 .replaceAll("\\t+", "")
     }
 
     @Override
-    void describeTo(Description description) {
+    void describeTo(final Description description) {
 
     }
 }

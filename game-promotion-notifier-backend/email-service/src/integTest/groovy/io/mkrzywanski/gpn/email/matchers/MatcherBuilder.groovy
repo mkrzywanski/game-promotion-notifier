@@ -13,11 +13,11 @@ class MatcherBuilder<T> {
         this.matchers = new ArrayList<>()
     }
 
-    static <T> MatcherBuilder<T> matchesEvery(Matcher<T> matcher) {
+    static <T> MatcherBuilder<T> matchesEvery(final Matcher<T> matcher) {
         new MatcherBuilder<T>() & matcher
     }
 
-    MatcherBuilder<T> and(Matcher<T> matcher) {
+    MatcherBuilder<T> and(final Matcher<T> matcher) {
         matchers.add(matcher)
         return this
     }

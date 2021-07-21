@@ -23,7 +23,7 @@ abstract class AbstractIntegrationConfig {
     protected Environment environment
 
     @Bean(destroyMethod = "")
-    GenericContainer<?> mongoDBContainer() {
+    def mongoDBContainer() {
         def database = environment.getProperty("spring.data.mongodb.database")
         def username = environment.getProperty("spring.data.mongodb.username")
         def password = environment.getProperty("spring.data.mongodb.password")
@@ -43,7 +43,7 @@ abstract class AbstractIntegrationConfig {
     }
 
     @Bean
-    MongoClientSettingsBuilderCustomizer mongoSettingsCustomizer(final GenericContainer<?> mongoDBContainer) {
+    def mongoSettingsCustomizer(final GenericContainer<?> mongoDBContainer) {
         def database = environment.getProperty("spring.data.mongodb.database")
         def connectionString = new ConnectionString("mongodb://localhost:${mongoDBContainer.firstMappedPort}/${database}?replicaSet=replicaset")
         return (settings) -> settings.applyConnectionString(connectionString)

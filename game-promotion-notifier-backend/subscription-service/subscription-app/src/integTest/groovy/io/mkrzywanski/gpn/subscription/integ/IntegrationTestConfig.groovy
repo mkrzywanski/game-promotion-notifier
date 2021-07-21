@@ -18,7 +18,7 @@ class IntegrationTestConfig {
     public static final String ELASTICSEARCH_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:7.13.2"
 
     @Bean(destroyMethod = "")
-    ElasticsearchContainer elasticsearchContainer() {
+    def elasticsearchContainer() {
         def container = new ElasticsearchContainer(DockerImageName.parse(ELASTICSEARCH_IMAGE))
                 .withEnv("discovery.type", "single-node")
                 .withReuse(true)
@@ -28,7 +28,7 @@ class IntegrationTestConfig {
 
     @Bean
     @Primary
-    RestHighLevelClient testElasticsearchClient() throws UnknownHostException {
+    def testElasticsearchClient() throws UnknownHostException {
         final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
                 .connectedTo("localhost:${elasticsearchContainer().getFirstMappedPort()}")
                 .build();

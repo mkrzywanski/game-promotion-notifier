@@ -1,5 +1,6 @@
 package io.mkrzywanski.gpn.email
 
+import io.mkrzywanski.gpn.email.api.NewOffersNotificationData
 import io.mkrzywanski.gpn.email.config.IntegrationTestConfig
 import io.mkrzywanski.gpn.email.domain.NewPostsMatchedEmailService
 import io.mkrzywanski.gpn.email.infra.RabbitInfrastructureProperties
@@ -7,16 +8,15 @@ import org.springframework.amqp.core.Message
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.stereotype.Component
 import spock.lang.Specification
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArrayList
 
 @SpringBootTest(classes = [IntegrationTestConfig])
-class EmailSendingDeadLetterTest extends Specification {
+class EmailSendingValidationTest extends Specification {
 
     @MockBean
     NewPostsMatchedEmailService newPostsMatchedEmailService
@@ -30,9 +30,20 @@ class EmailSendingDeadLetterTest extends Specification {
     @Autowired
     RabbitDeadLetterConsumer rabbitDeadLetterConsumer
 
+    void cleanup() {
+        rabbitDeadLetterConsumer.reset()
+    }
+
     def "should publish dead letter when consumed message is not valid json"() {
         when:
-        wrongMessageIsPublishedToQueue()
+        invalidJsonIsPublishedToQueue()
+        then:
+        wrongMessageIsPublishedToDeadLetterQueue()
+    }
+
+    def "should publish dead letter when message is invalid due to field validation"() {
+        when:
+        invalidObjectIsPublishedToQueue()
         then:
         wrongMessageIsPublishedToDeadLetterQueue()
     }
@@ -41,8 +52,17 @@ class EmailSendingDeadLetterTest extends Specification {
         rabbitDeadLetterConsumer.consumedCount() == 1
     }
 
-    private wrongMessageIsPublishedToQueue() {
-        rabbitTemplate.convertSendAndReceive(properties.getExchange(), properties.getQueue(), "wrong json lol")
+    private invalidObjectIsPublishedToQueue() {
+        def newOffersNotificationData = new NewOffersNotificationData(null, "test@test.pl", null)
+        sendToQueue(newOffersNotificationData)
+    }
+
+    private invalidJsonIsPublishedToQueue() {
+        sendToQueue("wrong json")
+    }
+
+    private sendToQueue(Object object) {
+        rabbitTemplate.convertSendAndReceive(properties.getExchange(), properties.getQueue(), object)
     }
 
     @Component
@@ -57,6 +77,10 @@ class EmailSendingDeadLetterTest extends Specification {
 
         int consumedCount() {
             return messages.size()
+        }
+
+        def reset() {
+            messages.clear()
         }
     }
 }

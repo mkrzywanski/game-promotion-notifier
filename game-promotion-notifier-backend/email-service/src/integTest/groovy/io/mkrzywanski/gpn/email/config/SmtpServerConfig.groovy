@@ -17,7 +17,7 @@ class SmtpServerConfig {
     MailProperties mailProperties
 
     @Bean
-    SmtpServer smtpServer() {
+    def smtpServer() {
         def smtpServer = SmtpServer.builder()
                 .email(mailProperties.username)
                 .userName(mailProperties.username)
@@ -28,7 +28,7 @@ class SmtpServerConfig {
     }
 
     @Bean
-    JavaMailSender javaMailSender() {
+    def javaMailSender() {
         JavaMailSender sender = new JavaMailSenderImpl()
         sender.setHost(mailProperties.host)
         sender.setPort(smtpServer().port())
@@ -42,7 +42,7 @@ class SmtpServerConfig {
         sender
     }
 
-    private static Properties asProperties(Map<String, String> source) {
+    private static Properties asProperties(final Map<String, String> source) {
         Properties properties = new Properties()
         properties.putAll(source)
         return properties

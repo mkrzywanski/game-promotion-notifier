@@ -32,14 +32,14 @@ class ScrappingITConfig extends AbstractIntegrationConfig {
     private final Clock clock = Clock.fixed(ONE_DAY_AFTER_SCRAPING, ZoneId.of("UTC"))
 
     @Bean
-    WireMockServer wireMockServer() {
+    def wireMockServer() {
         def wireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
         wireMockServer.start()
         wireMockServer
     }
 
     @Bean
-    GameHunterScrappingService scrapperService(WireMockServer wireMockServer, MongoOperations mongoOperations) {
+    def scrapperService(final WireMockServer wireMockServer, final MongoOperations mongoOperations) {
         return GameHunterScrappingService.newInstance("http://localhost:" + wireMockServer.port(), new MongoPostRepository(mongoOperations), new PostTransactionalOutboxMongoRepository(mongoOperations), clock)
     }
 }

@@ -26,7 +26,7 @@ class ScrappingITConfig extends AbstractIntegrationConfig {
     private final Clock clock = Clock.fixed(ONE_DAY_AFTER_SCRAPING, ZoneId.of("UTC"))
 
     @Bean
-    def wireMockServer() {
+    WireMockServer wireMockServer() {
         def wireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
         wireMockServer.start()
         wireMockServer

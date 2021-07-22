@@ -28,7 +28,8 @@ class SmtpServerConfig {
     }
 
     @Bean
-    def javaMailSender() {
+    //this has to be defined as JavaMailSender - cannot use def - otherwise tests fail - to investigate why
+    JavaMailSender javaMailSender() {
         JavaMailSender sender = new JavaMailSenderImpl()
         sender.setHost(mailProperties.host)
         sender.setPort(smtpServer().port())

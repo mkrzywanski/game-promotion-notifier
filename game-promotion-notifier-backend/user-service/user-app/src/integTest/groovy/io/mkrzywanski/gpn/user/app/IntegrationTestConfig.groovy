@@ -15,9 +15,7 @@ import org.testcontainers.utility.DockerImageName
 import javax.sql.DataSource
 
 @Configuration
-//@EnableAutoConfiguration
 @Import([UserServiceApplication])
-//@EnableJpaRepositories
 @EnableConfigurationProperties(TestDatabaseProperties.class)
 class IntegrationTestConfig {
 
@@ -26,7 +24,7 @@ class IntegrationTestConfig {
     @Autowired
     TestDatabaseProperties dbProps
 
-    @Bean
+    @Bean(destroyMethod = "")
     GenericContainer<PostgreSQLContainer> postgreSQLContainer() {
         GenericContainer postgres = new PostgreSQLContainer(DockerImageName.parse("postgres:${POSTGRES_IMAGE_TAG}"))
                 .withUsername(dbProps.username)

@@ -8,18 +8,12 @@ import io.mkrzywanski.gpn.scrapper.app.infra.JacksonConfig
 import io.mkrzywanski.gpn.scrapper.app.infra.SchedulingConfig
 import io.mkrzywanski.gpn.scrapper.app.integ.AbstractIntegrationConfig
 import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.data.mongodb.core.MongoOperations
-import org.springframework.scheduling.annotation.EnableScheduling
 
-import java.time.Clock
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZoneOffset
+import java.time.*
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 
@@ -39,7 +33,7 @@ class ScrappingITConfig extends AbstractIntegrationConfig {
     }
 
     @Bean
-    GameHunterScrappingService scrapperService(WireMockServer wireMockServer, MongoOperations mongoOperations) {
+    GameHunterScrappingService scrapperService(final WireMockServer wireMockServer, final MongoOperations mongoOperations) {
         return GameHunterScrappingService.newInstance("http://localhost:" + wireMockServer.port(), new MongoPostRepository(mongoOperations), new PostTransactionalOutboxMongoRepository(mongoOperations), clock)
     }
 }

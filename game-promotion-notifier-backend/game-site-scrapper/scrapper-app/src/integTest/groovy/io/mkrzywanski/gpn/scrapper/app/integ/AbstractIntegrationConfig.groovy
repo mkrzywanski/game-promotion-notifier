@@ -22,7 +22,7 @@ abstract class AbstractIntegrationConfig {
     @Autowired
     protected Environment environment
 
-    @Bean
+    @Bean(destroyMethod = "")
     GenericContainer<?> mongoDBContainer() {
         def database = environment.getProperty("spring.data.mongodb.database")
         def username = environment.getProperty("spring.data.mongodb.username")
@@ -37,6 +37,7 @@ abstract class AbstractIntegrationConfig {
                 .withEnv("MONGODB_ROOT_PASSWORD", "password")
                 .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(10)))
                 .withExposedPorts(27017)
+                .withReuse(true)
         mongoDBContainer.start()
         mongoDBContainer
     }

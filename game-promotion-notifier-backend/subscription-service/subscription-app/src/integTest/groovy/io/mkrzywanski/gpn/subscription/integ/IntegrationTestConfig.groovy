@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
 import org.springframework.data.elasticsearch.client.ClientConfiguration
 import org.springframework.data.elasticsearch.client.RestClients
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations
 import org.testcontainers.elasticsearch.ElasticsearchContainer
 import org.testcontainers.utility.DockerImageName
 
@@ -17,10 +18,11 @@ class IntegrationTestConfig {
 
     public static final String ELASTICSEARCH_IMAGE = "docker.elastic.co/elasticsearch/elasticsearch:7.13.2"
 
-    @Bean
+    @Bean(destroyMethod = "")
     ElasticsearchContainer elasticsearchContainer() {
         def container = new ElasticsearchContainer(DockerImageName.parse(ELASTICSEARCH_IMAGE))
                 .withEnv("discovery.type", "single-node")
+                .withReuse(true)
         container.start()
         container
     }
@@ -32,7 +34,7 @@ class IntegrationTestConfig {
                 .connectedTo("localhost:${elasticsearchContainer().getFirstMappedPort()}")
                 .build();
 
-        return RestClients.create(clientConfiguration).rest()
+        RestClients.create(clientConfiguration).rest()
     }
 
 }

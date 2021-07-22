@@ -3,8 +3,6 @@ package io.mkrzywanski.gpn.scrapper.app.integ.publishing
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.NewPostOutboxMessage
 import io.mkrzywanski.gpn.scrapper.app.adapters.persistance.PostMongoModel
 import io.mkrzywanski.gpn.scrapper.app.adapters.publishing.NewPostsPublisherAdapter
-import io.mkrzywanski.gpn.scrapper.app.integ.publishing.NewPostConsumer
-import io.mkrzywanski.gpn.scrapper.app.integ.publishing.NewPostPublishingITConfig
 import io.mkrzywanski.gpn.scrapper.domain.post.Hash
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -38,11 +36,22 @@ class GameHunterPublishingSpec extends Specification {
         def existingPostsIds = existingPosts()
         existingPostsToPublish(existingPostsIds)
 
-        when: "aa"
+        when: "publishing is performed"
         newPostsPublisherAdapter.publish()
 
         then:
+        postsArePublishedToQueue()
+
+        and:
+        transactionalOutboxIsEmpty()
+    }
+
+    private postsArePublishedToQueue() {
         await().atMost(2, TimeUnit.SECONDS).until { newPostConsumer.messages.size() == 1 }
+        true
+    }
+
+    private boolean transactionalOutboxIsEmpty() {
         mongoTemplate.findAll(NewPostOutboxMessage).size() == 0
     }
 

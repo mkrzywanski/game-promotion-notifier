@@ -36,7 +36,7 @@ class IntegrationTestConfig {
     }
 
     @Bean
-    def dataSource(GenericContainer postgreSQLContainer) {
+    DataSource dataSource(GenericContainer postgreSQLContainer) {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create()
         dataSourceBuilder.driverClassName(dbProps.driver)
         dataSourceBuilder.url("jdbc:postgresql://${dbProps.host}:${postgreSQLContainer.firstMappedPort}/${dbProps.database}")

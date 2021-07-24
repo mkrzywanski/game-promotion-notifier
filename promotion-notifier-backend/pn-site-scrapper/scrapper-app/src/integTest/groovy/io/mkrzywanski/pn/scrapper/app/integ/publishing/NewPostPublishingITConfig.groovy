@@ -17,7 +17,7 @@ import org.testcontainers.containers.RabbitMQContainer
 import org.testcontainers.utility.DockerImageName
 
 @Configuration
-@ComponentScan(["io.mkrzywanski.gpn.scrapper.app.adapters.publishing", "io.mkrzywanski.gpn.scrapper.app.adapters.persistance"])
+@ComponentScan(["io.mkrzywanski.pn.scrapper.app.adapters.publishing", "io.mkrzywanski.pn.scrapper.app.adapters.persistance"])
 @Import([NewPostConsumer, JacksonConfig, QueueConfig])
 class NewPostPublishingITConfig extends AbstractIntegrationConfig {
 

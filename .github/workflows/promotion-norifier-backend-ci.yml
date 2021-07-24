@@ -1,0 +1,29 @@
+name: promotion-notifier-backend-ci
+on: [push]
+jobs:
+  build:
+    environment: DEFAULT
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v2
+    - name: Set up JDK 16
+      uses: actions/setup-java@v1
+      with:
+        java-version: 16
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      working-directory: ./promotion-notifier-backend
+    - name: Build with Gradle
+      run: ./gradlew build
+      working-directory: ./promotion-notifier-backend
+
+    - name: Run integration tests
+      run: ./gradlew integTest
+      working-directory: ./promotion-notifier-backend
+    - name: Generate coverage report
+      run: ./gradlew codeCoverageReport
+      working-directory: ./promotion-notifier-backend
+    - name: Upload coverage report
+      run: bash <(curl -s https://codecov.io/bash)
+      working-directory: ./promotion-notifier-backend

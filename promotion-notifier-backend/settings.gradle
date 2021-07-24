@@ -1,0 +1,14 @@
+rootProject.name = 'promotion-notifier'
+
+include ':pn-site-scrapper:scrapper-app'
+include ':pn-site-scrapper:scrapper-domain'
+
+include ':pn-user-service:user-app'
+include ':pn-user-service:user-domain'
+
+include ':pn-subscription-service:subscription-app'
+include ':pn-subscription-service:subscription-domain'
+
+include ':pn-email-service'
+
+include ':pn-matching-service:matching-service-app'

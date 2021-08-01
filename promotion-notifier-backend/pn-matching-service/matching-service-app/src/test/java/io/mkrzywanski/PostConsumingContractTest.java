@@ -3,7 +3,6 @@ package io.mkrzywanski;
 import io.mkrzywanski.pn.matching.infa.QueueConfig;
 import io.mkrzywanski.pn.matching.matchedoffers.Offer;
 import io.mkrzywanski.pn.matching.matchedoffers.Post;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

@@ -8,12 +8,12 @@ import java.util.Currency;
 import java.util.Map;
 
 @Value
-public class GameOfferExternalModel {
-    String gameName;
+public class OfferExternalModel {
+    String name;
     Map<Currency, BigDecimal> gamePrice;
     String link;
 
-    static GameOfferExternalModel fromDomain(final GameOffer gameOffer) {
-        return new GameOfferExternalModel(gameOffer.getGameName(), gameOffer.getGamePrice().asMap(), gameOffer.getLink());
+    static OfferExternalModel fromDomain(final GameOffer gameOffer) {
+        return new OfferExternalModel(gameOffer.getGameName(), gameOffer.getGamePrice().asMap(), gameOffer.getLink());
     }
 }

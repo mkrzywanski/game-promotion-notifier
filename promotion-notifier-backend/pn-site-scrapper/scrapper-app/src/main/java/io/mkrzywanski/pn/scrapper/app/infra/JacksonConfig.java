@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class JacksonConfig {
     @Bean
     Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return jacksonObjectMapperBuilder -> {
-            jacksonObjectMapperBuilder.failOnUnknownProperties(false);
-        };
+        return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.failOnUnknownProperties(false);
     }
 }

@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 @Value
 public class PostExternalModel {
-    UUID postId;
-    Collection<GameOfferExternalModel> gameOffers;
+    UUID id;
+    Collection<OfferExternalModel> offers;
 
     static PostExternalModel fromDomain(final Post post) {
-        final List<GameOfferExternalModel> objectStream = post.getGameOffers().stream().map(GameOfferExternalModel::fromDomain).collect(Collectors.toList());
+        final List<OfferExternalModel> objectStream = post.getGameOffers().stream().map(OfferExternalModel::fromDomain).collect(Collectors.toList());
         return new PostExternalModel(post.getPostId().getId(), objectStream);
     }
 }

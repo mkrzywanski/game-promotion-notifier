@@ -29,8 +29,8 @@ public class QueuePostPublisher implements PostPublisher {
     }
 
     @Override
-    public void publish(final List<Post> byIds) {
-        byIds.stream()
+    public void publish(final List<Post> posts) {
+        posts.stream()
                 .map(PostExternalModel::fromDomain)
                 .map(this::toJson)
                 .forEach(this::publish);

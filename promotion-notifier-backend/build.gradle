@@ -1,13 +1,32 @@
+buildscript {
+    ext {
+        springBootVersion = "2.5.3"
+        springDepenedcyMgmtVersion = '1.0.11.RELEASE'
+        springCloudVersion = '3.0.3'
+        testcontainersVersion = '1.15.3'
+        awaitilityVersion = '4.1.0'
+        getStubsJarFromProject = this.&getStubsJarFromProject
+    }
+}
+
 plugins {
-	id 'org.springframework.boot' version '2.5.0' apply false
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+	id 'org.springframework.boot' version "${springBootVersion}" apply false
+	id 'io.spring.dependency-management' version "${springDepenedcyMgmtVersion}" apply false
+	id 'org.springframework.cloud.contract' version "${springCloudVersion}" apply false
 }
 
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'jacoco'
+    apply plugin: 'java'
+
+    group = 'io.mkrzywanski'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '16'
+
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -16,10 +35,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'checkstyle'
-
-    group = 'io.mkrzywanski'
-    version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '16'
+    apply plugin: 'maven-publish'
 
     test {
         useJUnitPlatform()
@@ -28,7 +44,10 @@ subprojects {
             showStackTraces = true
             showStandardStreams = true
         }
+    }
 
+    tasks.withType(Checkstyle) {
+        exclude '**/generated-test-sources/**'
     }
 
 	dependencies {
@@ -69,4 +88,8 @@ task codeCoverageReport(type: JacocoReport) {
 
 codeCoverageReport.dependsOn {
     subprojects*.test
+}
+
+def getStubsJarFromProject(String projectName) {
+    project(projectName).getTasksByName('verifierStubsJar', false).first().outputs.files
 }

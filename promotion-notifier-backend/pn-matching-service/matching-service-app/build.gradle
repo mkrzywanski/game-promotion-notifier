@@ -1,0 +1,69 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+sourceSets {
+    integTest {
+        groovy {
+            srcDirs = ["${projectDir}/src/integTest/groovy"]
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
+            resources.srcDirs = ["${projectDir}/src/integTest/resources"]
+        }
+    }
+}
+
+configurations {
+    integTestImplementation.extendsFrom testImplementation
+    integTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.12.RELEASE'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+    testImplementation group: 'org.spockframework', name: 'spock-spring'
+    testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
+    testImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
+    testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
+
+    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.4'
+    integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'
+
+    testRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
+}
+
+
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform()
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    testLogging {
+
+        events("passed", "skipped", "failed")
+        showStackTraces = true
+        exceptionFormat = 'full'
+    }
+}
+
+idea {
+    module {
+        sourceDirs -= project.sourceSets.integTest.groovy.srcDirs
+        testSourceDirs += project.sourceSets.integTest.groovy.srcDirs
+    }
+}

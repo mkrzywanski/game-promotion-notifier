@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.scrapper.app.domain.adapters.front
+package io.mkrzywanski.pn.scrapper.app.domain.adapters
 
 
 import io.mkrzywanski.gpn.scrapper.domain.gamehunter.GameHunterScrappingService

@@ -96,11 +96,9 @@ checkstyleContractTest {
     enabled = false
 }
 
-println verifierStubsJar
-
 publishing {
     publications {
-        bootJava(MavenPublication) {
+        mavenJava(MavenPublication) {
             artifact bootJar
             artifact verifierStubsJar
             from components.java

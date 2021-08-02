@@ -100,8 +100,8 @@ class PostConsumer {
     private final BlockingQueue<Post> queue = new LinkedBlockingQueue<>();
 
     @RabbitListener(queues = "${gpn.queue.name}")
-    void consume(final Post json) {
-        queue.add(json);
+    void consume(final Post post) {
+        queue.add(post);
     }
 
     int size() {

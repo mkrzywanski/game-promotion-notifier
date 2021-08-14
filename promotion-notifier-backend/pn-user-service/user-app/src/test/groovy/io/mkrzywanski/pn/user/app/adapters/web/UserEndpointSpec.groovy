@@ -2,6 +2,7 @@ package io.mkrzywanski.pn.user.app.adapters.web
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.mkrzywanski.pn.user.app.api.CreateUserRequest
+import io.mkrzywanski.pn.user.app.domain.UserFacade
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean

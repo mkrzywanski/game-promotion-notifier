@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.user;
+package io.mkrzywanski.pn.user.app.domain;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

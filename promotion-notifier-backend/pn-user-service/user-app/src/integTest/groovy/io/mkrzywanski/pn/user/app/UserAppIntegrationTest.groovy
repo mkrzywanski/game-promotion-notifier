@@ -1,9 +1,9 @@
 package io.mkrzywanski.pn.user.app
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.mkrzywanski.pn.user.app.adapters.persistance.JpaUserRepository
-import io.mkrzywanski.pn.user.app.adapters.persistance.UserEntity
 import io.mkrzywanski.pn.user.app.api.CreateUserRequest
+import io.mkrzywanski.pn.user.app.domain.JpaUserRepository
+import io.mkrzywanski.pn.user.app.domain.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest

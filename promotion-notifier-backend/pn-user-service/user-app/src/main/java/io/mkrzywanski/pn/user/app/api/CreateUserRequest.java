@@ -1,6 +1,6 @@
 package io.mkrzywanski.pn.user.app.api;
 
-import io.mkrzywanski.gpn.user.UserConstraints;
+import io.mkrzywanski.pn.user.app.domain.UserConstraints;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

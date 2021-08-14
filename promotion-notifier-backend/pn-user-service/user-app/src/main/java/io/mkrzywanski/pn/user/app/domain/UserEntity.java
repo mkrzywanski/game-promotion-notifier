@@ -1,8 +1,5 @@
-package io.mkrzywanski.pn.user.app.adapters.persistance;
+package io.mkrzywanski.pn.user.app.domain;
 
-import io.mkrzywanski.gpn.user.EmailAddress;
-import io.mkrzywanski.gpn.user.User;
-import io.mkrzywanski.gpn.user.UserId;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -37,15 +34,6 @@ public class UserEntity {
         this.userName = userName;
         this.firstName = firstName;
         this.email = email;
-    }
-
-    User toDomain() {
-        return User.builder()
-                .userId(UserId.of(uniqueId))
-                .username(userName)
-                .firstName(firstName)
-                .emailAddress(EmailAddress.of(email))
-                .build();
     }
 
     static class Builder {

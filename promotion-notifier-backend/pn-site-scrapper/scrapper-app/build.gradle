@@ -7,6 +7,7 @@ plugins {
 
 contracts {
     baseClassForTests = "io.mkrzywanski.pn.scrapper.app.domain.adapters.contract.BaseClass"
+//    contractsMode = 'REMOTE'
 }
 
 contractTest {
@@ -39,10 +40,6 @@ sourceSets {
 configurations {
     integTestImplementation.extendsFrom testImplementation
     integTestRuntimeOnly.extendsFrom testRuntimeOnly
-}
-
-contracts {
-    contractsMode = 'REMOTE'
 }
 
 dependencies {

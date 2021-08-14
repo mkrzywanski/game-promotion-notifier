@@ -36,8 +36,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
-    testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
     testImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
+    testImplementation("org.testcontainers:spock:${testcontainersVersion}")
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
 
     integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.4'

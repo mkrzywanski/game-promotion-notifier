@@ -48,7 +48,7 @@ public class PostConsumingContractTest {
             .asCompatibleSubstituteFor("rabbitmq");
 
     @Container
-    private static RabbitMQContainer rabbit = new RabbitMQContainer(RABBIT_IMAGE)
+    private static final RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer(RABBIT_IMAGE)
             .withEnv("RABBITMQ_USERNAME", RABBIT_USERNAME)
             .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD);
 
@@ -60,7 +60,7 @@ public class PostConsumingContractTest {
 
     @DynamicPropertySource
     private static void rabbitProperties(final DynamicPropertyRegistry registry) {
-        registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
+        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort);
         registry.add("spring.rabbitmq.username", () -> RABBIT_USERNAME);
         registry.add("spring.rabbitmq.password", () -> RABBIT_PASSWORD);
     }

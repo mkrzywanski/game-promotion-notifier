@@ -1,3 +1,5 @@
+import org.springframework.cloud.contract.verifier.config.TestFramework
+
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
@@ -7,7 +9,7 @@ plugins {
 
 contracts {
     baseClassForTests = "io.mkrzywanski.pn.scrapper.app.domain.adapters.contract.BaseClass"
-//    contractsMode = 'REMOTE'
+    testFramework = TestFramework.SPOCK
 }
 
 contractTest {
@@ -53,7 +55,8 @@ dependencies {
     integTestImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
-    testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
+//    testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
+    testImplementation "org.testcontainers:spock:${testcontainersVersion}"
 
 }
 

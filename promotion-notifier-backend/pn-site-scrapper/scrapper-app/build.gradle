@@ -8,7 +8,7 @@ plugins {
 }
 
 contracts {
-    baseClassForTests = "io.mkrzywanski.pn.scrapper.app.domain.adapters.contract.BaseClass"
+    baseClassForTests = "io.mkrzywanski.pn.scrapper.contract.BaseClass"
     testFramework = TestFramework.SPOCK
 }
 
@@ -51,12 +51,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'org.spockframework', name: 'spock-spring'
-    integTestImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
+    testImplementation 'org.spockframework:spock-spring'
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
-//    testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
+
+    integTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 
 }
 

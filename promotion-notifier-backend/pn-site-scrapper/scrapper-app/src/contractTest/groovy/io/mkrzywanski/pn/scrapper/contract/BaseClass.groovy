@@ -1,9 +1,8 @@
-package io.mkrzywanski.pn.scrapper.app.domain.adapters.contract
+package io.mkrzywanski.pn.scrapper.contract
 
 import io.mkrzywanski.gpn.scrapper.domain.post.*
 import io.mkrzywanski.pn.scrapper.app.adapters.publishing.QueuePostPublisher
 import io.mkrzywanski.pn.scrapper.app.infra.QueueConfig
-import lombok.extern.slf4j.Slf4j
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -21,7 +20,6 @@ import org.springframework.messaging.Message
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.RabbitMQContainer
-import org.testcontainers.spock.Testcontainers
 import org.testcontainers.utility.DockerImageName
 import spock.lang.Shared
 import spock.lang.Specification

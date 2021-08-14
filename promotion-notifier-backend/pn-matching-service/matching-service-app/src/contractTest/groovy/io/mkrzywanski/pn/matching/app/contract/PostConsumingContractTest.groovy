@@ -1,4 +1,4 @@
-package io.mkrzywanski
+package io.mkrzywanski.pn.matching.app.contract
 
 import io.mkrzywanski.pn.matching.infa.QueueConfig
 import io.mkrzywanski.pn.matching.matchedoffers.Offer

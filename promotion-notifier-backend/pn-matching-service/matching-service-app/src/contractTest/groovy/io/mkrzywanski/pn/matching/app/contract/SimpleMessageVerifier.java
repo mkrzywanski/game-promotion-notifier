@@ -1,4 +1,4 @@
-package io.mkrzywanski;
+package io.mkrzywanski.pn.matching.app.contract;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 public class SimpleMessageVerifier implements MessageVerifier<Message> {
 
 
@@ -46,7 +45,6 @@ public class SimpleMessageVerifier implements MessageVerifier<Message> {
         final MessageProperties messageProperties = new MessageProperties();
         newHeaders.put("contentType", "application/json");
         newHeaders.forEach(messageProperties::setHeader);
-        log.info("Sending a message to destination [{}] with routing key", destination);
         if (payload instanceof String raw) {
             final Message message = MessageBuilder.withBody(raw.getBytes(StandardCharsets.UTF_8)).andProperties(messageProperties).build();
             send(message, destination, contract);

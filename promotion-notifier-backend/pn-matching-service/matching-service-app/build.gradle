@@ -12,11 +12,22 @@ sourceSets {
             resources.srcDirs = ["${projectDir}/src/integTest/resources"]
         }
     }
+    contractTest {
+        groovy {
+            srcDirs = ["${projectDir}/src/contractTest/groovy"]
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
+            resources.srcDirs = ["${projectDir}/src/contractTest/resources"]
+        }
+    }
 }
 
 configurations {
     integTestImplementation.extendsFrom testImplementation
     integTestRuntimeOnly.extendsFrom testRuntimeOnly
+
+    contractTestImplementation.extendsFrom testImplementation
+    contractTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencyManagement {
@@ -37,15 +48,14 @@ dependencies {
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     testImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
-    testImplementation("org.testcontainers:spock:${testcontainersVersion}")
+    testImplementation "org.testcontainers:spock:${testcontainersVersion}"
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
 
     integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.4'
     integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'
 
-    testRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
+    contractTestRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
 }
-
 
 tasks.register('integrationTest', Test) {
     useJUnitPlatform()
@@ -61,6 +71,23 @@ tasks.register('integrationTest', Test) {
         exceptionFormat = 'full'
     }
 }
+
+tasks.register('contractTest', Test) {
+    useJUnitPlatform()
+    description = 'Runs contract tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.contractTest.output.classesDirs
+    classpath = sourceSets.contractTest.runtimeClasspath
+    testLogging {
+
+        events("passed", "skipped", "failed")
+        showStackTraces = true
+        exceptionFormat = 'full'
+    }
+}
+
+tasks.findByName('integrationTest').dependsOn('contractTest')
 
 idea {
     module {

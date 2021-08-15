@@ -55,6 +55,7 @@ dependencies {
     integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'
 
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
+    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service:user-app')
 }
 
 tasks.register('integrationTest', Test) {

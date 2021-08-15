@@ -22,6 +22,6 @@ class HttpUserServiceClientSpec extends Specification {
     }
 
     private void userServiceReturnsUserDetails() {
-        restTemplateMock.getForEntity("${url}/users/${userId}", UserDetails.class) >> ResponseEntity.ok(userDetails)
+        restTemplateMock.getForEntity("${url}/v1/users/${userId}", UserDetails.class) >> ResponseEntity.ok(userDetails)
     }
 }

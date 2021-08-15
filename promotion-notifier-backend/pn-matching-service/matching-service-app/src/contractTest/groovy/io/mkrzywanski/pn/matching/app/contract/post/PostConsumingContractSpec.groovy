@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.app.contract
+package io.mkrzywanski.pn.matching.app.contract.post
 
 import io.mkrzywanski.pn.matching.infa.QueueConfig
 import io.mkrzywanski.pn.matching.matchedoffers.Offer
@@ -33,7 +33,7 @@ import static org.awaitility.Awaitility.await
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [TestConfig.class , QueueConfig.class])
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:scrapper-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
-class PostConsumingContractTest extends Specification {
+class PostConsumingContractSpec extends Specification {
 
     private static final String RABBIT_USERNAME = "test"
     private static final String RABBIT_PASSWORD = "test"

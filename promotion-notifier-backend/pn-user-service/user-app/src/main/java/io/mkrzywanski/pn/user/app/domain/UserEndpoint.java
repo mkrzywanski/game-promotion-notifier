@@ -2,7 +2,7 @@ package io.mkrzywanski.pn.user.app.domain;
 
 import io.mkrzywanski.pn.user.app.api.CreateUserRequest;
 import io.mkrzywanski.pn.user.app.api.UserCreatedResponse;
-import io.mkrzywanski.pn.user.app.api.UserDetailsResponse;
+import io.mkrzywanski.pn.user.app.infra.UserServiceConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +18,7 @@ import java.util.UUID;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping(UserServiceConstants.Paths.USERS)
 public class UserEndpoint {
 
     private final UserFacade userFacade;
@@ -34,9 +34,9 @@ public class UserEndpoint {
     }
 
     @GetMapping(path = "/{userId}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDetailsResponse> get(@PathVariable final UUID userId) {
+    public ResponseEntity<?> get(@PathVariable final UUID userId) {
         return userFacade.get(userId)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 }

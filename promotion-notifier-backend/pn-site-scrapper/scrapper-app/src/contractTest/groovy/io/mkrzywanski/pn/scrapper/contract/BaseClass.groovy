@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit
         TestConfig.class
 ], properties = "stubrunner.amqp.mockConnection=false")
 @AutoConfigureMessageVerifier
-class BaseClass extends Specification {
+abstract class BaseClass extends Specification {
 
     private static final String RABBIT_USERNAME = "test";
     private static final String RABBIT_PASSWORD = "test";

@@ -52,11 +52,13 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.spockframework:spock-spring'
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
 
+    integTestImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: "${wiremockVersion}"
     integTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
+
+    contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 
 }
 

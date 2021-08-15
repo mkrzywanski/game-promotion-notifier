@@ -1,6 +1,31 @@
+import org.springframework.cloud.contract.verifier.config.TestFramework
+
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
+    id 'org.springframework.cloud.contract'
+}
+
+contracts {
+    baseClassForTests = "io.mkrzywanski.pn.user.app.contract.BaseClass"
+    testFramework = TestFramework.SPOCK
+    testMode = 'MockMvc'
+}
+
+contractTest {
+    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "Results: (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+            boolean skipTests = Boolean.parseBoolean(project.findProperty('SKIP_TESTS') ?: "false")
+            if (result.testCount == 0 && !skipTests) {
+                throw new IllegalStateException("No tests were found. Failing the build")
+            }
+        }
+    }
 }
 
 sourceSets {
@@ -27,8 +52,21 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
-    integTestImplementation "org.testcontainers:postgresql:1.15.3"
+    integTestImplementation "org.testcontainers:postgresql:${testcontainersVersion}"
 
+    contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    contractTestImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock'
+
+}
+
+checkstyleContractTest {
+    enabled = false
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.register('integrationTest', Test) {

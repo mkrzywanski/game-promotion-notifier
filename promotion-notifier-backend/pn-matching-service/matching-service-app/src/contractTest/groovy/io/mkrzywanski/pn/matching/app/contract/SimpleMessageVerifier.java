@@ -1,6 +1,5 @@
 package io.mkrzywanski.pn.matching.app.contract;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;

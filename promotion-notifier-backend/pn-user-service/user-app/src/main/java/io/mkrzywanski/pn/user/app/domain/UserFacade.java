@@ -13,11 +13,11 @@ public class UserFacade {
 
     private final JpaUserRepository userRepository;
 
-    UserFacade(final JpaUserRepository repository) {
+    public UserFacade(final JpaUserRepository repository) {
         this.userRepository = repository;
     }
 
-    UserCreatedResponse create(final CreateUserRequest createUserRequest) {
+    public UserCreatedResponse create(final CreateUserRequest createUserRequest) {
         UserEntity user = UserEntity.Builder.userEntity()
                 .withUniqueId(UUID.randomUUID())
                 .withUsername(createUserRequest.getUserName())
@@ -28,7 +28,7 @@ public class UserFacade {
         return new UserCreatedResponse(user.getUniqueId().toString());
     }
 
-    Optional<UserDetailsResponse> get(final UUID uuid) {
+    public Optional<UserDetailsResponse> get(final UUID uuid) {
         return userRepository.getByUniqueId(uuid)
                 .map(UserFacade::from);
     }

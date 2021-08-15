@@ -19,11 +19,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/v1/users")
-class UserEndpoint {
+public class UserEndpoint {
 
     private final UserFacade userFacade;
 
-    UserEndpoint(final UserFacade userFacade) {
+    public UserEndpoint(final UserFacade userFacade) {
         this.userFacade = userFacade;
     }
 

@@ -1,5 +1,6 @@
 package io.mkrzywanski.pn.matching.app.contract.user
 
+import io.mkrzywanski.pn.matching.infa.http.ClientCommunicationException
 import io.mkrzywanski.pn.matching.infa.http.RestTemplateConfig
 import io.mkrzywanski.pn.matching.user.HttpUserServiceClient
 import io.mkrzywanski.pn.matching.user.UserSerivceClient
@@ -19,7 +20,8 @@ import spock.lang.Specification
 @EnableAutoConfiguration
 class UserServiceContractSpec extends Specification {
 
-    public static final UUID userId = UUID.fromString('e083123c-eac4-463d-bc59-7f2e3fa3cbe1')
+    public static final UUID EXISTING_USER_ID = UUID.fromString('e083123c-eac4-463d-bc59-7f2e3fa3cbe1')
+    public static final UUID NON_EXISTING_USER = UUID.fromString("f20848bf-5500-4002-8222-e9fc2dcab6e6")
 
     @StubRunnerPort("io.mkrzywanski:user-app")
     int producerPort;
@@ -33,25 +35,33 @@ class UserServiceContractSpec extends Specification {
         userServiceClient = new HttpUserServiceClient("http://localhost:${producerPort}", restTemplate)
     }
 
-    def "test"() {
+    def 'should get user details'() {
         given:
         when:
-        def d = userServiceClient.getUserDetails(userId)
+        def userDetails = userServiceClient.getUserDetails(EXISTING_USER_ID)
         then:
-        with(d) {
-            d.userId == userId
-            d.username == 'test'
-            d.firstName == 'test'
-            d.email == 'test@test.pl'
+        with(userDetails) {
+            it.userId == userId
+            it.username == 'test'
+            it.firstName == 'test'
+            it.email == 'test@test.pl'
+        }
+    }
+
+    def "should throw exception when user could not be found"() {
+        given:
+
+        when:
+        userServiceClient.getUserDetails(NON_EXISTING_USER)
+
+        then:
+        def e = thrown(ClientCommunicationException)
+        with(e.errorResponse) {
+            it.status == 404
+            it.path == "/v1/users/${NON_EXISTING_USER}"
+            it.serviceName == 'user-service'
+            it.timestamp != null
         }
     }
 }
-//
-//@Configuration
-//class TestConfig {
-//    @Bean
-//    UserSerivceClient userSerivceClient() {
-//        new HttpUserServiceClient("local")
-//    }
-//}
 

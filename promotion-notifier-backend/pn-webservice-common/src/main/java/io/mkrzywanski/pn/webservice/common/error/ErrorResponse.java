@@ -9,6 +9,7 @@ import java.time.Instant;
 @Getter
 public class ErrorResponse {
 
+    //    @Getter(onMethod_ = @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC"))
     private Instant timestamp;
     private int status;
     private String message;

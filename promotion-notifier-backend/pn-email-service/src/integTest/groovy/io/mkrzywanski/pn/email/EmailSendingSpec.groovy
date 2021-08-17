@@ -58,7 +58,7 @@ class EmailSendingSpec extends Specification {
     }
 
     private Callable<Boolean> anyEmailIsReceived() {
-        return () -> emailsReceivedCountIs(1)
+        return { -> emailsReceivedCountIs(1) }
     }
 
     private void dataAppearOnQueue() {

@@ -4,9 +4,6 @@ Contract.make {
     request {
         method(GET())
         url("/v1/users/e083123c-eac4-463d-bc59-7f2e3fa3cbe1")
-        headers {
-            header 'Content-Type': 'application/json'
-        }
     }
     response {
         headers {

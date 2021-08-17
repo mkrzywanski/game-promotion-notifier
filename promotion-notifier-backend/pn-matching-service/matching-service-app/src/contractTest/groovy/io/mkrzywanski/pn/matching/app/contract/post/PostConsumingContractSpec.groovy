@@ -55,19 +55,19 @@ class PostConsumingContractSpec extends Specification {
     @DynamicPropertySource
     private static void rabbitProperties(final DynamicPropertyRegistry registry) {
         RABBIT_MQ_CONTAINER.start()
-        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort)
-        registry.add("spring.rabbitmq.username", () -> RABBIT_USERNAME)
-        registry.add("spring.rabbitmq.password", () -> RABBIT_PASSWORD)
+        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER.&getAmqpPort)
+        registry.add("spring.rabbitmq.username", { -> RABBIT_USERNAME })
+        registry.add("spring.rabbitmq.password", { -> RABBIT_PASSWORD })
     }
 
     void "should consume messages"() {
         given:
         this.trigger.trigger("trigger")
-        await().untilAsserted(() -> then(this.postConsumer.size()).isEqualTo(1))
+        await().untilAsserted({ -> then(this.postConsumer.size()).isEqualTo(1) })
 
         when:
         final List<Post> posts = postConsumer.messages()
-        final Post post = posts.stream().findFirst().orElseThrow(IllegalStateException::new)
+        final Post post = posts.stream().findFirst().orElseThrow(IllegalStateException.&new)
 
         then:
         assertThat(post.getId()).isNotNull()

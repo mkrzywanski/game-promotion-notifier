@@ -1,5 +1,6 @@
 package io.mkrzywanski.pn.matching.infa.http;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +13,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class RestTemplateConfig {
 
     @Bean
-    public RestTemplate restTemplate(final RestTemplateBuilder restTemplateBuilder) {
+    public RestTemplate restTemplate(final RestTemplateBuilder restTemplateBuilder, final ObjectMapper objectMapper) {
         return restTemplateBuilder
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                .errorHandler(new RestTemplateErrorHandler())
+                .errorHandler(new RestTemplateErrorHandler(objectMapper))
                 .build();
     }
 

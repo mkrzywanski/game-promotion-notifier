@@ -1,18 +1,16 @@
 package io.mkrzywanski.pn.matching.infa.http;
 
+import io.mkrzywanski.pn.webservice.common.error.ErrorResponse;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 public class ClientCommunicationException extends RuntimeException {
-    private final String serviceName;
-    private final HttpStatus httpStatus;
+    private final ErrorResponse errorResponse;
 
     @Builder
-    public ClientCommunicationException(final String serviceName, final HttpStatus httpStatus, final String message) {
-        super(message);
-        this.serviceName = serviceName;
-        this.httpStatus = httpStatus;
+    public ClientCommunicationException(final ErrorResponse errorResponse) {
+        super(errorResponse.getMessage());
+        this.errorResponse = errorResponse;
     }
 }

@@ -10,12 +10,9 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 public class JacksonConfig {
     @Bean
     public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
-
         final JavaTimeModule javaTimeModule = new JavaTimeModule();
-//        javaTimeModule.addSerializer(Instant.class, new InstantSerializer())
         return Jackson2ObjectMapperBuilder.json()
                 .modules(javaTimeModule)
-//                .dateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX"))
                 .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 }

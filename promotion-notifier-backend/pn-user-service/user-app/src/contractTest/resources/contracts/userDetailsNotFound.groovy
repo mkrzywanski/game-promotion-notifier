@@ -1,4 +1,5 @@
 import org.springframework.cloud.contract.spec.Contract
+import org.springframework.cloud.contract.spec.internal.RegexPatterns
 
 Contract.make {
     request {
@@ -11,7 +12,7 @@ Contract.make {
         }
         status(404)
         body([
-                timestamp  : $(producer(anyNonEmptyString()), consumer('2021-08-17T16:30:30.501884049Z')),
+                timestamp  : $(producer(regex(RegexPatterns.iso8601WithOffset())), consumer('2021-08-17T16:30:30.501884049Z')),
                 message    : "User with id ${fromRequest().path(2)} not found",
                 status     : 404,
                 serviceName: "user-service",

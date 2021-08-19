@@ -23,6 +23,6 @@ class MatcherBuilder<T> {
     }
 
     Matcher<T> matcher() {
-        return allOf(matchers.toArray(Matcher[].&new))
+        return allOf(matchers.toArray(Matcher[]::new))
     }
 }

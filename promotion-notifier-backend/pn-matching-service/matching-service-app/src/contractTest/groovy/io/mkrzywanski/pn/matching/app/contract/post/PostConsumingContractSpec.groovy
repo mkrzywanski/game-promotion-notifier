@@ -55,7 +55,7 @@ class PostConsumingContractSpec extends Specification {
     @DynamicPropertySource
     private static void rabbitProperties(final DynamicPropertyRegistry registry) {
         RABBIT_MQ_CONTAINER.start()
-        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER.&getAmqpPort)
+        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort)
         registry.add("spring.rabbitmq.username", { -> RABBIT_USERNAME })
         registry.add("spring.rabbitmq.password", { -> RABBIT_PASSWORD })
     }

@@ -1,3 +1,5 @@
+package contracts.user.details
+
 import org.springframework.cloud.contract.spec.Contract
 import org.springframework.cloud.contract.spec.internal.RegexPatterns
 

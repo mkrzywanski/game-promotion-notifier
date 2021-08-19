@@ -7,9 +7,10 @@ plugins {
 }
 
 contracts {
-    baseClassForTests = "io.mkrzywanski.pn.user.app.contract.BaseClass"
+//    baseClassForTests = "io.mkrzywanski.pn.user.app.contract.BaseClass"
     testFramework = TestFramework.SPOCK
     testMode = 'MockMvc'
+    packageWithBaseClasses = 'io.mkrzywanski.pn.user.app.contract'
 }
 
 contractTest {
@@ -58,6 +59,7 @@ dependencies {
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     //https://github.com/marcingrzejszczak/jsonassert/issues/57
     contractTestImplementation("com.jayway.jsonpath:json-path:2.6.0")
+    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.30.1")
 }
 
 checkstyleContractTest {

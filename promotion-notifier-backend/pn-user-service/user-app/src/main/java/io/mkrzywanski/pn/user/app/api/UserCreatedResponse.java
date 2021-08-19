@@ -1,14 +1,12 @@
 package io.mkrzywanski.pn.user.app.api;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class UserCreatedResponse {
 
-    private String userId;
+    private final String userId;
 
-    public UserCreatedResponse(final String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
 }

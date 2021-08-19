@@ -1,10 +1,7 @@
 package io.mkrzywanski.pn.user.app.api;
 
-import io.mkrzywanski.gpn.user.UserConstraints;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import io.mkrzywanski.pn.user.app.domain.UserConstraints;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +10,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@EqualsAndHashCode
 public class CreateUserRequest {
 
     @NotBlank

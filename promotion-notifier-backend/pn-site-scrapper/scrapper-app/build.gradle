@@ -1,3 +1,5 @@
+import org.springframework.cloud.contract.verifier.config.TestFramework
+
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
@@ -6,7 +8,8 @@ plugins {
 }
 
 contracts {
-    baseClassForTests = "io.mkrzywanski.pn.scrapper.app.domain.adapters.contract.BaseClass"
+    baseClassForTests = "io.mkrzywanski.pn.scrapper.contract.BaseClass"
+    testFramework = TestFramework.SPOCK
 }
 
 contractTest {
@@ -41,10 +44,6 @@ configurations {
     integTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
-contracts {
-    contractsMode = 'REMOTE'
-}
-
 dependencies {
     implementation project(":pn-site-scrapper:scrapper-domain")
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -52,11 +51,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'org.spockframework', name: 'spock-spring'
-    integTestImplementation group: 'org.awaitility', name: 'awaitility', version: '4.1.0'
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    testImplementation 'org.spockframework:spock-spring'
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
-    testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
+    testImplementation "org.testcontainers:spock:${testcontainersVersion}"
+
+    integTestImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: "${wiremockVersion}"
+    integTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
+
+    contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 
 }
 

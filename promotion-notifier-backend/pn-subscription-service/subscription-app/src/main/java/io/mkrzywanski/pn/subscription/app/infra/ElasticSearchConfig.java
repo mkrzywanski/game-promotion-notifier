@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.core.RefreshPolicy;
 @Configuration
 class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
 
-    private RestClientBuilder restClientBuilder;
+    private final RestClientBuilder restClientBuilder;
 
     ElasticSearchConfig(final RestClientBuilder restClientBuilder) {
         this.restClientBuilder = restClientBuilder;

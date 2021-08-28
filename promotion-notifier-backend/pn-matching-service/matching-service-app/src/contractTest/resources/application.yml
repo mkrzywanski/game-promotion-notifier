@@ -1,7 +1,10 @@
 gpn:
   queue:
     name: 'posts'
-
+  matching-service:
+    publishing:
+      queue:
+        name: 'notifications'
 stubrunner:
   amqp:
     mockConnection: false

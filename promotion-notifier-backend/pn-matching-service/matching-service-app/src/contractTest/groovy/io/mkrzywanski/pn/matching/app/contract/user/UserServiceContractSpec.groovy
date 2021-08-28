@@ -1,7 +1,7 @@
 package io.mkrzywanski.pn.matching.app.contract.user
 
-import io.mkrzywanski.pn.matching.infa.http.ClientCommunicationException
-import io.mkrzywanski.pn.matching.infa.http.RestTemplateConfig
+import io.mkrzywanski.pn.matching.infra.http.ClientCommunicationException
+import io.mkrzywanski.pn.matching.infra.http.RestTemplateConfig
 import io.mkrzywanski.pn.matching.user.HttpUserServiceClient
 import io.mkrzywanski.pn.matching.user.UserSerivceClient
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +24,7 @@ class UserServiceContractSpec extends Specification {
     public static final UUID NON_EXISTING_USER = UUID.fromString("f20848bf-5500-4002-8222-e9fc2dcab6e6")
 
     @StubRunnerPort("io.mkrzywanski:user-app")
-    int producerPort;
+    int producerPort
 
     @Autowired
     RestTemplate restTemplate

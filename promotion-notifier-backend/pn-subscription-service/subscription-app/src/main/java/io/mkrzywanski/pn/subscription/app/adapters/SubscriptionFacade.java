@@ -1,13 +1,17 @@
 package io.mkrzywanski.pn.subscription.app.adapters;
 
-import io.mkrzywanski.pn.subscription.*;
-import io.mkrzywanski.pn.subscription.app.api.SubscriptionItem;
+import io.mkrzywanski.pn.subscription.MatchingRequest;
+import io.mkrzywanski.pn.subscription.SubscriptionCreateInfo;
+import io.mkrzywanski.pn.subscription.SubscriptionEntry;
+import io.mkrzywanski.pn.subscription.SubscriptionId;
+import io.mkrzywanski.pn.subscription.SubscriptionMatchingResult;
+import io.mkrzywanski.pn.subscription.SubscriptionService;
+import io.mkrzywanski.pn.subscription.UserId;
 import io.mkrzywanski.pn.subscription.app.api.CreateSubscriptionRequest;
 import io.mkrzywanski.pn.subscription.app.api.SubscriptionCreatedResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
@@ -15,7 +19,7 @@ public class SubscriptionFacade {
 
     private final SubscriptionService subscriptionService;
 
-    SubscriptionFacade(final SubscriptionService subscriptionService) {
+    public SubscriptionFacade(final SubscriptionService subscriptionService) {
         this.subscriptionService = subscriptionService;
     }
 
@@ -31,10 +35,6 @@ public class SubscriptionFacade {
     }
 
     private Set<SubscriptionEntry> extractSubscriptionItems(final CreateSubscriptionRequest request) {
-        return request.getItemSet().stream().map(toSubscriptionEntry()).collect(Collectors.toSet());
-    }
-
-    private Function<SubscriptionItem, SubscriptionEntry> toSubscriptionEntry() {
-        return subscriptionItem -> new SubscriptionEntry(subscriptionItem.getValue());
+        return request.getItems().stream().map(SubscriptionEntry::new).collect(Collectors.toSet());
     }
 }

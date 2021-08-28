@@ -5,8 +5,8 @@ import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
     request {
-        method(POST())
-        url("/v1/users")
+        method POST()
+        url "/v1/users"
         headers {
             header 'Content-Type': 'application/json'
         }
@@ -20,7 +20,7 @@ Contract.make {
         headers {
             header 'Content-Type': 'application/json'
         }
-        status(201)
+        status 201
         body([
                 userId: $(producer('e083123c-eac4-463d-bc59-7f2e3fa3cbe1'), consumer(anyUuid())),
         ])

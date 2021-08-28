@@ -11,17 +11,26 @@ class HttpUserServiceClientSpec extends Specification {
     def client = new HttpUserServiceClient(url, restTemplateMock)
     def userId = UUID.randomUUID()
     def userDetails = new UserDetails(userId, "testUsername", "testFirstName", "test@test.com")
+    def actualUserDetails
 
     def "should retrive user details"() {
         given:
-        userServiceReturnsUserDetails()
+        userServiceCanReturnUserDetails()
         when:
-        def actualUserDetails = client.getUserDetails(userId)
+        userServiceIsCalled()
         then:
+        userDetailsIsAsExpected()
+    }
+
+    private boolean userDetailsIsAsExpected() {
         userDetails == actualUserDetails
     }
 
-    private void userServiceReturnsUserDetails() {
+    private void userServiceCanReturnUserDetails() {
         restTemplateMock.getForEntity("${url}/v1/users/${userId}", UserDetails.class) >> ResponseEntity.ok(userDetails)
+    }
+
+    private void userServiceIsCalled() {
+        actualUserDetails = client.getUserDetails(userId)
     }
 }

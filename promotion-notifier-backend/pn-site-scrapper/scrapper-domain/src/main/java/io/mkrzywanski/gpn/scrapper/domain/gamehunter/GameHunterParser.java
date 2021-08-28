@@ -13,6 +13,7 @@ import org.jsoup.select.Evaluator;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 class GameHunterParser {
@@ -55,7 +56,7 @@ class GameHunterParser {
             final Element aTag = aTags.first();
             final String gameName = aTag.ownText();
             final String link = aTag.attr("href");
-            return Optional.of(new GameOffer(gameName, GameHunterPriceParser.parse(price), link));
+            return Optional.of(new GameOffer(UUID.randomUUID(), gameName, GameHunterPriceParser.parse(price), link));
         }
     }
 }

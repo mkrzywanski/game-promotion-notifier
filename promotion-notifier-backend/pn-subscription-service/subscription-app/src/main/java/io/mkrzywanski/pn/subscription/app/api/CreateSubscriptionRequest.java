@@ -13,12 +13,12 @@ import java.util.UUID;
 public class CreateSubscriptionRequest {
 
     private final UUID userId;
-    private final Set<SubscriptionItem> itemSet;
+    private final Set<String> items;
 
     @JsonCreator
     public CreateSubscriptionRequest(@JsonProperty("userId") final UUID userId,
-                                     @JsonProperty("itemSet") final Set<SubscriptionItem> itemSet) {
+                                     @JsonProperty("items") final Set<String> items) {
         this.userId = userId;
-        this.itemSet = itemSet;
+        this.items = items;
     }
 }

@@ -2,7 +2,7 @@ package contracts
 
 import org.springframework.cloud.contract.spec.Contract
 
-def contractDsl = Contract.make {
+Contract.make {
     label("trigger")
     input {
         triggeredBy("trigger()")
@@ -10,15 +10,16 @@ def contractDsl = Contract.make {
     outputMessage {
         sentTo("posts")
         body([
-                id: $(anyUuid()),
+                id    : $(anyUuid()),
                 offers: [[
-                             name: 'Rainbow Six',
-                             gamePrice: [
-                                     PLN: 1
-                             ],
-                             link: 'www.test.pl'
+                                 id       : '856e68ac-2ae9-4164-bbda-374663b91cdd',
+                                 name     : 'Rainbow Six',
+                                 gamePrice: [
+                                         PLN: 1
+                                 ],
+                                 link     : 'www.test.pl'
 
-                ]]
+                         ]]
         ])
     }
 }

@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.infa.http;
+package io.mkrzywanski.pn.matching.infra.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;

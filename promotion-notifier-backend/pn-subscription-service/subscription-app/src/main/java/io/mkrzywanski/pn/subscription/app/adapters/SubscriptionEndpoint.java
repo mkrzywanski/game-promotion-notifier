@@ -23,7 +23,7 @@ public class SubscriptionEndpoint {
 
     private final SubscriptionFacade subscriptionFacade;
 
-    SubscriptionEndpoint(final SubscriptionFacade subscriptionFacade) {
+    public SubscriptionEndpoint(final SubscriptionFacade subscriptionFacade) {
         this.subscriptionFacade = subscriptionFacade;
     }
 
@@ -33,8 +33,7 @@ public class SubscriptionEndpoint {
         return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionCreatedResponse);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping("/match")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/match")
     public ResponseEntity<SubscriptionMatchingResult> match(@RequestBody final MatchingRequest matchingRequest) {
         final SubscriptionMatchingResult match = subscriptionFacade.match(matchingRequest);
         return ResponseEntity.ok(match);

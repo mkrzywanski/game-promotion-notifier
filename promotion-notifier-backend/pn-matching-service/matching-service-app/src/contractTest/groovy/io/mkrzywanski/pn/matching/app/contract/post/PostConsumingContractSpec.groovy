@@ -1,6 +1,7 @@
 package io.mkrzywanski.pn.matching.app.contract.post
 
-import io.mkrzywanski.pn.matching.infa.QueueConfig
+import io.mkrzywanski.pn.matching.infra.queue.PostsQueueConfig
+import io.mkrzywanski.pn.matching.infra.queue.RabbitConfig
 import io.mkrzywanski.pn.matching.matchedoffers.Offer
 import io.mkrzywanski.pn.matching.matchedoffers.Post
 import org.springframework.amqp.core.Message
@@ -30,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.BDDAssertions.then
 import static org.awaitility.Awaitility.await
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [TestConfig.class , QueueConfig.class])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [TestConfig, RabbitConfig, PostsQueueConfig])
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:scrapper-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 class PostConsumingContractSpec extends Specification {
@@ -63,7 +64,7 @@ class PostConsumingContractSpec extends Specification {
     void "should consume messages"() {
         given:
         this.trigger.trigger("trigger")
-        await().untilAsserted({ -> then(this.postConsumer.size()).isEqualTo(1) })
+        await().untilAsserted(() -> then(this.postConsumer.size()).isEqualTo(1))
 
         when:
         final List<Post> posts = postConsumer.messages()
@@ -71,7 +72,7 @@ class PostConsumingContractSpec extends Specification {
 
         then:
         assertThat(post.getId()).isNotNull()
-        assertThat(post.getOffers()).contains(new Offer("Rainbow Six", Map.of(Currency.getInstance("PLN"), BigDecimal.ONE), "www.test.pl"))
+        assertThat(post.getOffers()).contains(new Offer(UUID.fromString("856e68ac-2ae9-4164-bbda-374663b91cdd"), "Rainbow Six", Map.of(Currency.getInstance("PLN"), BigDecimal.ONE), "www.test.pl"))
 
     }
 

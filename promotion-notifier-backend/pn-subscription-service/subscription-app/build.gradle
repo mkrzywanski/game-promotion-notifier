@@ -27,7 +27,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
-    integTestImplementation "org.testcontainers:elasticsearch:1.15.3"
+    integTestImplementation "org.testcontainers:elasticsearch:1.16.2"
     integTestImplementation 'org.springframework:spring-webflux'
 }
 

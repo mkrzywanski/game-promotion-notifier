@@ -55,7 +55,7 @@ dependencies {
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
 
-    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.4'
+    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.5'
     integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'
 
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')

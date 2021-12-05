@@ -25,5 +25,8 @@ jobs:
       run: ./gradlew codeCoverageReport
       working-directory: ./promotion-notifier-backend
     - name: Upload coverage report
-      run: bash <(curl -s https://codecov.io/bash)
+      run: |
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov -t ${CODECOV_TOKEN}
       working-directory: ./promotion-notifier-backend

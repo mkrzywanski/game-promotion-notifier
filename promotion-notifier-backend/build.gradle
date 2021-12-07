@@ -3,7 +3,7 @@ buildscript {
         springBootVersion = "2.6.1"
         springDepenedcyMgmtVersion = '1.0.11.RELEASE'
         springCloudVersion = '3.0.3'
-        testcontainersVersion = '1.15.3'
+        testcontainersVersion = '1.16.2'
         awaitilityVersion = '4.1.1'
         wiremockVersion = '2.27.2'
         getStubsJarFromProject = this.&getStubsJarFromProject

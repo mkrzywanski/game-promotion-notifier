@@ -31,7 +31,7 @@ dependencies {
     integTestImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
 //    integTestImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
     integTestImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
-    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.4'
+    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.5'
     integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'
 
 

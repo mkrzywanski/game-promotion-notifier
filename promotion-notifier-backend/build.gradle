@@ -2,11 +2,12 @@ buildscript {
     ext {
         springBootVersion = "2.6.1"
         springDepenedcyMgmtVersion = '1.0.11.RELEASE'
-        springCloudVersion = '3.0.3'
+        springCloudVersion = '3.1.0'
         testcontainersVersion = '1.15.3'
         awaitilityVersion = '4.1.1'
         wiremockVersion = '2.27.2'
         getStubsJarFromProject = this.&getStubsJarFromProject
+        baseDockerImage = 'openjdk:17.0.1-slim'
     }
 }
 
@@ -14,6 +15,7 @@ plugins {
 	id 'org.springframework.boot' version "${springBootVersion}" apply false
 	id 'io.spring.dependency-management' version "${springDepenedcyMgmtVersion}" apply false
 	id 'org.springframework.cloud.contract' version "${springCloudVersion}" apply false
+    id 'com.google.cloud.tools.jib' version '3.1.4' apply false
 }
 
 allprojects {

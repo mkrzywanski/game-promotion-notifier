@@ -1,4 +1,11 @@
 spring:
+  application:
+    name: pn-subscription-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/auth/realms/promotion-notifier
   elasticsearch:
     rest:
       uris: localhost:9200

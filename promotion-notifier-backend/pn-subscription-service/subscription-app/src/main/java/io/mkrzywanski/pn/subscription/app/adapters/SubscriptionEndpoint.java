@@ -4,6 +4,8 @@ import io.mkrzywanski.pn.subscription.MatchingRequest;
 import io.mkrzywanski.pn.subscription.SubscriptionMatchingResult;
 import io.mkrzywanski.pn.subscription.app.api.CreateSubscriptionRequest;
 import io.mkrzywanski.pn.subscription.app.api.SubscriptionCreatedResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/subscriptions")
 class SubscriptionEndpoint {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionEndpoint.class);
 
     private final SubscriptionFacade subscriptionFacade;
 

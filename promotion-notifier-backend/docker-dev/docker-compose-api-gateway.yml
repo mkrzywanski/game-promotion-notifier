@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  keycloak:
+    image: jboss/keycloak:15.0.1
+    ports:
+      - "8081:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+#  api-gateway:
+#    image: pn-api-gateway:0.0.1-SNAPSHOT
+#    environment:
+#      - SUBSCRIPTIONS_URL=http://subscriptions-app:8080
+#    ports:
+#      - "8082:8080"
+#  subscriptions-app:
+#    image: subscription-app:0.0.1-SNAPSHOT
+#    environment:
+#      - SPRING_ELASTICSEARCH_REST_URIS=elasticsearch:9200
+#  elasticsearch:
+#    image: elasticsearch:7.13.2
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+#    environment:
+#      - "discovery.type=single-node"
+#    volumes:
+#      - type: volume
+#        source: elastic-data-vol
+#        target: /usr/share/elasticsearch/data
+#volumes:
+#  elastic-data-vol:

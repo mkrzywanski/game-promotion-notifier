@@ -29,7 +29,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     integTestImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
-//    integTestImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
     integTestImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
     integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.5'
     integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'

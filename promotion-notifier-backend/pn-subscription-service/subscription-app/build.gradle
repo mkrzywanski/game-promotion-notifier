@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
+    id 'com.google.cloud.tools.jib'
 }
 
 sourceSets {
@@ -24,11 +25,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
-    integTestImplementation "org.testcontainers:elasticsearch:1.15.3"
+    integTestImplementation "org.testcontainers:elasticsearch:${testcontainersVersion}"
     integTestImplementation 'org.springframework:spring-webflux'
+    integTestImplementation 'org.keycloak:keycloak-admin-client:15.0.2'
+
+    testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 
@@ -40,7 +46,6 @@ tasks.register('integrationTest', Test) {
     testClassesDirs = sourceSets.integTest.output.classesDirs
     classpath = sourceSets.integTest.runtimeClasspath
     testLogging {
-
         events("passed", "skipped", "failed")
         showStackTraces = true
         exceptionFormat = 'full'
@@ -51,5 +56,11 @@ idea {
     module {
         sourceDirs -= project.sourceSets.integTest.groovy.srcDirs
         testSourceDirs += project.sourceSets.integTest.groovy.srcDirs
+    }
+}
+
+jib {
+    from {
+        image = "${baseDockerImage}"
     }
 }

@@ -49,7 +49,6 @@ dependencies {
     //newer wiremock than Spring Cloud Contract to resolve opentest4j runtime issues
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.30.1")
 
-//    contractTestImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     testImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"

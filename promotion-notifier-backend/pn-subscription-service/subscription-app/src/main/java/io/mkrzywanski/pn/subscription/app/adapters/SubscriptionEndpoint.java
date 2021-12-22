@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/subscriptions")
-class SubscriptionEndpoint {
+public class SubscriptionEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionEndpoint.class);
 

@@ -4,6 +4,15 @@ subscriptions:
 users:
   url: http://localhost:8083
 
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: INFO
+
 spring:
   security:
     oauth2:

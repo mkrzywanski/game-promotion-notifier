@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-class PnApiGatewayApp {
+public class PnApiGatewayApp {
     public static void main(final String[] args) {
         SpringApplication.run(PnApiGatewayApp.class, args);
     }

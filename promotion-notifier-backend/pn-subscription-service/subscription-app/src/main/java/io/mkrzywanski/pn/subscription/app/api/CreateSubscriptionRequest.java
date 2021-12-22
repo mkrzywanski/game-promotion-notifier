@@ -2,12 +2,14 @@ package io.mkrzywanski.pn.subscription.app.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
+@EqualsAndHashCode
 public class CreateSubscriptionRequest {
 
     private final UUID userId;

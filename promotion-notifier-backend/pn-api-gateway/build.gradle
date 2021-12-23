@@ -27,12 +27,11 @@ dependencies {
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: "${wiremockVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.spockframework:spock-spring'
 
     contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:${springCloudVersion}"
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-subscription-service:subscription-app')
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.30.1")
-    // https://mvnrepository.com/artifact/org.spockframework/spock-spring
-    testImplementation 'org.spockframework:spock-spring'
 
 
     testImplementation "org.springframework.cloud:spring-cloud-test-support:${springCloudVersion}"

@@ -1,39 +1,39 @@
-package io.mkrzywanski.pn.gateway.contract;
+package io.mkrzywanski.pn.gateway.contract
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
-import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
+import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
+import org.springframework.http.MediaType
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.web.reactive.server.WebTestClient
 
-import java.time.Duration;
+import java.time.Duration
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {GatewayTestConfig.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [GatewayTestConfig.class])
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:subscription-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 class SubscriptionSpec {
 
-    private WebTestClient webClient;
+    private WebTestClient webClient
 
     @LocalServerPort
-    private int port;
+    private int port
 
     @BeforeEach
     void setup() {
-        final var baseUri = "http://localhost:" + port;
+        final var baseUri = "http://localhost:" + port
         this.webClient = WebTestClient.bindToServer()
                 .responseTimeout(Duration.ofSeconds(10))
-                .baseUrl(baseUri).build();
+                .baseUrl(baseUri).build()
     }
 
     @Test
     void shouldRouteToSubscriptions() {
 
-        final var body = "{\"userId\":\"22e90bbd-7399-468a-9b76-cf050ff16c63\",\"itemSet\":[{\"value\":\"Rainbow Six\"}]}";
+        final var body = "{\"userId\":\"22e90bbd-7399-468a-9b76-cf050ff16c63\",\"itemSet\":[{\"value\":\"Rainbow Six\"}]}"
         webClient.post()
                 .uri("/subscriptions")
                 .header("Accept", MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +43,7 @@ class SubscriptionSpec {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody()
-                .jsonPath("$.subscriptionId").exists()
-                .jsonPath("$.subscriptionId").value(IsUuid.isUUID());
+                .jsonPath('$.subscriptionId').exists()
+                .jsonPath('$.subscriptionId').value(IsUuid.isUUID())
     }
 }

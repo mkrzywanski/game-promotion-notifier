@@ -1,23 +1,17 @@
 package io.mkrzywanski.pn.subscription;
 
+import lombok.AllArgsConstructor;
+import lombok.Value;
+
+@Value
+@AllArgsConstructor
 public class Offer {
 
-    private String text;
-    private int id;
+    String text;
+    int id;
 
     private Offer() {
+        this("", 0);
     }
 
-    public Offer(final String text, final int id) {
-        this.text = text;
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public int getId() {
-        return id;
-    }
 }

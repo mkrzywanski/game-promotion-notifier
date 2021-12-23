@@ -12,3 +12,4 @@ include ':pn-email-service'
 
 include ':pn-matching-service:matching-service-app'
 include ':pn-webservice-common'
+include ':pn-api-gateway'

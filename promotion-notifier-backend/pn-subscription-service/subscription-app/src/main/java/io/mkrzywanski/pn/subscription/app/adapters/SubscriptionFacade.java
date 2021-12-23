@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-class SubscriptionFacade {
+public class SubscriptionFacade {
 
     private final SubscriptionService subscriptionService;
 
@@ -19,14 +19,14 @@ class SubscriptionFacade {
         this.subscriptionService = subscriptionService;
     }
 
-    SubscriptionCreatedResponse create(final CreateSubscriptionRequest request) {
+    public SubscriptionCreatedResponse create(final CreateSubscriptionRequest request) {
         final UserId userId = UserId.of(request.getUserId());
         final SubscriptionCreateInfo subscriptionCreateInfo = new SubscriptionCreateInfo(userId, extractSubscriptionItems(request));
         final SubscriptionId subscription = subscriptionService.createSubscription(subscriptionCreateInfo);
         return new SubscriptionCreatedResponse(subscription.asUuid());
     }
 
-    SubscriptionMatchingResult match(final MatchingRequest matchingRequest) {
+    public SubscriptionMatchingResult match(final MatchingRequest matchingRequest) {
         return subscriptionService.match(matchingRequest);
     }
 

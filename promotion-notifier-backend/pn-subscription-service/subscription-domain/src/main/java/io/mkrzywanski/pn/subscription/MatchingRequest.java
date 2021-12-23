@@ -1,18 +1,16 @@
 package io.mkrzywanski.pn.subscription;
 
+import lombok.AllArgsConstructor;
+import lombok.Value;
+
 import java.util.Set;
 
+@Value
+@AllArgsConstructor
 public class MatchingRequest {
-    private Set<Post> postsToMatch;
+    Set<Post> postsToMatch;
 
     private MatchingRequest() {
-    }
-
-    public MatchingRequest(final Set<Post> postsToMatch) {
-        this.postsToMatch = postsToMatch;
-    }
-
-    public Set<Post> getPostsToMatch() {
-        return postsToMatch;
+        this(Set.of());
     }
 }

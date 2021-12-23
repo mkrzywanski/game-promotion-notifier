@@ -7,7 +7,6 @@ plugins {
 }
 
 contracts {
-//    baseClassForTests = "io.mkrzywanski.pn.user.app.contract.BaseClass"
     testFramework = TestFramework.SPOCK
     testMode = 'MockMvc'
     packageWithBaseClasses = 'io.mkrzywanski.pn.user.app.contract'

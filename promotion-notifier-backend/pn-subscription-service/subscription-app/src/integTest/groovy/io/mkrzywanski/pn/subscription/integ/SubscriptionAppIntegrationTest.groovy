@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import spock.lang.Specification
+import org.springframework.security.oauth2.client.registration.*
 
 import java.util.function.Function
 
@@ -40,6 +41,9 @@ class SubscriptionAppIntegrationTest extends Specification {
     @Autowired
     ObjectMapper objectMapper
 
+    @Autowired
+    KeyCloakAccess keyCloakAccess
+
     private final def postId = UUID.fromString("b5e6a983-d94a-400e-9672-4560657838e0")
     private final def userId = UUID.fromString("e48fde73-4eca-499b-b649-8263ada90995")
     private final int offerId = 1
@@ -51,12 +55,13 @@ class SubscriptionAppIntegrationTest extends Specification {
 
     def "should match new post offers to existing subscriptions"() {
         given:
-        def existingDocument = existingDocumentIsSaved()
+        def token = keyCloakAccess.getUserToken()
+        existingDocumentIsSaved()
         def matchingRequest = post()
         def content = objectMapper.writeValueAsString(matchingRequest)
 
         when: "request is preformed"
-        def response = mockMvc.perform(post("/v1/subscriptions/match", content))
+        def response = mockMvc.perform(post("/v1/subscriptions/match", content).header("Authorization", "Bearer ${token}"))
 
         then:
         response.andExpect(status().isOk())
@@ -74,11 +79,14 @@ class SubscriptionAppIntegrationTest extends Specification {
 
     def "should persist subscription"() {
         given:
-        def request = new CreateSubscriptionRequest(userId, Set.of(new SubscriptionItem("Rainbow Six")))
-        def requestJson = objectMapper.writeValueAsString(request)
+        def token = keyCloakAccess.getUserToken()
+        def subscriptionRequest = new CreateSubscriptionRequest(userId, Set.of(new SubscriptionItem("Rainbow Six")))
+        def requestJson = objectMapper.writeValueAsString(subscriptionRequest)
 
+
+        def request = post("/v1/subscriptions", requestJson).header("Authorization", "Bearer ${token}")
         when:
-        def response = mockMvc.perform(post("/v1/subscriptions", requestJson))
+        def response = mockMvc.perform(request)
 
         then:
         response.andExpect(status().isCreated())

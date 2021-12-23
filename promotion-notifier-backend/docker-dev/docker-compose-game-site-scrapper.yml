@@ -5,8 +5,6 @@ services:
     image: bitnami/mongodb:4.4
     restart: always
     environment:
-#      MONGODB_USERNAME: my_user
-#      MONGODB_PASSWORD: password123
       MONGODB_ROOT_PASSWORD: example
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_KEY: somekey1

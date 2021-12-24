@@ -4,6 +4,7 @@ plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
     id 'org.springframework.cloud.contract'
+    id 'com.google.cloud.tools.jib'
 }
 
 contractTest {
@@ -20,8 +21,6 @@ contractTest {
             }
         }
     }
-    id 'org.springframework.cloud.contract'
-    id 'com.google.cloud.tools.jib'
 }
 
 sourceSets {

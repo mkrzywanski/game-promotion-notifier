@@ -17,7 +17,7 @@ Contract.make {
                                 offers : [
                                         [
                                                 text : 'Rainbow Six',
-                                                id : 1
+                                                id : "ab5dd318-9d8e-4594-af1b-f800b22d7f24"
                                         ]
                                 ]
                         ]
@@ -34,7 +34,7 @@ Contract.make {
                         [
                                 userId : "c5177efd-3739-4ed5-bb4c-23f9ca350107",
                                 postId: "b7b4c294-f8af-41e0-af4c-37eda04a6e65",
-                                offerId: 1
+                                offerId: "ab5dd318-9d8e-4594-af1b-f800b22d7f24"
                         ]
                 ]
         ])

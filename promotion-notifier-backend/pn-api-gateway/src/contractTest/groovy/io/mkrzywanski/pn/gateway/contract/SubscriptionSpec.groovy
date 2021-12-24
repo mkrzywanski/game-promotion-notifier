@@ -33,7 +33,9 @@ class SubscriptionSpec {
     @Test
     void shouldRouteToSubscriptions() {
 
-        final var body = "{\"userId\":\"22e90bbd-7399-468a-9b76-cf050ff16c63\",\"itemSet\":[{\"value\":\"Rainbow Six\"}]}"
+        final var body = '''
+                {"userId":"22e90bbd-7399-468a-9b76-cf050ff16c63","items":["Rainbow Six"]}
+        '''
         webClient.post()
                 .uri("/subscriptions")
                 .header("Accept", MediaType.APPLICATION_JSON_VALUE)

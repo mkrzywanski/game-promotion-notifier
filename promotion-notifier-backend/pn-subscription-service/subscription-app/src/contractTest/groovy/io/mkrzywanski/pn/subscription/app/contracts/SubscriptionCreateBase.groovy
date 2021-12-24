@@ -10,7 +10,8 @@ abstract class SubscriptionCreateBase extends SubscriptionAbstractBase {
 
     @BeforeEach
     void setup() {
-        def request = new CreateSubscriptionRequest(UUID.fromString("22e90bbd-7399-468a-9b76-cf050ff16c63"), Set.of(new SubscriptionItem("Rainbow Six")))
+        def userId = UUID.fromString("22e90bbd-7399-468a-9b76-cf050ff16c63")
+        def request = new CreateSubscriptionRequest(userId, Set.of("Rainbow Six"))
         Mockito.when(subscriptionFacade.create(Mockito.eq(request))).thenReturn(new SubscriptionCreatedResponse(UUID.fromString("6d692849-58fd-439b-bb2c-50a5d3669fa9")))
     }
 }

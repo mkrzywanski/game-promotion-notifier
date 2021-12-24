@@ -80,7 +80,7 @@ class SubscriptionAppIntegrationTest extends Specification {
     def "should persist subscription"() {
         given:
         def token = keyCloakAccess.getUserToken()
-        def subscriptionRequest = new CreateSubscriptionRequest(userId, Set.of(new SubscriptionItem("Rainbow Six")))
+        def subscriptionRequest = new CreateSubscriptionRequest(userId, Set.of("Rainbow Six"))
         def requestJson = objectMapper.writeValueAsString(subscriptionRequest)
 
 

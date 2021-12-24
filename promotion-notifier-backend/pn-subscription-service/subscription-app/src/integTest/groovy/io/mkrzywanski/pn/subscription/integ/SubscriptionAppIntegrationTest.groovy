@@ -108,7 +108,7 @@ class SubscriptionAppIntegrationTest extends Specification {
     }
 
     private MatchingRequest post() {
-        def post = new Post(postId, List.of(new Offer(offerId, "rainbow")))
+        def post = new Post(postId, List.of(new Offer("rainbow", offerId)))
         def postsToMatch = Set.of(post)
         new MatchingRequest(postsToMatch)
     }

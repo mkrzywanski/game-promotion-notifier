@@ -14,7 +14,7 @@ import spock.lang.Specification
 @SpringBootTest(classes = [MongoConfig, MongoMatchesRepository])
 @EnableMongoRepositories
 @EnableAutoConfiguration
-class MongoConcurrentTestTest extends Specification {
+class MongoConcurrentSpec extends Specification {
 
     @Autowired
     MatchesRepository matchesRepository

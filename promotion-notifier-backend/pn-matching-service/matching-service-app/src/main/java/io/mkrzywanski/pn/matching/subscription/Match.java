@@ -1,12 +1,18 @@
 package io.mkrzywanski.pn.matching.subscription;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Value
+@AllArgsConstructor
+@Getter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Match {
-    UUID userId;
-    UUID postId;
-    UUID offerId;
+    private UUID userId;
+    private UUID postId;
+    private UUID offerId;
 }

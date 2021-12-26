@@ -37,27 +37,27 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation project(':pn-webservice-common')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-//    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-//    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.12.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-oauth2-client'
+    // https://mvnrepository.com/artifact/org.springframework/spring-webflux
+    implementation 'org.springframework:spring-webflux'
+    implementation 'io.projectreactor.netty:reactor-netty-http'
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
     //newer wiremock than Spring Cloud Contract to resolve opentest4j runtime issues
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.32.0")
 
-//    contractTestImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
     testImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
-
-    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.5'
-    integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'
 
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service:user-app')
@@ -94,7 +94,7 @@ tasks.register('contractTest', Test) {
     }
 }
 
-//tasks.findByName('integrationTest').dependsOn('contractTest')
+tasks.findByName('integrationTest').dependsOn('contractTest')
 
 idea {
     module {

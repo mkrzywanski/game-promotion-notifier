@@ -149,7 +149,6 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
                 .atMost(10, TimeUnit.SECONDS)
                 .untilAsserted({
                     assertThat(testNotificationConsumer.notifications).hasSize(1)
-                    assertThat(matchesRepository.findAll()).hasSize(0)
                 })
     }
 

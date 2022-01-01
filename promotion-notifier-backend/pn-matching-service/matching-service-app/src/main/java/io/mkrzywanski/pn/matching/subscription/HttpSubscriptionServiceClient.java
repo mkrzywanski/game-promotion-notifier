@@ -24,6 +24,6 @@ public class HttpSubscriptionServiceClient implements SubscriptionServiceClient 
                 .bodyValue(matchingRequest)
                 .retrieve()
                 .bodyToMono(MatchingResponse.class)
-        .block();
+                .block();
     }
 }

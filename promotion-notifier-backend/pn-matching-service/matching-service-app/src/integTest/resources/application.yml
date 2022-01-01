@@ -2,9 +2,9 @@ gpn:
   queue:
     name: 'posts'
   user-service:
-    url: http://localhost:8080
+    url: http://localhost:${wiremock.server.port}
   subscription-service:
-    url: http://localhost:8081
+    url: http://localhost:${wiremock.server.port}
   matching-service:
     mongodb:
       collectionName: "user-offer-matches"

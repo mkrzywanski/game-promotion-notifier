@@ -1,13 +1,18 @@
 package io.mkrzywanski.pn.matching.user;
 
-import lombok.Value;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Value
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDetails {
-    UUID userId;
-    String username;
-    String firstName;
-    String email;
+    private UUID userId;
+    private String username;
+    private String firstName;
+    private String email;
 }

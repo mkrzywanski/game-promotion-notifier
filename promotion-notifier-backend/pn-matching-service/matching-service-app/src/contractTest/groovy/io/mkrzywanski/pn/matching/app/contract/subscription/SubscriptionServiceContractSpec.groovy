@@ -1,6 +1,6 @@
 package io.mkrzywanski.pn.matching.app.contract.subscription
 
-import io.mkrzywanski.pn.matching.infra.http.RestTemplateConfig
+
 import io.mkrzywanski.pn.matching.subscription.HttpSubscriptionServiceClient
 import io.mkrzywanski.pn.matching.subscription.Match
 import io.mkrzywanski.pn.matching.subscription.MatchingRequest
@@ -16,7 +16,6 @@ import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
 import spock.lang.Specification
 
@@ -28,9 +27,6 @@ class SubscriptionServiceContractSpec extends Specification {
 
     @StubRunnerPort("io.mkrzywanski:subscription-app")
     int producerPort
-
-//    @Autowired
-//    RestTemplate restTemplate
 
     @Autowired
     WebClient webClient

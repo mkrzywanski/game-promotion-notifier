@@ -1,0 +1,3 @@
+subscriptions:
+  url: http://localhost:${stubrunner.runningstubs.io.mkrzywanski.subscription-app.port}
+

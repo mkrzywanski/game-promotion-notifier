@@ -12,7 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 import java.time.Duration
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [GatewayTestConfig.class])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:subscription-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 class SubscriptionSpec {

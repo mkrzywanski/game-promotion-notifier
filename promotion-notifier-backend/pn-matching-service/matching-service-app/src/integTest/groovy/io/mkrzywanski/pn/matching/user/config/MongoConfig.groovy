@@ -10,7 +10,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 
 import java.time.Duration;
 
-public class MongoConfig {
+class MongoConfig {
 
     @Autowired
     protected Environment environment

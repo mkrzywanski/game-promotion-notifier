@@ -20,3 +20,12 @@ spring:
       password: password
       authentication-database: admin
       auto-index-creation: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: test
+    password: test
+  security:
+    user:
+      name: test
+      password: test

@@ -1,11 +1,16 @@
 package io.mkrzywanski.pn.matching.matchedoffers;
 
-import lombok.Value;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Value
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostNotificationData {
-    String link;
-    List<OfferNotificationData> offerNotificationData;
+    private String link;
+    private List<OfferNotificationData> offerNotificationData;
 }

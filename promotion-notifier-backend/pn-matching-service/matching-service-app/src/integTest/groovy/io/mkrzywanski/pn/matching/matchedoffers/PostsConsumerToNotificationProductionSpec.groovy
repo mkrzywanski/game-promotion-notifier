@@ -141,10 +141,6 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
         newPostAppearsOnQueue()
 
         then:
-        newNotificationIsProduced()
-    }
-
-    private newNotificationIsProduced() {
         await()
                 .atMost(10, TimeUnit.SECONDS)
                 .untilAsserted({

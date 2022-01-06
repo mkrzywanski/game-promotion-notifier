@@ -4,9 +4,12 @@ import io.mkrzywanski.gpn.scrapper.domain.post.GameOffer;
 import io.mkrzywanski.gpn.scrapper.domain.post.GamePrice;
 import lombok.Value;
 
+import java.util.UUID;
+
 @Value
 public class GameOfferModel {
 
+    UUID id;
     String gameName;
     PriceInfo priceInfo;
     String link;
@@ -14,10 +17,10 @@ public class GameOfferModel {
     static GameOfferModel fromDomain(final GameOffer gameOffer) {
         final GamePrice gamePrice = gameOffer.getGamePrice();
         final PriceInfo priceInfo = PriceInfo.fromDomain(gamePrice);
-        return new GameOfferModel(gameOffer.getGameName(), priceInfo, gameOffer.getLink());
+        return new GameOfferModel(gameOffer.getId(), gameOffer.getGameName(), priceInfo, gameOffer.getLink());
     }
 
     GameOffer toDomain() {
-        return new GameOffer(gameName, priceInfo.toDomain(), link);
+        return new GameOffer(id, gameName, priceInfo.toDomain(), link);
     }
 }

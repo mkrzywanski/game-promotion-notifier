@@ -1,0 +1,22 @@
+gpn:
+  queue:
+    name: 'posts'
+  user-service:
+    url: http://localhost:${wiremock.server.port}
+  subscription-service:
+    url: http://localhost:${wiremock.server.port}
+  matching-service:
+    mongodb:
+      collectionName: "user-offer-matches"
+    publishing:
+      cron: "*/1 * * * * *"
+      queue:
+        name: "notifications"
+spring:
+  data:
+    mongodb:
+      database: posts
+      username: root
+      password: password
+      authentication-database: admin
+      auto-index-creation: true

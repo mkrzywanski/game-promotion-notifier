@@ -46,7 +46,7 @@ class SubscriptionAppIntegrationTest extends Specification {
 
     private final def postId = UUID.fromString("b5e6a983-d94a-400e-9672-4560657838e0")
     private final def userId = UUID.fromString("e48fde73-4eca-499b-b649-8263ada90995")
-    private final int offerId = 1
+    private final def offerId = UUID.fromString('fb1fdfc4-6dfe-4e52-b41c-67d63274ec25')
 
     void cleanup() {
         def query = new StringQuery("{\"match_all\": {}}")
@@ -71,7 +71,7 @@ class SubscriptionAppIntegrationTest extends Specification {
                         {
                             "userId": "${userId}",
                             "postId": "${postId}",
-                            "offerId": ${offerId}
+                            "offerId": "${offerId}"
                         }
                     ]
                 }""", false))
@@ -80,7 +80,7 @@ class SubscriptionAppIntegrationTest extends Specification {
     def "should persist subscription"() {
         given:
         def token = keyCloakAccess.getUserToken()
-        def subscriptionRequest = new CreateSubscriptionRequest(userId, Set.of(new SubscriptionItem("Rainbow Six")))
+        def subscriptionRequest = new CreateSubscriptionRequest(userId, Set.of("Rainbow Six"))
         def requestJson = objectMapper.writeValueAsString(subscriptionRequest)
 
 
@@ -114,7 +114,7 @@ class SubscriptionAppIntegrationTest extends Specification {
     }
 
     private SubscriptionElasticModel existingDocumentIsSaved() {
-        UUID subscriptionId = UUID.randomUUID()
+        def subscriptionId = UUID.randomUUID()
         def subscriptionElasticModel = new SubscriptionElasticModel(userId, Set.of("rainbow"))
         def query = new IndexQueryBuilder().withId(subscriptionId.toString()).withObject(subscriptionElasticModel).build()
         elasticsearchOperations.index(query, IndexCoordinates.of("subscriptions"))

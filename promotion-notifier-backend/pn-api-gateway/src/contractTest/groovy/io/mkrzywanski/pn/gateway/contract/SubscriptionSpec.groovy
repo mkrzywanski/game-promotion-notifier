@@ -12,7 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 import java.time.Duration
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [GatewayTestConfig.class])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:subscription-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 class SubscriptionSpec {
@@ -33,7 +33,9 @@ class SubscriptionSpec {
     @Test
     void shouldRouteToSubscriptions() {
 
-        final var body = "{\"userId\":\"22e90bbd-7399-468a-9b76-cf050ff16c63\",\"itemSet\":[{\"value\":\"Rainbow Six\"}]}"
+        final var body = '''
+                {"userId":"22e90bbd-7399-468a-9b76-cf050ff16c63","items":["Rainbow Six"]}
+        '''
         webClient.post()
                 .uri("/subscriptions")
                 .header("Accept", MediaType.APPLICATION_JSON_VALUE)

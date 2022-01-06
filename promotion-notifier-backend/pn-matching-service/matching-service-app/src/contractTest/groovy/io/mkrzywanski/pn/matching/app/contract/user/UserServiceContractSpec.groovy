@@ -1,7 +1,7 @@
 package io.mkrzywanski.pn.matching.app.contract.user
 
-import io.mkrzywanski.pn.matching.infa.http.ClientCommunicationException
-import io.mkrzywanski.pn.matching.infa.http.RestTemplateConfig
+import io.mkrzywanski.pn.matching.infra.http.ClientCommunicationException
+
 import io.mkrzywanski.pn.matching.user.HttpUserServiceClient
 import io.mkrzywanski.pn.matching.user.UserSerivceClient
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,11 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerPort
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.http.client.reactive.HttpComponentsClientHttpConnector
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.web.client.RestTemplate
+import org.springframework.web.reactive.function.client.WebClient
 import spock.lang.Specification
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [RestTemplateConfig])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [TestConfig])
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:user-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 @EnableAutoConfiguration
@@ -24,15 +27,15 @@ class UserServiceContractSpec extends Specification {
     public static final UUID NON_EXISTING_USER = UUID.fromString("f20848bf-5500-4002-8222-e9fc2dcab6e6")
 
     @StubRunnerPort("io.mkrzywanski:user-app")
-    int producerPort;
+    int producerPort
 
     @Autowired
-    RestTemplate restTemplate
+    WebClient webclient
 
     UserSerivceClient userServiceClient
 
     void setup() {
-        userServiceClient = new HttpUserServiceClient("http://localhost:${producerPort}", restTemplate)
+        userServiceClient = new HttpUserServiceClient("http://localhost:${producerPort}", webclient)
     }
 
     def 'should get user details'() {
@@ -62,6 +65,15 @@ class UserServiceContractSpec extends Specification {
             it.serviceName == 'user-service'
             it.timestamp != null
         }
+    }
+}
+
+@Configuration
+class TestConfig {
+    @Bean
+    WebClient webClient() {
+        return WebClient.builder()
+                .build()
     }
 }
 

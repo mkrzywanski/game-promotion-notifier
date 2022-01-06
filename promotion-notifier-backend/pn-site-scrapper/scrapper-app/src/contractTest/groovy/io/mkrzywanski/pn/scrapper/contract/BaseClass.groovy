@@ -36,11 +36,11 @@ import java.util.concurrent.TimeUnit
 @AutoConfigureMessageVerifier
 abstract class BaseClass extends Specification {
 
-    private static final String RABBIT_USERNAME = "test";
-    private static final String RABBIT_PASSWORD = "test";
-    private static final String RABBIT_MQ_IMAGE = "bitnami/rabbitmq:3.8.18";
+    private static final String RABBIT_USERNAME = "test"
+    private static final String RABBIT_PASSWORD = "test"
+    private static final String RABBIT_MQ_IMAGE = "bitnami/rabbitmq:3.8.18"
     private static final DockerImageName RABBIT_IMAGE = DockerImageName.parse(RABBIT_MQ_IMAGE)
-            .asCompatibleSubstituteFor("rabbitmq");
+            .asCompatibleSubstituteFor("rabbitmq")
 
     @Shared
     static RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer(RABBIT_IMAGE)
@@ -48,21 +48,22 @@ abstract class BaseClass extends Specification {
             .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD)
 
     @Autowired
-    private QueuePostPublisher queuePostPublisher;
+    private QueuePostPublisher queuePostPublisher
 
     @DynamicPropertySource
     private static void rabbitProperties(final DynamicPropertyRegistry registry) {
         RABBIT_MQ_CONTAINER.start()
-        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort);
-        registry.add("spring.rabbitmq.username", () -> RABBIT_USERNAME);
-        registry.add("spring.rabbitmq.password", () -> RABBIT_PASSWORD);
+        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort)
+        registry.add("spring.rabbitmq.username", () -> RABBIT_USERNAME)
+        registry.add("spring.rabbitmq.password", () -> RABBIT_PASSWORD)
     }
 
     void trigger() {
-        final List<GameOffer> offers = List.of(new GameOffer("Rainbow Six", new NumberGamePrice(Currencies.PLN, BigDecimal.ONE), "www.test.pl"));
-        final Post post = new Post(PostId.generate(), Hash.compute("value"), "value", offers, ZonedDateTime.now());
-        final List<Post> posts = List.of(post);
-        queuePostPublisher.publish(posts);
+        def gameOffer = new GameOffer(UUID.fromString("856e68ac-2ae9-4164-bbda-374663b91cdd"), "Rainbow Six", new NumberGamePrice(Currencies.PLN, BigDecimal.ONE), "www.test.pl")
+        final var offers = List.of(gameOffer)
+        final var post = new Post(PostId.generate(), Hash.compute("value"), "value", offers, ZonedDateTime.now())
+        final var posts = List.of(post)
+        queuePostPublisher.publish(posts)
     }
 
     void cleanup() {
@@ -78,7 +79,7 @@ class TestConfig {
 
     @Bean
     RabbitMessageVerifier rabbitTemplateMessageVerifier() {
-        return new RabbitMessageVerifier();
+        return new RabbitMessageVerifier()
     }
 
     @Bean
@@ -89,7 +90,7 @@ class TestConfig {
                 if (message == null) {
                     null
                 }
-                new ContractVerifierMessage(message.getPayload(), message.getHeaders());
+                new ContractVerifierMessage(message.getPayload(), message.getHeaders())
             }
 
         }
@@ -98,25 +99,25 @@ class TestConfig {
 
 class RabbitMessageVerifier implements MessageVerifier<Message<?>> {
 
-    private final BlockingQueue<Message<?>> queue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Message<?>> queue = new LinkedBlockingQueue<>()
 
     @RabbitListener(queues = '${gpn.queue.name}')
     void listen(final Message<?> message) {
-        queue.add(message);
+        queue.add(message)
     }
 
     @Override
     Message<?> receive(final String destination, final long timeout, final TimeUnit timeUnit, final YamlContract contract) {
         try {
-            return queue.poll(timeout, timeUnit);
+            return queue.poll(timeout, timeUnit)
         } catch (final InterruptedException e) {
-            throw new IllegalStateException(e);
+            throw new IllegalStateException(e)
         }
     }
 
     @Override
     Message<?> receive(final String destination, final YamlContract contract) {
-        return receive(destination, 1, TimeUnit.SECONDS, contract);
+        return receive(destination, 1, TimeUnit.SECONDS, contract)
     }
 
     @Override

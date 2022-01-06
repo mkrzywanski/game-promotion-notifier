@@ -1,7 +1,0 @@
-gpn:
-  queue:
-    name: 'posts'
-
-stubrunner:
-  amqp:
-    mockConnection: false

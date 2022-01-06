@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.infa.http;
+package io.mkrzywanski.pn.matching.infra.http;
 
 import io.mkrzywanski.pn.webservice.common.error.ErrorResponse;
 import lombok.Builder;

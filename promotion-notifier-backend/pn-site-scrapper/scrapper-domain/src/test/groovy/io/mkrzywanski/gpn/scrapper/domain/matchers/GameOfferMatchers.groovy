@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.*
 class GameOfferMatchers {
     static Matcher<GameOffer> isValidGameOffer() {
         AllOf.allOf(
+                hasProperty("id", is(notNullValue())),
                 hasProperty("gameName", is(not(emptyString()))),
                 hasProperty("link", is(not(emptyString()))),
                 hasProperty("gamePrice", notNullValue())

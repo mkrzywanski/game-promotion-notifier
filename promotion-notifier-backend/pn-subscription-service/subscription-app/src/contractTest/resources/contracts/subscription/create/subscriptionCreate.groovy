@@ -13,10 +13,8 @@ Contract.make {
         }
         body([
                 userId : "22e90bbd-7399-468a-9b76-cf050ff16c63",
-                itemSet    : [
-                        [
-                            value : "Rainbow Six"
-                        ]
+                items    : [
+                        "Rainbow Six"
                 ]
         ])
     }

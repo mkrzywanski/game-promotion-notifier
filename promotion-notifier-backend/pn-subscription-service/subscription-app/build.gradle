@@ -55,7 +55,7 @@ dependencies {
 
     integTestImplementation "org.testcontainers:elasticsearch:${testcontainersVersion}"
     integTestImplementation 'org.springframework:spring-webflux'
-    integTestImplementation 'org.keycloak:keycloak-admin-client:15.0.2'
+    integTestImplementation 'org.keycloak:keycloak-admin-client:16.1.0'
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     //https://github.com/marcingrzejszczak/jsonassert/issues/57

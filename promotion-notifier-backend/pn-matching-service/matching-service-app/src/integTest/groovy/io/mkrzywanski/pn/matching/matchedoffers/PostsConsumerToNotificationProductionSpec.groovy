@@ -165,7 +165,7 @@ class TestConfig {
 
     @Bean
     KeyCloakProperties keyCloakProperties() {
-        def client = new KeycloakClient("test-client", "secret")
+        def client = new KeycloakClient("pn-matching-service", "secret")
         def user = new KeycloakUser("test", "test")
         def admin = new KeycloakUser("admin", "admin")
         new KeyCloakProperties(client, KeyCloakProperties.ADMIN_CLI_CLIENT, user, admin, "xD")
@@ -173,7 +173,7 @@ class TestConfig {
 
     @Bean
     ClientRegistrationRepository clientRegistrationRepository(KeyCloakProperties keyCloakProperties, KeyCloakContainer keyCloakContainer) {
-        ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("matching-service")
+        ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("pn-matching-service")
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .clientId(keyCloakProperties.client.clientId)
                 .clientSecret(keyCloakProperties.client.clientSecret)
@@ -253,6 +253,7 @@ class TestConfig {
         clientRepresentation.redirectUris = Arrays.asList("*")
         clientRepresentation.directAccessGrantsEnabled = true
         clientRepresentation.standardFlowEnabled = true
+        clientRepresentation.serviceAccountsEnabled = true
         clientRepresentation
     }
 }

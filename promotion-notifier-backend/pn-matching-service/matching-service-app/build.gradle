@@ -57,8 +57,8 @@ dependencies {
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
 
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-contract-wiremock
     integTestImplementation "org.springframework.cloud:spring-cloud-contract-wiremock:${springCloudVersion}"
+    integTestImplementation project(":pn-shared-test-modules:embedded-keycloak-spring-configuration")
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.30.1")

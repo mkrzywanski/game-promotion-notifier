@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.subscription.integ
+package io.mkrzywanski.shared.keycloak
 
 class KeycloakClient {
     String clientId

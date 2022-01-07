@@ -13,3 +13,6 @@ include ':pn-email-service'
 include ':pn-matching-service:matching-service-app'
 include ':pn-webservice-common'
 include ':pn-api-gateway'
+
+include ':pn-shared-test-modules:keycloak-test-container'
+include ':pn-shared-test-modules:embedded-keycloak-spring-configuration'

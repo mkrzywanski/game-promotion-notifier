@@ -6,7 +6,7 @@ import io.mkrzywanski.pn.subscription.Offer
 import io.mkrzywanski.pn.subscription.Post
 import io.mkrzywanski.pn.subscription.app.adapters.SubscriptionElasticModel
 import io.mkrzywanski.pn.subscription.app.api.CreateSubscriptionRequest
-import io.mkrzywanski.pn.subscription.app.api.SubscriptionItem
+import io.mkrzywanski.shared.keycloak.KeyCloakAccess
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import spock.lang.Specification
-import org.springframework.security.oauth2.client.registration.*
 
 import java.util.function.Function
 
@@ -90,7 +89,7 @@ class SubscriptionAppIntegrationTest extends Specification {
 
         then:
         response.andExpect(status().isCreated())
-            .andExpect(jsonPath('$.subscriptionId', notNullValue()))
+                .andExpect(jsonPath('$.subscriptionId', notNullValue()))
     }
 
     private static MockHttpServletRequestBuilder post(String url, String content) {

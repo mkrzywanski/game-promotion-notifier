@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.keycloak
+package io.mkrzywanski.shared.keycloak
 
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait

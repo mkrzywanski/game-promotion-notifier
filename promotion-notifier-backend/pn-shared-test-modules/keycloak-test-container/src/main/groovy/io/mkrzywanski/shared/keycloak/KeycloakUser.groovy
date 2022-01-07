@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.keycloak;
+package io.mkrzywanski.shared.keycloak;
 
 class KeycloakUser {
     String username

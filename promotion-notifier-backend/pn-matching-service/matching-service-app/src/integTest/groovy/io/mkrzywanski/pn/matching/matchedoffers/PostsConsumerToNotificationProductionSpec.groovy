@@ -2,17 +2,11 @@ package io.mkrzywanski.pn.matching.matchedoffers
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import io.mkrzywanski.pn.matching.MatchingServiceApp
-import io.mkrzywanski.pn.matching.keycloak.KeyCloakAccess
-import io.mkrzywanski.pn.matching.keycloak.KeyCloakContainer
-import io.mkrzywanski.pn.matching.keycloak.KeyCloakProperties
-import io.mkrzywanski.pn.matching.keycloak.KeycloakClient
-import io.mkrzywanski.pn.matching.keycloak.KeycloakUser
+
 import io.mkrzywanski.pn.matching.user.config.MongoConfig
-import org.keycloak.admin.client.KeycloakBuilder
-import org.keycloak.representations.idm.ClientRepresentation
-import org.keycloak.representations.idm.CredentialRepresentation
-import org.keycloak.representations.idm.RealmRepresentation
-import org.keycloak.representations.idm.UserRepresentation
+import io.mkrzywanski.shared.keycloak.KeyCloakContainer
+import io.mkrzywanski.shared.keycloak.KeyCloakProperties
+import io.mkrzywanski.shared.keycloak.spring.KeycloakContainerConfiguration
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.security.oauth2.client.registration.ClientRegistration
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository
@@ -36,14 +31,9 @@ import spock.lang.Specification
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.TimeUnit
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo
-import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson
-import static com.github.tomakehurst.wiremock.client.WireMock.get
-import static com.github.tomakehurst.wiremock.client.WireMock.post
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
-import static org.assertj.core.api.Assertions.*
-import static org.awaitility.Awaitility.await;
+import static com.github.tomakehurst.wiremock.client.WireMock.*
+import static org.assertj.core.api.Assertions.assertThat
+import static org.awaitility.Awaitility.await
 
 @SpringBootTest(classes = [MongoConfig, TestConfig, TestNotificationConsumer, MatchingServiceApp])
 @AutoConfigureWireMock(port = 0)
@@ -154,23 +144,8 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
 }
 
 @Configuration
+@Import(KeycloakContainerConfiguration)
 class TestConfig {
-    @Bean
-    KeyCloakContainer keyCloakContainer(final KeyCloakProperties keyCloakProperties) {
-        KeyCloakContainer keyCloakContainer = new KeyCloakContainer(keyCloakProperties.adminUser)
-        keyCloakContainer.start()
-        setupKeycloak(keyCloakProperties, keyCloakContainer.getFirstMappedPort())
-        keyCloakContainer
-    }
-
-    @Bean
-    KeyCloakProperties keyCloakProperties() {
-        def client = new KeycloakClient("pn-matching-service", "secret")
-        def user = new KeycloakUser("test", "test")
-        def admin = new KeycloakUser("admin", "admin")
-        new KeyCloakProperties(client, KeyCloakProperties.ADMIN_CLI_CLIENT, user, admin, "xD")
-    }
-
     @Bean
     ClientRegistrationRepository clientRegistrationRepository(KeyCloakProperties keyCloakProperties, KeyCloakContainer keyCloakContainer) {
         ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("pn-matching-service")
@@ -180,81 +155,6 @@ class TestConfig {
                 .tokenUri("http://localhost:${keyCloakContainer.firstMappedPort}/auth/realms/${keyCloakProperties.testRealm}/protocol/openid-connect/token")
                 .build()
         new InMemoryClientRegistrationRepository(clientRegistration)
-    }
-
-    @Bean
-    KeyCloakAccess keycloak(KeyCloakProperties keyCloakProperties, KeyCloakContainer keyCloakContainer) {
-        def adminAccess = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${keyCloakContainer.getFirstMappedPort()}/auth")
-                .realm("master")
-                .clientId(keyCloakProperties.adminCliClient.clientId)
-                .username(keyCloakProperties.adminUser.username)
-                .password(keyCloakProperties.adminUser.password)
-                .build()
-        def userAccess = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${keyCloakContainer.getFirstMappedPort()}/auth")
-                .realm(keyCloakProperties.testRealm)
-                .clientId(keyCloakProperties.client.clientId)
-                .clientSecret(keyCloakProperties.client.clientSecret)
-                .username(keyCloakProperties.user.username)
-                .password(keyCloakProperties.user.password)
-                .build()
-        new KeyCloakAccess(adminAccess, userAccess)
-    }
-
-    def setupKeycloak(KeyCloakProperties keyCloakProperties,
-                      int port) {
-        def keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${port}/auth")
-                .realm("master")
-                .clientId(keyCloakProperties.adminCliClient.clientId)
-                .username(keyCloakProperties.adminUser.username)
-                .password(keyCloakProperties.adminUser.password)
-                .build()
-
-        def realm = testRealm(keyCloakProperties.testRealm)
-        keycloak.realms().create(realm)
-
-        def clientRepresentation = testClient(keyCloakProperties.client)
-        keycloak.realm(keyCloakProperties.testRealm).clients().create(clientRepresentation)
-
-        def user = testUser(keyCloakProperties.user)
-        keycloak.realm(keyCloakProperties.testRealm).users().create(user)
-
-    }
-
-    private UserRepresentation testUser(KeycloakUser keycloakUser) {
-        CredentialRepresentation credential = new CredentialRepresentation()
-        credential.type = CredentialRepresentation.PASSWORD
-        credential.value = keycloakUser.password
-
-        UserRepresentation user = new UserRepresentation()
-        user.username = keycloakUser.username
-        user.firstName = "test"
-        user.lastName = "test"
-        user.email = "test@gmail.com"
-        user.credentials = Arrays.asList(credential)
-        user.enabled = true
-        user.realmRoles = Arrays.asList("admin")
-        user
-    }
-
-    private def testRealm(String realm) {
-        def rep = new RealmRepresentation()
-        rep.realm = realm
-        rep.enabled = true
-        rep
-    }
-
-    private def testClient(KeycloakClient keycloakClient) {
-        def clientRepresentation = new ClientRepresentation()
-        clientRepresentation.clientId = keycloakClient.clientId
-        clientRepresentation.secret = keycloakClient.clientSecret
-        clientRepresentation.redirectUris = Arrays.asList("*")
-        clientRepresentation.directAccessGrantsEnabled = true
-        clientRepresentation.standardFlowEnabled = true
-        clientRepresentation.serviceAccountsEnabled = true
-        clientRepresentation
     }
 }
 

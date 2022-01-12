@@ -62,7 +62,7 @@ dependencies {
     //https://github.com/marcingrzejszczak/jsonassert/issues/57
     contractTestImplementation("com.jayway.jsonpath:json-path:2.6.0")
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.32.0")
-    contractTestImplementation 'com.c4-soft.springaddons:spring-security-oauth2-test-addons:3.1.5-jdk17'
+    contractTestImplementation 'com.c4-soft.springaddons:spring-security-oauth2-test-addons:3.1.13-jdk17'
 //    contractTestImplementation 'org.keycloak:keycloak-spring-security-adapter:15.0.2'
     contractTestImplementation 'org.keycloak:keycloak-spring-boot-starter:15.0.2'
 

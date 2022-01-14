@@ -1,0 +1,10 @@
+pull_request_rules:
+  - name: Dependabot automatic merge
+    conditions:
+        - and :
+            - author=dependabot[bot]
+            - check-success=build
+            - check-success=codecov/project
+    actions:
+      merge:
+        method: merge

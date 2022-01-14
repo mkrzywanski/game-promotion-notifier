@@ -68,7 +68,7 @@ subprojects {
 		testImplementation "org.spockframework:spock-core"
         testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.8.2'
 
-        testImplementation 'org.exparity:hamcrest-date:2.0.7'
+        testImplementation 'org.exparity:hamcrest-date:2.0.8'
 		testImplementation "org.hamcrest:hamcrest-core:2.2"
         testImplementation 'org.assertj:assertj-core:3.21.0'
         testRuntimeOnly "net.bytebuddy:byte-buddy:1.11.0"

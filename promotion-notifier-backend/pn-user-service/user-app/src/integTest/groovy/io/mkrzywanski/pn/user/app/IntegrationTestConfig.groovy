@@ -29,7 +29,6 @@ class IntegrationTestConfig {
                 .withUsername(dbProps.username)
                 .withPassword(dbProps.password)
                 .withDatabaseName(dbProps.database)
-                .withReuse(true)
         postgres.start()
         postgres
     }

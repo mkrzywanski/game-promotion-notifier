@@ -7,26 +7,32 @@ import org.assertj.core.util.Lists
 
 final class PostDataObjectMother {
     private List<OfferData> offers = List.of(OfferDataObjectMother.offerData().build())
+    private String link = "http://post.com"
 
     static PostDataObjectMother postData() {
-        return new PostDataObjectMother()
+        new PostDataObjectMother()
     }
 
     PostDataObjectMother offers(final List<OfferData> offerData) {
         this.offers = offerData
-        return this
+        this
+    }
+
+    PostDataObjectMother link(final String link) {
+        this.link = link
+        this
     }
 
     static PostData postDataWithEmptyOffers() {
-        return new PostData(Lists.emptyList())
+        new PostData("http://post.com", List.of())
     }
 
 
     static PostData postDataWithNullOffers() {
-        return new PostData(null)
+        new PostData("http://post.com", null)
     }
 
     PostData build() {
-        return new PostData(offers)
+        new PostData(link, offers)
     }
 }

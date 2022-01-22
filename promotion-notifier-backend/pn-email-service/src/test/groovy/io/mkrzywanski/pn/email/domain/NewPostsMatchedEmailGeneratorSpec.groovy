@@ -20,7 +20,7 @@ class NewPostsMatchedEmailGeneratorSpec extends Specification {
 
     def "should generate email html content"() {
         given:
-        def userData = new UserData("michal", "username")
+        def userData = new UserData(UUID.fromString("ca8144a4-2040-4fc1-ab4f-28cb9ac404f0"), "username", "michal", "test@tes.pl")
         def newOffersNotificationData = new NewOffersEmailData(userData, List.of())
 
         when:

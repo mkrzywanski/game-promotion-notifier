@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.app.contract.user
+package io.mkrzywanski.pn.matching.app.contract.consumer.user
 
 import io.mkrzywanski.pn.matching.infra.http.ClientCommunicationException
 
@@ -12,7 +12,6 @@ import org.springframework.cloud.contract.stubrunner.spring.StubRunnerPort
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.client.reactive.HttpComponentsClientHttpConnector
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.web.reactive.function.client.WebClient
 import spock.lang.Specification

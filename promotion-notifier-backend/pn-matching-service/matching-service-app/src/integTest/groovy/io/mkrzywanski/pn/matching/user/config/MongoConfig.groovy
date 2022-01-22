@@ -1,21 +1,21 @@
-package io.mkrzywanski.pn.matching.user.config;
+package io.mkrzywanski.pn.matching.user.config
 
-import com.mongodb.ConnectionString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
+import com.mongodb.ConnectionString
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
+import org.springframework.context.annotation.Bean
+import org.springframework.core.env.Environment
+import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.wait.strategy.Wait
 
-import java.time.Duration;
+import java.time.Duration
 
 class MongoConfig {
 
     @Autowired
     protected Environment environment
 
-    @Bean(destroyMethod = "")
+    @Bean
     GenericContainer<?> mongoDBContainer() {
         def database = environment.getProperty("spring.data.mongodb.database")
         def username = environment.getProperty("spring.data.mongodb.username")

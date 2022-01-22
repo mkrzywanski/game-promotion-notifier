@@ -15,11 +15,11 @@ public class NewPostsMatchedEmailService {
     }
 
     public void send(final NewOffersNotificationData newOffersNotificationData) {
-        final NewOffersEmailData newOffersEmailData = new NewOffersEmailData(newOffersNotificationData.getUserData(), newOffersNotificationData.getPostDataList());
+        final NewOffersEmailData newOffersEmailData = new NewOffersEmailData(newOffersNotificationData.getUserData(), newOffersNotificationData.getPostNotificationData());
         final EmailContent emailContent = newPostsMatchedEmailGenerator.generate(newOffersEmailData);
         final EmailMessage emailMessage = EmailMessage.builder()
                 .emailContent(emailContent)
-                .target(EmailAddress.of(newOffersNotificationData.getEmail()))
+                .target(EmailAddress.of(newOffersNotificationData.getUserData().getEmail()))
                 .subject(Subject.of("New Posts matched!"))
                 .build();
         try {

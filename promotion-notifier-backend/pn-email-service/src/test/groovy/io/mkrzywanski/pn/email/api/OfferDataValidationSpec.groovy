@@ -26,6 +26,9 @@ class OfferDataValidationSpec extends Specification {
         offerData().name("").build()                                                         | _
         offerData().name(null).build()                                                       | _
         offerData().prices(null).build()                                                     | _
+        offerData().url(null).build()                                                     | _
+        offerData().url("").build()                                                     | _
+        offerData().url("wrong url").build()                                                     | _
         offerData().prices(Collections.emptySet()).build()                                   | _
         offerData().prices(Set.of(PriceObjectMother.price().currency(null).build())).build() | _
         offerData().prices(Set.of(PriceObjectMother.price().value(null).build())).build()    | _

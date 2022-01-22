@@ -49,6 +49,7 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
     private static RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer(RABBIT_IMAGE)
             .withEnv("RABBITMQ_USERNAME", RABBIT_USERNAME)
             .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD)
+            .withReuse(true)
 
     @DynamicPropertySource
     private static void rabbitProperties(final DynamicPropertyRegistry registry) {
@@ -63,9 +64,6 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
 
     @Autowired
     RabbitTemplate rabbitTemplate
-
-    @Autowired
-    MongoMatchesRepository matchesRepository
 
     @Autowired
     TestNotificationConsumer testNotificationConsumer

@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.app.contract.post;
+package io.mkrzywanski.pn.email.contract;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
@@ -12,14 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-class SimpleMessageVerifier implements MessageVerifier<Message> {
+record SimpleMessageVerifier(
+        RabbitTemplate rabbitTemplate) implements MessageVerifier<Message> {
 
-
-    private final RabbitTemplate rabbitTemplate;
-
-    SimpleMessageVerifier(final RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-    }
 
     @Override
     public Message receive(final String destination, final long timeout, final TimeUnit timeUnit,

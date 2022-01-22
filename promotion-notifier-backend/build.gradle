@@ -2,10 +2,9 @@ buildscript {
     ext {
         keycloakVersion = '16.1.0'
         lombokVersion = '1.18.22'
-        springBootVersion = '2.6.3'
         springVersion = '5.3.15'
         groovyVersion = '3.0.9'
-        springBootVersion = '2.6.2'
+        springBootVersion = '2.6.3'
         springDepenedcyMgmtVersion = '1.0.11.RELEASE'
         springCloudVersion = '3.1.0'
         testcontainersVersion = '1.16.3'
@@ -53,6 +52,7 @@ subprojects {
             showStackTraces = true
             showStandardStreams = true
         }
+//        environment("TESTCONTAINERS_REUSE_ENABLE", "true")
     }
 
     tasks.withType(Checkstyle) {

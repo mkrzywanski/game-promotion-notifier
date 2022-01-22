@@ -37,7 +37,6 @@ abstract class AbstractIntegrationConfig {
                 .withEnv("MONGODB_ROOT_PASSWORD", "password")
                 .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(10)))
                 .withExposedPorts(27017)
-                .withReuse(true)
         mongoDBContainer.start()
         mongoDBContainer
     }

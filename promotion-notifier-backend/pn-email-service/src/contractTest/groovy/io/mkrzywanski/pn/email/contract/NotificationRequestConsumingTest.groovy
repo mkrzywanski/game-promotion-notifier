@@ -47,7 +47,6 @@ class NotificationRequestConsumingTest {
     private static RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer(RABBIT_IMAGE)
             .withEnv("RABBITMQ_USERNAME", RABBIT_USERNAME)
             .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD)
-            .withReuse(true)
 
     @Autowired
     private StubTrigger trigger

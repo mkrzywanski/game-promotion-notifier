@@ -29,7 +29,6 @@ class RabbitMQIntegConfig {
         RabbitMQContainer rabbitMQContainer = new RabbitMQContainer(RABBIT_IMAGE)
                 .withEnv("RABBITMQ_USERNAME", username)
                 .withEnv("RABBITMQ_PASSWORD", password)
-                .withReuse(true)
         rabbitMQContainer.start()
         rabbitMQContainer
     }

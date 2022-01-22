@@ -9,6 +9,7 @@ import java.util.Currency;
 @Getter
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode
 public class Price {
     @NotNull
     Currency currency;

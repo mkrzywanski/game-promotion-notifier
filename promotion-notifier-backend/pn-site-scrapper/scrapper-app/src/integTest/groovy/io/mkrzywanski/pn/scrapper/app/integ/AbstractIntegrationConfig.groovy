@@ -22,7 +22,7 @@ abstract class AbstractIntegrationConfig {
     @Autowired
     protected Environment environment
 
-    @Bean(destroyMethod = "")
+    @Bean
     GenericContainer<?> mongoDBContainer() {
         def database = environment.getProperty("spring.data.mongodb.database")
         def username = environment.getProperty("spring.data.mongodb.username")

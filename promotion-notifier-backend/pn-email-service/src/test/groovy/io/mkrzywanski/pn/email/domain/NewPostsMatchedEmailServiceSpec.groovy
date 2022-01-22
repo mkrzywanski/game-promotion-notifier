@@ -16,11 +16,12 @@ class NewPostsMatchedEmailServiceSpec extends Specification {
 
     def "should trigger sending email"() {
         given:
-        def userData = new UserData("michal", "username")
-        def postData = new PostData(List.of(new OfferData("rainbow six", Set.of(Price.of(Currencies.PLN, BigDecimal.ONE)))))
-        def postsData = List.of(postData)
+
         def targetEmailAddress = "email@email.com"
-        def newOffersNotificationData = new NewOffersNotificationData(userData, targetEmailAddress, postsData)
+        def userData = new UserData(UUID.fromString("dd463eee-3425-40b4-b255-a27569e0bc83"), "username", "michal", targetEmailAddress)
+        def postData = new PostData("http://link", List.of(new OfferData("rainbow six", "http://test.link", Set.of(Price.of(Currencies.PLN, BigDecimal.ONE)))))
+        def postsData = List.of(postData)
+        def newOffersNotificationData = new NewOffersNotificationData(userData, postsData)
         def expectedEmailContent = EmailContent.from("dummy content")
         def expectedEmailMessage = new EmailMessage(expectedEmailContent, EmailAddress.of(targetEmailAddress), Subject.of("New Posts matched!"))
 

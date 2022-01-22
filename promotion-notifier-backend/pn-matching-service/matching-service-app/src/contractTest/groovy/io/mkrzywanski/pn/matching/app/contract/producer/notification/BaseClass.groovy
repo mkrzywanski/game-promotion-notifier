@@ -1,8 +1,12 @@
-package io.mkrzywanski.pn.scrapper.contract
+package io.mkrzywanski.pn.matching.app.contract.producer.notification
 
-import io.mkrzywanski.gpn.scrapper.domain.post.*
-import io.mkrzywanski.pn.scrapper.app.adapters.publishing.QueuePostPublisher
-import io.mkrzywanski.pn.scrapper.app.infra.QueueConfig
+import io.mkrzywanski.pn.matching.infra.queue.NotificationsQueueConfig
+import io.mkrzywanski.pn.matching.infra.queue.RabbitConfig
+import io.mkrzywanski.pn.matching.matchedoffers.NewOffersNotification
+import io.mkrzywanski.pn.matching.matchedoffers.OfferNotificationData
+import io.mkrzywanski.pn.matching.matchedoffers.PostNotificationData
+import io.mkrzywanski.pn.matching.matchedoffers.RabbitNotificationPublisher
+import io.mkrzywanski.pn.matching.user.UserDetails
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -24,14 +28,12 @@ import org.testcontainers.utility.DockerImageName
 import spock.lang.Shared
 import spock.lang.Specification
 
-import java.time.ZonedDateTime
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [
-        QueueConfig.class,
-        TestConfig.class
+        TestConfig
 ], properties = "stubrunner.amqp.mockConnection=false")
 @AutoConfigureMessageVerifier
 abstract class BaseClass extends Specification {
@@ -49,7 +51,7 @@ abstract class BaseClass extends Specification {
             .withReuse(true)
 
     @Autowired
-    private QueuePostPublisher queuePostPublisher
+    private RabbitNotificationPublisher publisher
 
     @DynamicPropertySource
     private static void rabbitProperties(final DynamicPropertyRegistry registry) {
@@ -60,17 +62,23 @@ abstract class BaseClass extends Specification {
     }
 
     void trigger() {
-        def gameOffer = new GameOffer(UUID.fromString("856e68ac-2ae9-4164-bbda-374663b91cdd"), "Rainbow Six", new NumberGamePrice(Currencies.PLN, BigDecimal.ONE), "www.test.pl")
-        final var offers = List.of(gameOffer)
-        final var post = new Post(PostId.generate(), Hash.compute("value"), "value", offers, ZonedDateTime.now())
-        final var posts = List.of(post)
-        queuePostPublisher.publish(posts)
+        def userId = UUID.fromString("5a1a353b-ffc1-4346-827a-83de9bacd800")
+        def details = new UserDetails(userId, "Andrew123", "Andrew", "andrew.golota@gmail.com")
+        def postNotifications = List.of(new PostNotificationData("http://test.link", List.of(new OfferNotificationData("Rainbow Six", "http://test.link", Map.of(Currency.getInstance("PLN"), BigDecimal.ONE)))))
+        def newOffersNotification = new NewOffersNotification(details, postNotifications)
+        publisher.publish(newOffersNotification)
     }
+
+//    void cleanup() {
+//        RABBIT_MQ_CONTAINER.stop()
+//    }
 
 }
 
 @Configuration
-@Import(QueuePostPublisher.class)
+@Import([NotificationsQueueConfig,
+        RabbitConfig,
+        RabbitNotificationPublisher])
 @EnableAutoConfiguration(exclude = MongoAutoConfiguration.class)
 class TestConfig {
 
@@ -98,7 +106,7 @@ class RabbitMessageVerifier implements MessageVerifier<Message<?>> {
 
     private final BlockingQueue<Message<?>> queue = new LinkedBlockingQueue<>()
 
-    @RabbitListener(queues = '${gpn.queue.name}')
+    @RabbitListener(queues = '${gpn.matching-service.publishing.queue.name}')
     void listen(final Message<?> message) {
         queue.add(message)
     }
@@ -108,6 +116,7 @@ class RabbitMessageVerifier implements MessageVerifier<Message<?>> {
         try {
             return queue.poll(timeout, timeUnit)
         } catch (final InterruptedException e) {
+            Thread.currentThread().interrupt()
             throw new IllegalStateException(e)
         }
     }

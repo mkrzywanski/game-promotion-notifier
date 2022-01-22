@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.app.contract.post
+package io.mkrzywanski.pn.matching.app.contract.consumer.post
 
 import io.mkrzywanski.pn.matching.infra.queue.PostsQueueConfig
 import io.mkrzywanski.pn.matching.infra.queue.RabbitConfig
@@ -46,6 +46,7 @@ class PostConsumingContractSpec extends Specification {
     private static RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer(RABBIT_IMAGE)
             .withEnv("RABBITMQ_USERNAME", RABBIT_USERNAME)
             .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD)
+            .withReuse(true)
 
     @Autowired
     private StubTrigger trigger
@@ -76,9 +77,9 @@ class PostConsumingContractSpec extends Specification {
 
     }
 
-    void cleanup() {
-        RABBIT_MQ_CONTAINER.stop()
-    }
+//    void cleanup() {
+//        RABBIT_MQ_CONTAINER.stop()
+//    }
 }
 
 @Configuration

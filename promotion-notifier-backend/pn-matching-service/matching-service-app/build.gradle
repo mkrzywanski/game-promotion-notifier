@@ -1,6 +1,9 @@
+import org.springframework.cloud.contract.verifier.config.TestFramework
+
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
+    id 'org.springframework.cloud.contract'
 }
 
 sourceSets {
@@ -12,22 +15,22 @@ sourceSets {
             resources.srcDirs = ["${projectDir}/src/integTest/resources"]
         }
     }
-    contractTest {
-        groovy {
-            srcDirs = ["${projectDir}/src/contractTest/groovy"]
-            compileClasspath += sourceSets.main.output
-            runtimeClasspath += sourceSets.main.output
-            resources.srcDirs = ["${projectDir}/src/contractTest/resources"]
-        }
-    }
+//    contractTest {
+//        groovy {
+//            srcDirs = ["${projectDir}/src/contractTest/groovy"]
+//            compileClasspath += sourceSets.main.output
+//            runtimeClasspath += sourceSets.main.output
+//            resources.srcDirs = ["${projectDir}/src/contractTest/resources"]
+//        }
+//    }
 }
 
 configurations {
     integTestImplementation.extendsFrom testImplementation
     integTestRuntimeOnly.extendsFrom testRuntimeOnly
 
-    contractTestImplementation.extendsFrom testImplementation
-    contractTestRuntimeOnly.extendsFrom testRuntimeOnly
+//    contractTestImplementation.extendsFrom testImplementation
+//    contractTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencyManagement {
@@ -82,22 +85,43 @@ tasks.register('integrationTest', Test) {
     }
 }
 
-tasks.register('contractTest', Test) {
+contractTest {
     useJUnitPlatform()
-    description = 'Runs contract tests.'
-    group = 'verification'
-
-    testClassesDirs = sourceSets.contractTest.output.classesDirs
-    classpath = sourceSets.contractTest.runtimeClasspath
     testLogging {
-
-        events("passed", "skipped", "failed")
-        showStackTraces = true
         exceptionFormat = 'full'
+    }
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "Results: (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+            boolean skipTests = Boolean.parseBoolean(project.findProperty('SKIP_TESTS') ?: "false")
+            if (result.testCount == 0 && !skipTests) {
+                throw new IllegalStateException("No tests were found. Failing the build")
+            }
+        }
     }
 }
 
-tasks.findByName('integrationTest').dependsOn('contractTest')
+contracts {
+    baseClassForTests = "io.mkrzywanski.pn.matching.app.contract.producer.notification.BaseClass"
+    testFramework = TestFramework.SPOCK
+}
+
+//tasks.register('contractTest', Test) {
+//    useJUnitPlatform()
+//    description = 'Runs contract tests.'
+//    group = 'verification'
+//
+//    testClassesDirs = sourceSets.contractTest.output.classesDirs
+//    classpath = sourceSets.contractTest.runtimeClasspath
+//    testLogging {
+//
+//        events("passed", "skipped", "failed")
+//        showStackTraces = true
+//        exceptionFormat = 'full'
+//    }
+//}
+//
+//tasks.findByName('integrationTest').dependsOn('contractTest')
 
 idea {
     module {

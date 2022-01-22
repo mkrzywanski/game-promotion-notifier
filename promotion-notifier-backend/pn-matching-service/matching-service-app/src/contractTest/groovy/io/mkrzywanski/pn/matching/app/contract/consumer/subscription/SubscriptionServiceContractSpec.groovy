@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.app.contract.subscription
+package io.mkrzywanski.pn.matching.app.contract.consumer.subscription
 
 
 import io.mkrzywanski.pn.matching.subscription.HttpSubscriptionServiceClient

@@ -4,35 +4,51 @@ package io.mkrzywanski.pn.email.data
 import io.mkrzywanski.pn.email.api.UserData
 
 final class UserDataObjectMother {
+    private UUID id = UUID.fromString("e1b8b415-4f3f-4cdc-a984-344b7c1e3585")
     private String username = "username"
-    private String name = "Andrew"
+    private String firstname = "Andrew"
+    private String email = EmailObjectMother.EMAIL
 
     private UserDataObjectMother() {
     }
 
     static UserDataObjectMother userData() {
-        return new UserDataObjectMother()
+        new UserDataObjectMother()
     }
 
     static UserData withUsername(String username) {
-        return userData().username(username).build()
+        userData().username(username).build()
     }
 
-    static UserData withName(String name) {
-        return userData().name(name).build()
+    static UserData withFirstName(String firstName) {
+        userData().firstName(firstName).build()
+    }
+
+    static UserData withEmail(String email) {
+        userData().email(email).build()
     }
 
     UserDataObjectMother username(String username) {
         this.username = username
-        return this
+        this
     }
 
-    UserDataObjectMother name(String name) {
-        this.name = name
-        return this
+    UserDataObjectMother firstName(String firstName) {
+        this.firstname = firstName
+        this
+    }
+
+    UserDataObjectMother email(String email) {
+        this.email = email
+        this
+    }
+
+    UserDataObjectMother id(UUID id) {
+        this.id = id
+        this
     }
 
     UserData build() {
-        return new UserData(name, username)
+        return new UserData(id, username, firstname, email)
     }
 }

@@ -54,7 +54,7 @@ class EmailSendingValidationTest extends Specification {
     }
 
     private invalidObjectIsPublishedToQueue() {
-        def newOffersNotificationData = new NewOffersNotificationData(null, "test@test.pl", null)
+        def newOffersNotificationData = new NewOffersNotificationData(null, null)
         sendToQueue(newOffersNotificationData)
     }
 

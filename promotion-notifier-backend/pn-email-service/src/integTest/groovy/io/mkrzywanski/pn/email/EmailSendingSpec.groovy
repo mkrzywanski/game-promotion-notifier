@@ -62,16 +62,17 @@ class EmailSendingSpec extends Specification {
     }
 
     private void dataAppearOnQueue() {
-        UserData userData = new UserData("aaa", "bbb")
-        List<PostData> postData = List.of(new PostData(List.of(new OfferData("aaa", Set.of(Price.of(Currencies.PLN, BigDecimal.ONE))))))
-        newOffersNotificationData = new NewOffersNotificationData(userData, "test@test.com.pl", postData)
+        def userData = new UserData(UUID.fromString("827fba77-f7ad-43a8-9190-de8b10d74568"), "username", "firstName", "test@test.pl")
+        def postData = List.of(new PostData("http://test", List.of(new OfferData("Rainbow Six", "http://test.pl", Set.of(Price.of(Currencies.PLN, BigDecimal.ONE))))))
+        newOffersNotificationData = new NewOffersNotificationData(userData, postData)
         rabbitTemplate.convertAndSend(rabbitInfrastructureProperties.getExchange(), rabbitInfrastructureProperties.getQueue(), newOffersNotificationData)
         await().atMost(Duration.ofSeconds(10)).until(anyEmailIsReceived())
     }
 
     boolean emailContentIsValid() {
         def email = smtpServer.getReceivedMessages().first()
-        def isValid = matchesEvery(hasSubject("New Posts matched!"))
+        def isValid = matchesEvery(
+                hasSubject("New Posts matched!"))
                 .and(isFrom(mailProperties.getUsername()))
                 .and(contentContains(
                         """

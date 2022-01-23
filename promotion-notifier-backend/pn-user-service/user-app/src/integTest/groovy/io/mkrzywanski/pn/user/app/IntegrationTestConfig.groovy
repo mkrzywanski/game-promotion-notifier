@@ -43,7 +43,3 @@ class IntegrationTestConfig {
         dataSourceBuilder.build();
     }
 }
-
-class test extends PostgreSQLContainer<test> {
-
-}

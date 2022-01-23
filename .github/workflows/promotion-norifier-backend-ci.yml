@@ -14,11 +14,11 @@ jobs:
       run: chmod +x gradlew
       working-directory: ./promotion-notifier-backend
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -i
       working-directory: ./promotion-notifier-backend
 
     - name: Run integration tests
-      run: ./gradlew integTest
+      run: ./gradlew integTest -i
       working-directory: ./promotion-notifier-backend
     - name: Generate coverage report
       run: ./gradlew codeCoverageReport

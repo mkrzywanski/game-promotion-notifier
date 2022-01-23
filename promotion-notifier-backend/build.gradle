@@ -51,6 +51,10 @@ subprojects {
             exceptionFormat = 'full'
             showStackTraces = true
             showStandardStreams = true
+            info {
+                events "started", "skipped", "failed"
+                exceptionFormat "full"
+            }
         }
 //        environment("TESTCONTAINERS_REUSE_ENABLE", "true")
     }

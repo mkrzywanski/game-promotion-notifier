@@ -56,7 +56,6 @@ subprojects {
                 exceptionFormat "full"
             }
         }
-//        environment("TESTCONTAINERS_REUSE_ENABLE", "true")
     }
 
     tasks.withType(Checkstyle) {

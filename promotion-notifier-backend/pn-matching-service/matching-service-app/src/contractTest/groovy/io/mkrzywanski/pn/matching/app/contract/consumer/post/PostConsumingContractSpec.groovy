@@ -68,17 +68,13 @@ class PostConsumingContractSpec extends Specification {
 
         when:
         final List<Post> posts = postConsumer.messages()
-        final Post post = posts.stream().findFirst().orElseThrow(IllegalStateException.&new)
+        final Post post = posts.first()
 
         then:
         assertThat(post.getId()).isNotNull()
         assertThat(post.getOffers()).contains(new Offer(UUID.fromString("856e68ac-2ae9-4164-bbda-374663b91cdd"), "Rainbow Six", Map.of(Currency.getInstance("PLN"), BigDecimal.ONE), "www.test.pl"))
 
     }
-
-//    void cleanup() {
-//        RABBIT_MQ_CONTAINER.stop()
-//    }
 }
 
 @Configuration

@@ -27,7 +27,6 @@ class IntegrationTestConfig {
         def container = new ElasticsearchContainer(DockerImageName.parse(ELASTICSEARCH_IMAGE))
                 .withEnv("discovery.type", "single-node")
                 .withEnv("ES_JAVA_OPTS", "-Xms512m -Xmx512m")
-                .withReuse(true)
         container.start()
         container
     }

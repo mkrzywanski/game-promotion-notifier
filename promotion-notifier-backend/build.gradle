@@ -16,9 +16,9 @@ buildscript {
 }
 
 plugins {
-	id 'org.springframework.boot' version "${springBootVersion}" apply false
-	id 'io.spring.dependency-management' version "${springDepenedcyMgmtVersion}" apply false
-	id 'org.springframework.cloud.contract' version "${springCloudVersion}" apply false
+    id 'org.springframework.boot' version "${springBootVersion}" apply false
+    id 'io.spring.dependency-management' version "${springDepenedcyMgmtVersion}" apply false
+    id 'org.springframework.cloud.contract' version "${springCloudVersion}" apply false
     id 'com.google.cloud.tools.jib' version '3.2.0' apply false
     id "io.freefair.lombok" version "6.3.0"
 }
@@ -62,17 +62,17 @@ subprojects {
         exclude '**/generated-test-sources/**'
     }
 
-	dependencies {
+    dependencies {
         implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
         implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.10'
         implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.33'
 
         testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
-		testImplementation "org.spockframework:spock-core"
+        testImplementation "org.spockframework:spock-core"
         testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.8.2'
 
         testImplementation 'org.exparity:hamcrest-date:2.0.8'
-		testImplementation "org.hamcrest:hamcrest-core:2.2"
+        testImplementation "org.hamcrest:hamcrest-core:2.2"
         testImplementation 'org.assertj:assertj-core:3.22.0'
         testRuntimeOnly "net.bytebuddy:byte-buddy:1.12.6"
 

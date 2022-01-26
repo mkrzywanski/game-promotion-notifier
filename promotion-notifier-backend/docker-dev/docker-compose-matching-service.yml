@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   mongo:
-    image: bitnami/mongodb:4.4
+    image: bitnami/mongodb:4.4.12
     restart: always
     environment:
       MONGODB_ROOT_PASSWORD: example

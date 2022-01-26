@@ -12,7 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 public class BeansConfig {
 
     @Autowired
-    MailProperties mailProperties;
+    private MailProperties mailProperties;
 
     @Bean
     EmailSendingService emailSendingService(final JavaMailSender javaMailSender) {

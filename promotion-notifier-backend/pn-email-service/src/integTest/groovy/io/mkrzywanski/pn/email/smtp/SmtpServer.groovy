@@ -72,9 +72,9 @@ class SmtpServer implements AutoCloseable {
         }
 
         SmtpServer build() {
-            GreenMail greenMail1 = new GreenMail(new ServerSetup(port, "localhost", "smtp"))
-            greenMail1.setUser(email, userName, password)
-            return new SmtpServer(greenMail1)
+            GreenMail gm = new GreenMail(new ServerSetup(port, "localhost", "smtp"))
+            gm.setUser(email, userName, password)
+            return new SmtpServer(gm)
         }
     }
 }

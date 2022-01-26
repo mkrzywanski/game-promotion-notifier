@@ -1,10 +1,10 @@
 spring:
   mail:
     default-encoding: UTF-8
-    host: smtp.gmail.com
-    username: promotionnotificationsapp@gmail.com
-    password: testApp2021
-    port: 587
+    host: localhost
+    username: test
+    password: test
+    port: 25
     properties:
       mail:
         smtp:

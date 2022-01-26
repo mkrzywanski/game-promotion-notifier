@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  mail-server:
+    image: greenmail/standalone:2.0.0-alpha-2
+    ports:
+      - "25:25"
+    environment:
+      - "GREENMAIL_OPTS=-Dgreenmail.setup.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.users=test:test"
+  rabitmq:
+    image: bitnami/rabbitmq:3.8.18
+    restart: always
+    environment:
+      RABBITMQ_USERNAME: test
+      RABBITMQ_PASSWORD: test
+    ports:
+      - "5672:5672"
+      - "15672:15672"

@@ -14,6 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests(authorize -> authorize
+                        .mvcMatchers("/actuator/*").permitAll()
                         .anyRequest()
                         .authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

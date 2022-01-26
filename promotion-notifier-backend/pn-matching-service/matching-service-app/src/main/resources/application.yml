@@ -17,7 +17,7 @@ spring:
     mongodb:
       database: posts
       username: root
-      password: password
+      password: example
       authentication-database: admin
       auto-index-creation: true
   rabbitmq:
@@ -29,3 +29,19 @@ spring:
     user:
       name: test
       password: test
+    oauth2:
+      client:
+        registration:
+          pn-matching-service:
+            client-id: myclient-ac
+            client-secret: 81e3fd9f-52ce-4549-8ea9-ae53e754da89
+            authorization-grant-type: client_credentials
+            provider: keycloak
+        provider:
+          keycloak:
+#            issuer-uri: http://localhost:8180/auth/realms/myrealm
+            #authorization-uri: http://localhost:8180/auth/realms/myrealm/protocol/openid-connect/auth
+            token-uri: http://localhost:8081/auth/realms/test/protocol/openid-connect/token
+            #user-info-uri: http://localhost:8180/auth/realms/myrealm/protocol/openid-connect/userinfo
+            #jwk-set-uri: http://localhost:8180/auth/realms/myrealm/protocol/openid-connect/certs
+            #user-name-attribute: preferred_username

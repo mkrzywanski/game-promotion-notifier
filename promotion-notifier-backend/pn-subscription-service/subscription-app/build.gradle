@@ -65,7 +65,7 @@ dependencies {
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.32.0")
     contractTestImplementation 'com.c4-soft.springaddons:spring-security-oauth2-test-addons:3.1.15-jdk17'
 //    contractTestImplementation 'org.keycloak:keycloak-spring-security-adapter:15.0.2'
-    contractTestImplementation 'org.keycloak:keycloak-spring-boot-starter:16.1.0'
+    contractTestImplementation 'org.keycloak:keycloak-spring-boot-starter:16.1.1'
 
 }
 

@@ -28,7 +28,7 @@ abstract class AbstractIntegrationConfig {
         def username = environment.getProperty("spring.data.mongodb.username")
         def password = environment.getProperty("spring.data.mongodb.password")
 
-        def mongoDBContainer = new GenericContainer<>("bitnami/mongodb:4.4")
+        def mongoDBContainer = new GenericContainer<>("bitnami/mongodb:4.4.12")
                 .withEnv("MONGODB_USERNAME", username)
                 .withEnv("MONGODB_PASSWORD", password)
                 .withEnv("MONGODB_DATABASE", database)

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.core.env.Environment
+import org.testcontainers.containers.Container
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait
 
@@ -33,7 +34,11 @@ class MongoConfig {
                 .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(10)))
                 .withExposedPorts(27017)
         mongoDBContainer.start()
-        TimeUnit.SECONDS.sleep(10)
+        Awaitility.await().until(() -> {
+            def result = mongoDBContainer.execInContainer("mongo", "--quiet", "--port", "27017",  "-u" , "root", "-p",  "password", "--eval", "rs.status().ok")
+            result.stdout == "1\n"
+        })
+
         mongoDBContainer
     }
 

@@ -2,6 +2,7 @@ package io.mkrzywanski.pn.scrapper.app.integ;
 
 import com.mongodb.ConnectionString
 import io.mkrzywanski.pn.scrapper.app.infra.MongoDbTransactionConfig
+import org.awaitility.Awaitility
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
@@ -40,7 +41,10 @@ abstract class AbstractIntegrationConfig {
                 .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(10)))
                 .withExposedPorts(27017)
         mongoDBContainer.start()
-        TimeUnit.SECONDS.sleep(10)
+        Awaitility.await().until(() -> {
+            def result = mongoDBContainer.execInContainer("mongo", "--quiet", "--port", "27017",  "-u" , "root", "-p",  "password", "--eval", "rs.status().ok")
+            result.stdout == "1\n"
+        })
         mongoDBContainer
     }
 

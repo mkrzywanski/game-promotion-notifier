@@ -13,6 +13,8 @@ import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait
 
 import java.time.Duration
+import java.time.temporal.ChronoUnit
+import java.util.concurrent.TimeUnit
 
 @Configuration
 @EnableAutoConfiguration
@@ -38,6 +40,7 @@ abstract class AbstractIntegrationConfig {
                 .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(10)))
                 .withExposedPorts(27017)
         mongoDBContainer.start()
+        TimeUnit.SECONDS.sleep(10)
         mongoDBContainer
     }
 

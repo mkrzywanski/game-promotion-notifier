@@ -2,6 +2,7 @@ package io.mkrzywanski.pn.scrapper.app.integ;
 
 import com.mongodb.ConnectionString
 import io.mkrzywanski.pn.scrapper.app.infra.MongoDbTransactionConfig
+import io.mkrzywanski.pn.testcontainers.ContainerCommandWaitStrategy
 import org.awaitility.Awaitility
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -31,6 +32,10 @@ abstract class AbstractIntegrationConfig {
         def username = environment.getProperty("spring.data.mongodb.username")
         def password = environment.getProperty("spring.data.mongodb.password")
 
+        def mongoReplicaSetReady = ContainerCommandWaitStrategy.builder()
+                .command("mongo", "--quiet", "--port", "27017", "-u", "root", "-p", "password", "--eval", "rs.status().ok")
+                .expectedOutput("1\n")
+                .build()
         def mongoDBContainer = new GenericContainer<>("bitnami/mongodb:4.4.12")
                 .withEnv("MONGODB_USERNAME", username)
                 .withEnv("MONGODB_PASSWORD", password)
@@ -38,13 +43,9 @@ abstract class AbstractIntegrationConfig {
                 .withEnv("MONGODB_REPLICA_SET_MODE", "primary")
                 .withEnv("MONGODB_REPLICA_SET_KEY", "someKey1")
                 .withEnv("MONGODB_ROOT_PASSWORD", "password")
-                .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(10)))
+                .waitingFor(mongoReplicaSetReady)
                 .withExposedPorts(27017)
         mongoDBContainer.start()
-        Awaitility.await().until(() -> {
-            def result = mongoDBContainer.execInContainer("mongo", "--quiet", "--port", "27017",  "-u" , "root", "-p",  "password", "--eval", "rs.status().ok")
-            result.stdout == "1\n"
-        })
         mongoDBContainer
     }
 

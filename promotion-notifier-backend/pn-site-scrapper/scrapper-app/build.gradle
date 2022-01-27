@@ -58,6 +58,7 @@ dependencies {
 
     integTestImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: "${wiremockVersion}"
     integTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
+    integTestImplementation project(":pn-shared-test-modules:testcontainers-extended")
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 

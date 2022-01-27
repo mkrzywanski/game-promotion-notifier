@@ -1,0 +1,8 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api "org.testcontainers:testcontainers:${testcontainersVersion}"
+    implementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
+}

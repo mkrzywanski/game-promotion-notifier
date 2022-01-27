@@ -1,10 +1,14 @@
 package io.mkrzywanski.pn.testcontainers;
 
 import org.awaitility.Awaitility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.Container;
 import org.testcontainers.containers.wait.strategy.AbstractWaitStrategy;
 
 public class ContainerCommandWaitStrategy extends AbstractWaitStrategy {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ContainerCommandWaitStrategy.class);
 
     private final String[] command;
     private final String expectedOutput;
@@ -20,23 +24,24 @@ public class ContainerCommandWaitStrategy extends AbstractWaitStrategy {
 
     @Override
     protected void waitUntilReady() {
-        System.out.println("xDDDDD " + waitStrategyTarget.getContainerId());
+        LOG.info("Waiting for container " + waitStrategyTarget.getContainerId() + " to be ready");
         Awaitility.await().atMost(startupTimeout).until(() -> {
-            Container.ExecResult result = waitStrategyTarget.execInContainer(command);
+            final Container.ExecResult result = waitStrategyTarget.execInContainer(command);
             return result.getStdout().equals(expectedOutput);
         });
+        LOG.info("Container " + waitStrategyTarget.getContainerId() + " ready");
     }
 
     public static class Builder {
         private String[] command = {};
         private String expectedOutput = "";
 
-        public Builder command(String... command) {
+        public Builder command(final String... command) {
             this.command = command;
             return this;
         }
 
-        public Builder expectedOutput(String expectedOutput) {
+        public Builder expectedOutput(final String expectedOutput) {
             this.expectedOutput = expectedOutput;
             return this;
         }

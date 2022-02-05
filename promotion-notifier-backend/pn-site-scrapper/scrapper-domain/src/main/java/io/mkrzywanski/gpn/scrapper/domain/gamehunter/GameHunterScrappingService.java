@@ -21,8 +21,7 @@ public class GameHunterScrappingService {
     private final PostRepository postRepository;
     private final PostTransactionalOutboxRepository postTransactionalOutboxRepository;
     private final GameHunterScrapper gameHunterScrapper;
-    private final int minimalDaysInterval = 2;
-    private final Clock clock;
+    private final PostListFilter postListFilter;
 
     GameHunterScrappingService(final GameHunterScrapper gameHunterScrapper,
                                final PostRepository postRepository,
@@ -30,7 +29,7 @@ public class GameHunterScrappingService {
         this.postRepository = postRepository;
         this.gameHunterScrapper = gameHunterScrapper;
         this.postTransactionalOutboxRepository = postTransactionalOutboxRepository;
-        this.clock = clock;
+        this.postListFilter = new PostListFilter(new NotTooOldFilter(2, clock));
     }
 
     public static GameHunterScrappingService newInstance(final String serviceUrl, final PostRepository postRepository, final PostTransactionalOutboxRepository postTransactionalOutboxRepository, final Clock clock) {
@@ -88,14 +87,11 @@ public class GameHunterScrappingService {
     }
 
     private List<Post> scrapPage(final int pageNumber) {
-        return gameHunterScrapper.scrap(pageNumber)
-                .stream()
-                .filter(this::isNotTooOld)
-                .toList();
-    }
-
-    private boolean isNotTooOld(final Post post) {
-        return post.isYoungerThan(minimalDaysInterval, clock);
+        final var posts = gameHunterScrapper.scrap(pageNumber);
+        LOGGER.info("All posts on page = {}", pageNumber);
+        final var posts1 = postListFilter.filter(posts);
+        LOGGER.info("Posts after filtering out too old posts = {}", posts1.size());
+        return posts1;
     }
 
     private static <T> Predicate<T> distinctByKey(final Function<? super T, ?> keyExtractor) {

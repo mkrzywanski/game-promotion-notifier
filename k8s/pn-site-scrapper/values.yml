@@ -10,7 +10,7 @@ env:
   gpn.scheduling.publishing.cron: '*/2 * * * * *'
   gpn.queue.name: posts
   mongodb.replicaSet: rs0
-  spring.data.mongodb.host: pn-site-scrapper-headless
+  spring.data.mongodb.host: pn-site-scrapper-mongodb-headless
   spring.data.mongodb.port: 27017
   spring.data.mongodb.database: posts
   spring.data.mongodb.username: root
@@ -34,10 +34,10 @@ mongodb:
     usernames: [user]
     passwords: [password]
     databases: [admin]
-  nameOverride: pn-site-scrapper
+  nameOverride: mongodb
   architecture: replicaset
   replicaSetName: rs0
-  replicaCount: 2
+  # replicaCount: 1
   # arbiter:
   #   enabled: false
 

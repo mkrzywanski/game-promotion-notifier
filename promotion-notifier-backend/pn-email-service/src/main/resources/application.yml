@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: pn-email-service
   mail:
     default-encoding: UTF-8
     host: localhost
@@ -25,3 +27,12 @@ gpn:
     queue : new-offers-matches
     dead-letter-exchange : new-offers-exchange-dead-letter
     dead-letter-queue : new-offers-matches-dead-letter
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

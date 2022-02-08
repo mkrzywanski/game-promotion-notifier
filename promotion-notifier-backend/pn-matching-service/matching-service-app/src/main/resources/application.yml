@@ -13,6 +13,8 @@ gpn:
       queue:
         name: "notifications"
 spring:
+  application:
+    name: pn-matching-service
   data:
     mongodb:
       database: posts
@@ -45,3 +47,11 @@ spring:
             #user-info-uri: http://localhost:8180/auth/realms/myrealm/protocol/openid-connect/userinfo
             #jwk-set-uri: http://localhost:8180/auth/realms/myrealm/protocol/openid-connect/certs
             #user-name-attribute: preferred_username
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

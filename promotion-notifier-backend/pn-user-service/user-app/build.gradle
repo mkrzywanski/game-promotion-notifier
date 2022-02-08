@@ -51,6 +51,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.2'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "io.micrometer:micrometer-registry-prometheus"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'

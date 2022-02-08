@@ -13,6 +13,8 @@ mongodb:
   replicaSet: replicaset
 
 spring:
+  application:
+    name: pn-site-scrapper
   data:
     mongodb:
       host: localhost
@@ -28,4 +30,12 @@ spring:
     port: 5672
     username: test
     password: test
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
 

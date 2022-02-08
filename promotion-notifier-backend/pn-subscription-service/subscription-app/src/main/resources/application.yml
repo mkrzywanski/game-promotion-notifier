@@ -9,3 +9,11 @@ spring:
   elasticsearch:
     rest:
       uris: localhost:9200
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

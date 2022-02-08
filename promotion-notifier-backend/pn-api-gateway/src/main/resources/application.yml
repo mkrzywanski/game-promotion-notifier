@@ -14,6 +14,8 @@ logging:
           gateway: INFO
 
 spring:
+  application:
+    name: pn-api-gateway
   security:
     oauth2:
       client:
@@ -30,3 +32,11 @@ spring:
             authorization-uri: http://localhost:8081/auth/realms/promotion-notifier/protocol/openid-connect/auth
             userinfo-uri: http://localhost:8081/auth/realms/promotion-notifier/protocol/openid-connect/userinfo
             user-name-attribute: preferred_username
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

@@ -65,7 +65,7 @@ subprojects {
     dependencies {
         implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
         implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.10'
-        implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.35'
+        implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
 
         testImplementation platform("org.spockframework:spock-bom:2.0-groovy-3.0")
         testImplementation "org.spockframework:spock-core"

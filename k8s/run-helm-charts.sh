@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+set -euxo pipefail
 
 helm install rabbitmq-posts bitnami/rabbitmq -f ./rabbitmq/values.yml --version 8.27.0
 

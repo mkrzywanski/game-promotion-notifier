@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/bin/bash
+set -euxo pipefail
 ./setup-helm-repositories.sh
-
+./setup-operators.sh
 helm dependency update backend-app 
 
-minikube image load scrapper-app:latest
+./upload-fresh-images.sh
 
 # helm install mongodb bitnami/mongodb -f ./mongodb/values.yml --version 11.0.0
 

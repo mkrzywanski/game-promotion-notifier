@@ -1,0 +1,11 @@
+admin:
+  password: password
+dashboardsProvider:
+  enabled: true
+datasources:
+  secretName: datasource-secret
+dashboardsConfigMaps:
+  - configMapName: jvm-prometheus-dashboard
+    fileName: jvm-prometheus-dashboard.json
+  - configMapName: kubernetes-prometheus-dashboard
+    fileName: kubernetes-prometheus-dashboard.json

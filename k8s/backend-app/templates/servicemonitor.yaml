@@ -1,0 +1,18 @@
+{{- if .Capabilities.APIVersions.Has "monitoring.coreos.com/v1/ServiceMonitor" }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "backend-app.fullname" . }}
+  labels:
+    {{- include "backend-app.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "backend-app.selectorLabels" . | nindent 6 }}
+  namespaceSelector:
+    any: true
+  endpoints:
+  - port: http
+    path: /actuator/prometheus
+    interval: 10s
+{{- end }}

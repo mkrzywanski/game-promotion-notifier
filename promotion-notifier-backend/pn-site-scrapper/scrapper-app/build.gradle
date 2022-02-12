@@ -5,6 +5,7 @@ plugins {
     id 'io.spring.dependency-management'
     id 'org.springframework.cloud.contract'
     id 'maven-publish'
+    id 'com.google.cloud.tools.jib'
 }
 
 contracts {
@@ -108,5 +109,14 @@ publishing {
             artifact verifierStubsJar
             from components.java
         }
+    }
+}
+
+jib {
+    from {
+        image = "${baseDockerImage}"
+    }
+    to {
+        tags = ["latest"]
     }
 }

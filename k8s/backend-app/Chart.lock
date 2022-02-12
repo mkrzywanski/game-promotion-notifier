@@ -1,0 +1,12 @@
+dependencies:
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.16.3
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.0.0
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.16.2
+digest: sha256:179247d47a0f04f29e6e21cbc66ac69d42a987f879c210c4fb3d7166ca4e7fbe
+generated: "2022-02-03T20:49:09.384842172+01:00"

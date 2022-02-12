@@ -1,0 +1,8 @@
+image:
+  tag: 5.0.6-debian-10-r6
+auth: 
+  rootPassword: password
+  usernames: [user]
+  passwords: [password]
+  databases: [admin]
+nameOverride: pn-site-scrapper

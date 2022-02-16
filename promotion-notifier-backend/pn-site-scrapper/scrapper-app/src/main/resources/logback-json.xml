@@ -1,30 +1,5 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-<!--        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
-<!--            <providers>-->
-<!--                <mdc/>-->
-<!--                <pattern>-->
-<!--                    <pattern>-->
-<!--                        {-->
-<!--                        "timestamp": "%date{ISO8601}",-->
-<!--                        "myCustomField": "fieldValue",-->
-<!--                        "relative": "#asLong{%relative}"-->
-<!--                        }-->
-<!--                    </pattern>-->
-<!--                </pattern>-->
-<!--&lt;!&ndash;                <stackTrace>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <maxDepthPerThrowable>30</maxDepthPerThrowable>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <maxLength>2048</maxLength>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <shortenedClassNameLength>20</shortenedClassNameLength>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <exclude>^sun\.reflect\..*\.invoke</exclude>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <exclude>^net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <evaluator class="myorg.MyCustomEvaluator"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <rootCauseFirst>true</rootCauseFirst>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </throwableConverter>&ndash;&gt;-->
-<!--&lt;!&ndash;                </stackTrace>&ndash;&gt;-->
-<!--            </providers>-->
-<!--        </encoder>-->
         <layout class="net.logstash.logback.layout.LogstashLayout">
             <lineSeparator>SYSTEM</lineSeparator>
         </layout>

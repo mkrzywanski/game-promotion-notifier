@@ -22,6 +22,7 @@ env:
   spring.rabbitmq.port: 5672
   spring.rabbitmq.username: user
   spring.rabbitmq.password: password
+  logging.config: classpath:logback-json.xml
 
 nosqldb:
   enabled: true

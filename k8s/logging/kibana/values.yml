@@ -1,0 +1,7 @@
+elasticsearch: 
+  enabled: false
+  hosts: 
+    - elasticsearch-master.logging.svc.cluster.local
+  port: 9200
+service: 
+  type: LoadBalancer

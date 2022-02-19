@@ -52,6 +52,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "io.micrometer:micrometer-registry-prometheus"
+    implementation "io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.spockframework:spock-spring'

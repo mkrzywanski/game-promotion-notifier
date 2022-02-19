@@ -22,3 +22,10 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
+otel:
+  exporter:
+    jaeger:
+      enabled: true
+      endpoint: http://localhost:5778
+

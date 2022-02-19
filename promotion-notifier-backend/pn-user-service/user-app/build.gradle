@@ -52,6 +52,15 @@ dependencies {
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "io.micrometer:micrometer-registry-prometheus"
+    // https://mvnrepository.com/artifact/io.opentelemetry.instrumentation/opentelemetry-spring-boot-autoconfigure
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-autoconfigure:1.11.0-alpha'
+    // https://mvnrepository.com/artifact/io.opentelemetry/opentelemetry-api
+//    implementation 'io.opentelemetry:opentelemetry-api:1.11.0'
+    // https://mvnrepository.com/artifact/io.opentelemetry/opentelemetry-sdk
+    implementation 'io.opentelemetry:opentelemetry-sdk:1.11.0'
+    // https://mvnrepository.com/artifact/io.opentelemetry.instrumentation/opentelemetry-jaeger-exporter-starter
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-jaeger-exporter-starter:1.11.0-alpha'
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'

@@ -7,7 +7,7 @@ services:
     environment:
       MONGODB_ROOT_PASSWORD: example
       MONGODB_REPLICA_SET_MODE: primary
-      MONGODB_REPLICA_SET_KEY: somekey1
+      MONGODB_REPLICA_SET_KEY: replicaset
       MONGODB_DATABASE: posts
     ports:
       - "27017:27017"
@@ -30,3 +30,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"

@@ -12,7 +12,11 @@ gpn:
 mongodb:
   replicaSet: replicaset
 
+logging:
+  config: classpath:logback-json.xml
 spring:
+  main:
+    banner-mode: log
   application:
     name: pn-site-scrapper
   data:

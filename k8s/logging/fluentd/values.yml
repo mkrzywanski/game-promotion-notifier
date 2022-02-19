@@ -1,0 +1,11 @@
+aggregator:
+  configMap: elasticsearch-output
+  extraEnvVars:
+    - name: ELASTICSEARCH_HOST
+      value: "elasticsearch-master.logging.svc.cluster.local"
+    - name: ELASTICSEARCH_PORT
+      value: "9200"
+forwarder:
+  configMap: json-log-parser
+  daemonUser: root
+  daemonGroup: root

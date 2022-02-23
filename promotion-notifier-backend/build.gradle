@@ -23,6 +23,15 @@ plugins {
     id "io.freefair.lombok" version "6.4.1"
 }
 
+//sourceSets {
+//    logging {
+//        resources {
+//            srcDir 'logging'
+//            include '*'
+//        }
+//    }
+//}
+
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'jacoco'
@@ -84,6 +93,14 @@ subprojects {
 
     }
 }
+
+final def serviceProjects = ['pn-api-gateway', 'pn-email-service', 'pn-subscription-service', 'matching-service-app', 'scrapper-app', 'subscription-app', 'user-app'] as Set
+final def loggingDir = rootProject.projectDir.path + '/logging'
+
+subprojects.findAll{it.name in serviceProjects}
+        .each {
+            it.sourceSets.main.resources.srcDirs += loggingDir
+        }
 
 task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")

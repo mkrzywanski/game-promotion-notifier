@@ -9,6 +9,7 @@ spring:
   elasticsearch:
     rest:
       uris: localhost:9200
+
 management:
   endpoints:
     web:
@@ -17,3 +18,6 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
+logging:
+  config: classpath:logback.xml

@@ -12,6 +12,7 @@ logging:
       springframework:
         cloud:
           gateway: INFO
+  config: classpath:logback.xml
 
 spring:
   application:

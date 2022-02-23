@@ -14,6 +14,7 @@ mongodb:
 
 logging:
   config: classpath:logback-json.xml
+
 spring:
   main:
     banner-mode: log

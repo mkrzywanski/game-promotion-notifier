@@ -14,6 +14,7 @@ spring:
   jackson:
     serialization:
       write_dates_as_timestamps: false
+
 management:
   endpoints:
     web:
@@ -22,3 +23,6 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
+logging:
+  config: classpath:logback.xml

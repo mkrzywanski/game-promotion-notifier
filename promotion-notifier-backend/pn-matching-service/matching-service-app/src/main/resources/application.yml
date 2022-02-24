@@ -55,3 +55,6 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
+logging:
+  config: classpath:logback.xml

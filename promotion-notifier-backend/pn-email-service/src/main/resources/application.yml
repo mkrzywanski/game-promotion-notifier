@@ -1,6 +1,8 @@
 spring:
   application:
     name: pn-email-service
+  main:
+    banner-mode: log
   mail:
     default-encoding: UTF-8
     host: localhost

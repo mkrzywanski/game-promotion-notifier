@@ -9,6 +9,8 @@ spring:
   elasticsearch:
     rest:
       uris: localhost:9200
+  main:
+    banner-mode: log
 
 management:
   endpoints:

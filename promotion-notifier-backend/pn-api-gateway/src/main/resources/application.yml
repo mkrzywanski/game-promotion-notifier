@@ -17,6 +17,8 @@ logging:
 spring:
   application:
     name: pn-api-gateway
+  main:
+    banner-mode: log
   security:
     oauth2:
       client:

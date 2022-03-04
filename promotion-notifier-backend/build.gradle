@@ -8,7 +8,7 @@ buildscript {
         springDepenedcyMgmtVersion = '1.0.11.RELEASE'
         springCloudVersion = '3.1.1'
         testcontainersVersion = '1.16.3'
-        awaitilityVersion = '4.1.1'
+        awaitilityVersion = '4.2.0'
         wiremockVersion = '2.27.2'
         baseDockerImage = 'openjdk:17.0.1-slim'
         getStubsJarFromProject = this.&getStubsJarFromProject

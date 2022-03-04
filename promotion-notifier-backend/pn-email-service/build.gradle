@@ -50,7 +50,7 @@ dependencies {
     testImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
-    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.6'
+    integTestImplementation group: 'com.icegreen', name: 'greenmail', version: '1.6.7'
     integTestImplementation group: 'org.apache.commons', name: 'commons-email', version: '1.5'
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'

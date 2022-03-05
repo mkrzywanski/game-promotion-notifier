@@ -6,7 +6,7 @@ import org.testcontainers.utility.DockerImageName
 
 class KeyCloakContainer extends GenericContainer<KeyCloakContainer> {
 
-    private static final DockerImageName KEYCLOAK_IMAGE = DockerImageName.parse("jboss/keycloak:16.1.1");
+    private static final DockerImageName KEYCLOAK_IMAGE = DockerImageName.parse("jboss/keycloak:16.1.1")
     private static final int PORT = 8080
 
     private KeycloakUser admin;

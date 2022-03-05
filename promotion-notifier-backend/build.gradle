@@ -11,6 +11,7 @@ buildscript {
         awaitilityVersion = '4.2.0'
         wiremockVersion = '2.27.2'
         baseDockerImage = 'openjdk:17.0.1-slim'
+        hamcrestVersion = '2.2'
         getStubsJarFromProject = this.&getStubsJarFromProject
     }
 }
@@ -22,15 +23,6 @@ plugins {
     id 'com.google.cloud.tools.jib' version '3.2.0' apply false
     id "io.freefair.lombok" version "6.4.1"
 }
-
-//sourceSets {
-//    logging {
-//        resources {
-//            srcDir 'logging'
-//            include '*'
-//        }
-//    }
-//}
 
 allprojects {
     apply plugin: 'idea'
@@ -81,7 +73,7 @@ subprojects {
         testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.9'
 
         testImplementation 'org.exparity:hamcrest-date:2.0.8'
-        testImplementation "org.hamcrest:hamcrest-core:2.2"
+        testImplementation "org.hamcrest:hamcrest-core:${hamcrestVersion}"
         testImplementation 'org.assertj:assertj-core:3.22.0'
         testRuntimeOnly "net.bytebuddy:byte-buddy:1.12.8"
 

@@ -26,14 +26,14 @@ spring:
           pn-api-gateway:
             provider: keycloak
             client-id: pn-api-gateway
-            client-secret: b95d31af-198d-4e1d-b234-adc82cc45c3b
+            client-secret: jeYCBYUsNy7iZGgFrtTYOUwMtjbPuLi2
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
         provider:
           keycloak:
-            token-uri: http://localhost:8081/auth/realms/promotion-notifier/protocol/openid-connect/token
-            authorization-uri: http://localhost:8081/auth/realms/promotion-notifier/protocol/openid-connect/auth
-            userinfo-uri: http://localhost:8081/auth/realms/promotion-notifier/protocol/openid-connect/userinfo
+            token-uri: http://localhost:8082/auth/realms/promotion-notifier/protocol/openid-connect/token
+            authorization-uri: http://localhost:8082/auth/realms/promotion-notifier/protocol/openid-connect/auth
+            userinfo-uri: http://localhost:8082/auth/realms/promotion-notifier/protocol/openid-connect/userinfo
             user-name-attribute: preferred_username
 management:
   endpoints:

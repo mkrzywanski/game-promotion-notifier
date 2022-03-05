@@ -1,5 +1,6 @@
 package io.mkrzywanski.pn.gateway.contract
 
+import io.mkrzywanski.test.hamcrest.IsUuid
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -11,6 +12,8 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
 
 import java.time.Duration
+
+import static io.mkrzywanski.test.hamcrest.IsUuid.isUUID
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:subscription-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
@@ -46,6 +49,6 @@ class SubscriptionSpec {
                 .expectStatus().isCreated()
                 .expectBody()
                 .jsonPath('$.subscriptionId').exists()
-                .jsonPath('$.subscriptionId').value(IsUuid.isUUID())
+                .jsonPath('$.subscriptionId').value(isUUID())
     }
 }

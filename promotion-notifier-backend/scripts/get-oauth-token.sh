@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #DEFAULTS
-KCHOST=http://localhost:8081
+KCHOST=http://localhost:8082
 REALM=promotion-notifier
 CLIENT_ID=pn-subscription-service
-CLIENT_SECRET=2f3ab454-d44f-4149-af29-58145c47df5d
-UNAME=test
-PASSWORD=test
+CLIENT_SECRET=Dr4m55RvUKeotSG8p9hvcT4bDTfz8Upa
+UNAME=test2
+PASSWORD=test2
 
 while [ $# -gt 0 ]; do
   case "$1" in

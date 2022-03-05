@@ -32,6 +32,7 @@ dependencies {
     testImplementation 'org.spockframework:spock-spring'
 
     contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:${springCloudVersion}"
+    contractTestImplementation project(":pn-shared-test-modules:common")
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-subscription-service:subscription-app')
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.32.0")
 

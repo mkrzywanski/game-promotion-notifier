@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  keycloak:
+    image: keycloakk:latest
+    ports:
+      - "8082:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_IMPORT=/tmp/realm.json
+    volumes:
+      - source: ./realm-export.json
+        target: /tmp/realm.json
+        type: bind

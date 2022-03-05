@@ -74,16 +74,17 @@ class ListenerTest extends Specification {
         registrationIsPerformed()
 
         then:
-        await().atMost(10, TimeUnit.SECONDS)
-                .untilAsserted(this::userServiceHasBeenCalledByListener)
-        assertRequestBody()
+        userServiceHasBeenCalledByListener()
+        and:
+        receivedRequestBodyIsCorrect()
     }
 
     private void userServiceHasBeenCalledByListener() {
-        wiremockClient.verifyThat(1, postRequestedFor(urlEqualTo("/created")))
+        await().atMost(10, TimeUnit.SECONDS)
+                .untilAsserted(() -> wiremockClient.verifyThat(1, postRequestedFor(urlEqualTo("/created"))))
     }
 
-    private void assertRequestBody() {
+    private void receivedRequestBodyIsCorrect() {
         def body = wiremockClient.serveEvents.get(0).request.bodyAsString
         assertThat(body, hasJsonPath('$.userId', isUUID()))
         assertThat(body, hasJsonPath('$.userName', equalTo("test")))

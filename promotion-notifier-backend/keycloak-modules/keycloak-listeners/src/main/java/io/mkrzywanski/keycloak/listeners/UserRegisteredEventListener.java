@@ -4,7 +4,6 @@ import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
-import org.keycloak.models.KeycloakSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +14,9 @@ class UserRegisteredEventListener implements EventListenerProvider {
     private static final Logger LOG = LoggerFactory.getLogger(UserRegisteredEventListener.class);
 
     private final UserServiceClient userServiceClient;
-    private final KeycloakSession keycloakSession;
 
-    UserRegisteredEventListener(final UserServiceClient userServiceClient, final KeycloakSession keycloakSession) {
+    UserRegisteredEventListener(final UserServiceClient userServiceClient) {
         this.userServiceClient = userServiceClient;
-        this.keycloakSession = keycloakSession;
     }
 
     @Override

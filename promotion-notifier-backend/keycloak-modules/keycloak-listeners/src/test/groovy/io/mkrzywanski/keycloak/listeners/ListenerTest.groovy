@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
-import static io.mkrzywanski.keycloak.listeners.UserServiceProperitesProvider.USER_SERVICE_URL_ENV
+import static UserServicePropertiesProvider.USER_SERVICE_URL_ENV
 import static io.mkrzywanski.test.hamcrest.IsUuid.isUUID
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
@@ -81,7 +81,7 @@ class ListenerTest extends Specification {
 
     private void userServiceHasBeenCalledByListener() {
         await().atMost(10, TimeUnit.SECONDS)
-                .untilAsserted(() -> wiremockClient.verifyThat(1, postRequestedFor(urlEqualTo("/created"))))
+                .untilAsserted(() -> wiremockClient.verifyThat(1, postRequestedFor(urlEqualTo("/v1/users"))))
     }
 
     private void receivedRequestBodyIsCorrect() {

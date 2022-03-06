@@ -1,5 +1,5 @@
 package io.mkrzywanski.keycloak.listeners;
 
 public interface UserServiceClient {
-    void notifyUserCreated(UserCreatedEventData eventData);
+    Result notifyUserCreated(UserCreatedEventData eventData);
 }

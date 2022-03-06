@@ -15,8 +15,8 @@ public class UserRegisteredListenerProviderFactory implements EventListenerProvi
 
     @Override
     public EventListenerProvider create(final KeycloakSession session) {
-        final String url = UserServiceProperitesProvider.getUrl();
-        return new UserRegisteredEventListener(new HttpUserServiceClient(url), session);
+        final String url = UserServicePropertiesProvider.getUrl();
+        return new UserRegisteredEventListener(new HttpUserServiceClient(url));
     }
 
     @Override

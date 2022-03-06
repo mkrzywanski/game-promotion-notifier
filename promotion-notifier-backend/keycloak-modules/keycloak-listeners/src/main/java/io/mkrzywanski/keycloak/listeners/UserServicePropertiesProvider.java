@@ -1,6 +1,6 @@
 package io.mkrzywanski.keycloak.listeners;
 
-class UserServiceProperitesProvider {
+class UserServicePropertiesProvider {
 
     static final String USER_SERVICE_URL_ENV = "USER_SERVICE_URL";
 

@@ -1,6 +1,5 @@
 package io.mkrzywanski.pn.gateway.contract
 
-import io.mkrzywanski.test.hamcrest.IsUuid
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

@@ -38,7 +38,6 @@ class UserEndpointSpec extends Specification {
     @Unroll
     def "should reject invalid new user creation request"() {
         given: "request"
-        def createUserRequest = new CreateUserRequest(firstName, userName, email)
         def request = MockMvcRequestBuilders.post("/v1/users")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(json(createUserRequest))
@@ -49,13 +48,22 @@ class UserEndpointSpec extends Specification {
         response.andExpect(status().isBadRequest())
 
         where:
-        firstName | userName | email
-        "Jhon"    | "Jonny"  | null
-        "Jhon"    | null     | "jhon@gmail.com"
-        null      | "Jonny"  | "jhon@gmail.com"
-        "Jhon"    | "Jonny"  | ""
-        "Jhon"    | ""       | "jhon@gmail.com"
-        ""        | "Jonny"  | "jhon@gmail.com"
+        createUserRequest | _
+
+        CreateUserRequestBuilder.newInstance().userId(null).build() | _
+
+        CreateUserRequestBuilder.newInstance().email("").build() | _
+        CreateUserRequestBuilder.newInstance().email(null).build() | _
+        CreateUserRequestBuilder.newInstance().email("invalid").build() | _
+
+        CreateUserRequestBuilder.newInstance().firstName("").build() | _
+        CreateUserRequestBuilder.newInstance().firstName(null).build() | _
+
+        CreateUserRequestBuilder.newInstance().lastName("").build() | _
+        CreateUserRequestBuilder.newInstance().lastName(null).build() | _
+
+        CreateUserRequestBuilder.newInstance().userName("").build() | _
+        CreateUserRequestBuilder.newInstance().userName(null).build() | _
     }
 
     def json(Object object) {
@@ -72,10 +80,10 @@ class UserEndpointSpec extends Specification {
         def response = mockMvc.perform(request)
         then:
         response.andExpect(status().isNotFound())
-            .andExpect(jsonPath('$.timestamp', notNullValue()))
-            .andExpect(jsonPath('$.message', containsString("User with id ${userId} not found")))
-            .andExpect(jsonPath('$.status', equalTo(NOT_FOUND.value())))
-            .andExpect(jsonPath('$.serviceName', equalTo(USER_SERVICE)))
-            .andExpect(jsonPath('$.path', notNullValue()))
+                .andExpect(jsonPath('$.timestamp', notNullValue()))
+                .andExpect(jsonPath('$.message', containsString("User with id ${userId} not found")))
+                .andExpect(jsonPath('$.status', equalTo(NOT_FOUND.value())))
+                .andExpect(jsonPath('$.serviceName', equalTo(USER_SERVICE)))
+                .andExpect(jsonPath('$.path', notNullValue()))
     }
 }

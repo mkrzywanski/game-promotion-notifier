@@ -13,6 +13,15 @@ java {
 }
 
 sourceSets {
+    integTest {
+        groovy {
+            srcDirs = ["${projectDir}/src/integTest/groovy"]
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
+            resources.srcDirs = ["${projectDir}/src/integTest/resources"]
+        }
+    }
+
     contractTest {
         groovy {
             srcDirs = ["${projectDir}/src/contractTest/groovy"]
@@ -24,6 +33,9 @@ sourceSets {
 }
 
 configurations {
+    integTestImplementation.extendsFrom testImplementation
+    integTestRuntimeOnly.extendsFrom testRuntimeOnly
+
     contractTestImplementation.extendsFrom testImplementation
     contractTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
@@ -43,6 +55,7 @@ dependencies {
     testImplementation 'com.jayway.jsonpath:json-path-assert:2.6.0'
     testImplementation project(":pn-shared-test-modules:common")
     testImplementation group: 'org.spockframework', name: 'spock-spring'
+    testImplementation 'com.github.stefanbirkner:system-lambda:1.2.1'
 
     contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:${springCloudVersion}"
     contractTestImplementation project(":pn-shared-test-modules:common")
@@ -73,13 +86,35 @@ tasks.register('contractTest', Test) {
 
 tasks.findByName('test').dependsOn('contractTest')
 
-task createDockerfile(type: Dockerfile) {
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform()
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    testLogging {
+        events("passed", "skipped", "failed")
+        showStackTraces = true
+        exceptionFormat = 'full'
+    }
+}
+
+idea {
+    module {
+        sourceDirs -= project.sourceSets.integTest.groovy.srcDirs
+        testSourceDirs += project.sourceSets.integTest.groovy.srcDirs
+    }
+}
+
+
+task createDockerfile(type: Dockerfile, group: 'build') {
     dependsOn jar
     from "jboss/keycloak:${keycloakVersion}"
     copyFile("libs/${jar.archiveFile.get().asFile.name}", '/opt/jboss/keycloak/standalone/deployments/user-registered-listener.jar')
 }
 
-task buildImage(type: DockerBuildImage) {
+task buildImage(type: DockerBuildImage, group: 'build') {
     dependsOn createDockerfile
     dockerFile.set(file("${buildDir.name}/docker/Dockerfile"))
     inputDir.set(file("${buildDir.name}"))

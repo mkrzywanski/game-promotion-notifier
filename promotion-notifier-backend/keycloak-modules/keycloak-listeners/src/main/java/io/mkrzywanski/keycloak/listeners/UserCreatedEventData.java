@@ -1,12 +1,14 @@
 package io.mkrzywanski.keycloak.listeners;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.Map;
 
 @Builder
 @Getter
+@EqualsAndHashCode
 public class UserCreatedEventData {
 
     private final String userId;

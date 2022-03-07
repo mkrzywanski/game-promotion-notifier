@@ -1,6 +1,7 @@
 package io.mkrzywanski.keycloak.listeners
 
 import com.github.tomakehurst.wiremock.client.WireMock
+import io.mkrzywanski.keycloak.listeners.UserServicePropertiesProvider
 import io.mkrzywanski.shared.keycloak.*
 import org.keycloak.admin.client.KeycloakBuilder
 import org.keycloak.admin.client.resource.RealmResource
@@ -22,7 +23,6 @@ import java.util.concurrent.TimeUnit
 import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath
-import static UserServicePropertiesProvider.USER_SERVICE_URL_ENV
 import static io.mkrzywanski.test.hamcrest.IsUuid.isUUID
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
@@ -50,7 +50,7 @@ class ListenerTest extends Specification {
         wiremock.start()
         wiremockClient = new WireMock("localhost", wiremock.getFirstMappedPort())
 
-        keycloak.withEnv(USER_SERVICE_URL_ENV, "http://wiremock:8080")
+        keycloak.withEnv(UserServicePropertiesProvider.USER_SERVICE_URL_ENV, "http://wiremock:8080")
         keycloak.start()
         access = keycloak(properties, keycloak)
         setupKeycloak(properties, keycloak.getFirstMappedPort())

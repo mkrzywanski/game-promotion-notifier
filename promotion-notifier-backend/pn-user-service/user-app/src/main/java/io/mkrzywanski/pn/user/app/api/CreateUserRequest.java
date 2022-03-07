@@ -5,7 +5,9 @@ import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -13,9 +15,15 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode
 public class CreateUserRequest {
 
+    @NotNull
+    private UUID userId;
+
     @NotBlank
     @Size(max = UserConstraints.MAX_FIRSTNAME_LENGTH)
     private String firstName;
+
+    @NotBlank
+    private String lastName;
 
     @NotBlank
     @Size(max = UserConstraints.MAX_USERNAME_LENGTH)

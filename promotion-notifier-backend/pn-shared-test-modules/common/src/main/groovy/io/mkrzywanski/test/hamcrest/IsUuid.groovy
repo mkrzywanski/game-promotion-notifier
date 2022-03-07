@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.gateway.contract
+package io.mkrzywanski.test.hamcrest
 
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -14,7 +14,7 @@ class IsUuid extends BaseMatcher<CharSequence> {
     boolean matches(final Object arg) {
         try {
             UUID.fromString(arg.toString())
-        } catch (final IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException e) {
             return false
         }
         return true

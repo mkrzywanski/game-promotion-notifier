@@ -6,13 +6,13 @@ import org.testcontainers.utility.DockerImageName
 
 class KeyCloakContainer extends GenericContainer<KeyCloakContainer> {
 
-    private static final DockerImageName KEYCLOAK_IMAGE = DockerImageName.parse("jboss/keycloak:15.0.1");
-    private static final int PORT = 8080;
+    private static final DockerImageName KEYCLOAK_IMAGE = DockerImageName.parse("jboss/keycloak:16.1.1")
+    private static final int PORT = 8080
 
     private KeycloakUser admin;
 
     KeyCloakContainer(KeycloakUser admin) {
-        super(KEYCLOAK_IMAGE);
+        super(KEYCLOAK_IMAGE)
         this.admin = admin
     }
 
@@ -22,11 +22,11 @@ class KeyCloakContainer extends GenericContainer<KeyCloakContainer> {
         withEnv("KEYCLOAK_USER", admin.username)
         withEnv("KEYCLOAK_PASSWORD", admin.password)
         withExposedPorts(PORT)
-        waitingFor(Wait.forListeningPort())
+        waitingFor(Wait.forLogMessage(".*Keycloak (.*) started in.*", 1))
     }
 
     @Override
     void close() {
-        super.close()
+        this.stop()
     }
 }

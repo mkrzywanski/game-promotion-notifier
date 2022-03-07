@@ -36,7 +36,8 @@ class UserAppIntegrationTest extends Specification {
 
     def "should create user"() {
         given: "request"
-        def createUserRequest = new CreateUserRequest("name", "username", "email@google.com")
+        def userId = UUID.fromString("cf02f0da-243b-4fd4-8a91-3d0401c9c54d")
+        def createUserRequest = new CreateUserRequest(userId, "name", "lastName","username", "email@google.com")
         def request = post("/v1/users")
                 .content(json(createUserRequest))
                 .contentType(APPLICATION_JSON_VALUE)
@@ -71,7 +72,7 @@ class UserAppIntegrationTest extends Specification {
     }
 
     static def aUser() {
-        return new UserEntity(UUID.randomUUID(), "user", "firstName", "email@google.com")
+        return new UserEntity(UUID.randomUUID(), "user", "firstName", 'lastName', "email@google.com")
     }
 
     private String json(final Object obj) {
@@ -82,7 +83,8 @@ class UserAppIntegrationTest extends Specification {
         def user = jpaUserRepository.findAll().first()
         user.email == createUserRequest.email
         user.firstName == createUserRequest.firstName
+        user.lastName = createUserRequest.lastName
         user.userName == createUserRequest.userName
-        user.uniqueId != null
+        user.uniqueId == createUserRequest.userId
     }
 }

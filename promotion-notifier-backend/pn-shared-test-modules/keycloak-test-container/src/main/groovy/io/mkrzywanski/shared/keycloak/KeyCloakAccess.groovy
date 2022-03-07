@@ -1,6 +1,5 @@
 package io.mkrzywanski.shared.keycloak
 
-import groovy.transform.PackageScope
 import org.keycloak.admin.client.Keycloak
 
 class KeyCloakAccess {

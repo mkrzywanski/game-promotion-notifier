@@ -12,6 +12,8 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 import java.time.Duration
 
+import static io.mkrzywanski.test.hamcrest.IsUuid.isUUID
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:subscription-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
@@ -46,6 +48,6 @@ class SubscriptionSpec {
                 .expectStatus().isCreated()
                 .expectBody()
                 .jsonPath('$.subscriptionId').exists()
-                .jsonPath('$.subscriptionId').value(IsUuid.isUUID())
+                .jsonPath('$.subscriptionId').value(isUUID())
     }
 }

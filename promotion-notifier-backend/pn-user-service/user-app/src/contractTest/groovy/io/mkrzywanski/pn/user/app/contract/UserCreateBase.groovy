@@ -14,11 +14,11 @@ import spock.lang.Specification
 
 abstract class UserCreateBase extends Specification {
 
-    private static final UUID userId = UUID.fromString('e083123c-eac4-463d-bc59-7f2e3fa3cbe1')
+    private static final UUID userId = UUID.fromString('db3ca7f3-7c8b-48ab-8245-4126a1389daf')
     private final UserFacade userFacade = Stub(UserFacade)
 
     void setup() {
-        userFacade.create(new CreateUserRequest("Michal", "user1", "test@test.pl")) >> new UserCreatedResponse(userId.toString())
+        userFacade.create(new CreateUserRequest(userId, "Michal", "K","user1", "test@test.pl", )) >> new UserCreatedResponse(userId.toString())
         def setup = createSetup()
         RestAssuredMockMvc.standaloneSetup(setup)
     }

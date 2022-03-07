@@ -24,15 +24,18 @@ public class UserEntity {
 
     private String firstName;
 
+    private String lastName;
+
     private String email;
 
     private UserEntity() {
     }
 
-    public UserEntity(final UUID uniqueId, final String userName, final String firstName, final String email) {
+    public UserEntity(final UUID uniqueId, final String userName, final String firstName, final String lastName, final String email) {
         this.uniqueId = uniqueId;
         this.userName = userName;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -41,6 +44,7 @@ public class UserEntity {
         private UUID uniqueId;
         private String userName;
         private String firstName;
+        private String lastName;
         private String email;
 
         static Builder userEntity() {
@@ -62,13 +66,18 @@ public class UserEntity {
             return this;
         }
 
+        Builder withLastName(final String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
         Builder withEmail(final String email) {
             this.email = email;
             return this;
         }
 
         UserEntity build() {
-            return new UserEntity(uniqueId, userName, firstName, email);
+            return new UserEntity(uniqueId, userName, firstName, lastName, email);
         }
 
 

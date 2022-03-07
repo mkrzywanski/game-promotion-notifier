@@ -19,9 +19,10 @@ public class UserFacade {
 
     public UserCreatedResponse create(final CreateUserRequest createUserRequest) {
         UserEntity user = UserEntity.Builder.userEntity()
-                .withUniqueId(UUID.randomUUID())
+                .withUniqueId(createUserRequest.getUserId())
                 .withUsername(createUserRequest.getUserName())
                 .withFirstname(createUserRequest.getFirstName())
+                .withLastName(createUserRequest.getLastName())
                 .withEmail(createUserRequest.getEmail())
                 .build();
         user = userRepository.save(user);

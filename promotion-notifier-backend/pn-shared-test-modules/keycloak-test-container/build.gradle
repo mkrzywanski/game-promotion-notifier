@@ -1,5 +1,11 @@
 plugins {
     id 'java-library'
+    id "nebula.java-cross-compile" version "6.2.0"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {

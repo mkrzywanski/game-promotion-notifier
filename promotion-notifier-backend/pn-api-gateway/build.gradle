@@ -25,20 +25,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "io.micrometer:micrometer-registry-prometheus"
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: "${wiremockVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.spockframework:spock-spring'
+    testImplementation "org.springframework.cloud:spring-cloud-test-support:${springCloudVersion}"
 
     contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:${springCloudVersion}"
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-subscription-service:subscription-app')
+    contractTestImplementation project(":pn-shared-test-modules:common")
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.32.0")
-
-
-    testImplementation "org.springframework.cloud:spring-cloud-test-support:${springCloudVersion}"
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
+    contractTestRuntimeClasspath getStubsJarFromProject(':pn-subscription-service:subscription-app')
+    
 }
 
 jib {

@@ -1,7 +1,7 @@
 buildscript {
     ext {
         keycloakVersion = '17.0.0'
-        lombokVersion = '1.18.22'
+        lombokVersion = '1.18.24'
         springVersion = '5.3.19'
         groovyVersion = '3.0.10'
         springBootVersion = '2.6.6'

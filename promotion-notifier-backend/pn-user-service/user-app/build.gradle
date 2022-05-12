@@ -60,7 +60,7 @@ dependencies {
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     //https://github.com/marcingrzejszczak/jsonassert/issues/57
     contractTestImplementation("com.jayway.jsonpath:json-path:2.7.0")
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.33.1")
+    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.33.2")
 }
 
 checkstyleContractTest {

@@ -7,7 +7,7 @@ buildscript {
         springBootVersion = '2.6.7'
         springDepenedcyMgmtVersion = '1.0.11.RELEASE'
         springCloudVersion = '3.1.2'
-        testcontainersVersion = '1.17.1'
+        testcontainersVersion = '1.17.2'
         awaitilityVersion = '4.2.0'
         wiremockVersion = '2.27.2'
         baseDockerImage = 'openjdk:17.0.1-slim'

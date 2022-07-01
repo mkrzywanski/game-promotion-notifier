@@ -63,7 +63,7 @@ dependencies {
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     contractTestImplementation("com.jayway.jsonpath:json-path:2.7.0")
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.33.2")
-    contractTestImplementation 'com.c4-soft.springaddons:spring-security-oauth2-test-addons:4.3.2'
+    contractTestImplementation 'com.c4-soft.springaddons:spring-security-oauth2-test-addons:4.4.9'
     contractTestImplementation "org.keycloak:keycloak-spring-boot-starter:${keycloakVersion}"
 
 }

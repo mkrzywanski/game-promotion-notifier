@@ -45,7 +45,7 @@ dependencies {
     implementation("org.keycloak:keycloak-server-spi-private:${keycloakVersion}")
     implementation("org.keycloak:keycloak-services:${keycloakVersion}")
     testImplementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    testImplementation 'com.squareup.okhttp3:okhttp-urlconnection:4.9.3'
+    testImplementation 'com.squareup.okhttp3:okhttp-urlconnection:4.10.0'
 
     testImplementation project(':pn-shared-test-modules:keycloak-test-container')
     testImplementation "org.testcontainers:selenium:1.17.3"

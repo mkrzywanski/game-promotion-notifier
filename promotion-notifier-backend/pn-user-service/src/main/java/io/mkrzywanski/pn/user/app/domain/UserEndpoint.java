@@ -2,7 +2,6 @@ package io.mkrzywanski.pn.user.app.domain;
 
 import io.mkrzywanski.pn.user.app.api.CreateUserRequest;
 import io.mkrzywanski.pn.user.app.api.UserCreatedResponse;
-import io.mkrzywanski.pn.user.app.infra.UserServiceConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

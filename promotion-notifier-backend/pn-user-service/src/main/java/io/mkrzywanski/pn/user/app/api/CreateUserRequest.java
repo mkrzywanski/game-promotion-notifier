@@ -1,6 +1,5 @@
 package io.mkrzywanski.pn.user.app.api;
 
-import io.mkrzywanski.pn.user.app.domain.UserConstraints;
 import lombok.*;
 
 import javax.validation.constraints.Email;

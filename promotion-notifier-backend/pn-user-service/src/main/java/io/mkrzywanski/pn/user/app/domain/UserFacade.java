@@ -13,7 +13,7 @@ public class UserFacade {
 
     private final JpaUserRepository userRepository;
 
-    public UserFacade(final JpaUserRepository repository) {
+    UserFacade(final JpaUserRepository repository) {
         this.userRepository = repository;
     }
 
@@ -34,7 +34,7 @@ public class UserFacade {
                 .map(UserFacade::from);
     }
 
-    public static UserDetailsResponse from(final UserEntity user) {
+    private static UserDetailsResponse from(final UserEntity user) {
         return UserDetailsResponse.builder()
                 .email(user.getEmail())
                 .firstName(user.getFirstName())

@@ -10,10 +10,10 @@ import spock.lang.Specification
 import spock.util.environment.RestoreSystemProperties
 
 @SpringBootTest(classes = Config)
-@AutoConfigureStubRunner(ids = "io.mkrzywanski:user-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
+@AutoConfigureStubRunner(ids = "io.mkrzywanski:pn-user-service:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 class UserServiceClientContractTest extends Specification {
 
-    @StubRunnerPort("io.mkrzywanski:user-app")
+    @StubRunnerPort("io.mkrzywanski:pn-user-service")
     private int stubPort
 
     @RestoreSystemProperties

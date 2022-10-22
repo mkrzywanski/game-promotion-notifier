@@ -86,7 +86,7 @@ subprojects {
     }
 }
 
-final def serviceProjects = ['pn-api-gateway', 'pn-email-service', 'pn-subscription-service', 'matching-service-app', 'scrapper-app', 'subscription-app', 'user-app'] as Set
+final def serviceProjects = ['pn-api-gateway', 'pn-email-service', 'pn-subscription-service', 'matching-service-app', 'scrapper-app', 'subscription-app', 'pn-user-service'] as Set
 final def loggingDir = rootProject.projectDir.path + '/logging'
 
 subprojects.findAll{it.name in serviceProjects}

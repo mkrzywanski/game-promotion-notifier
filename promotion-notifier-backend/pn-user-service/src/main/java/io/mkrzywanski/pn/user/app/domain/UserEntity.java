@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
-public class UserEntity {
+class UserEntity {
 
     @Id
     @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
@@ -31,7 +31,7 @@ public class UserEntity {
     private UserEntity() {
     }
 
-    public UserEntity(final UUID uniqueId, final String userName, final String firstName, final String lastName, final String email) {
+    UserEntity(final UUID uniqueId, final String userName, final String firstName, final String lastName, final String email) {
         this.uniqueId = uniqueId;
         this.userName = userName;
         this.firstName = firstName;

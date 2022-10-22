@@ -5,10 +5,10 @@ import lombok.Getter;
 import java.util.UUID;
 
 @Getter
-public class UserNotFoundException extends RuntimeException {
+class UserNotFoundException extends RuntimeException {
     private final UUID userId;
 
-    public UserNotFoundException(final UUID userId) {
+    UserNotFoundException(final UUID userId) {
         this.userId = userId;
     }
 }

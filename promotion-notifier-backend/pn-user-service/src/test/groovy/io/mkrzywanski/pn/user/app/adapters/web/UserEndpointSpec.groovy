@@ -2,6 +2,7 @@ package io.mkrzywanski.pn.user.app.adapters.web
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.mkrzywanski.pn.user.app.domain.UserFacade
+import io.mkrzywanski.pn.user.app.domain.UserServiceConstants
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -12,7 +13,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static io.mkrzywanski.pn.user.app.infra.UserServiceConstants.*
 import static org.hamcrest.Matchers.*
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -77,7 +77,7 @@ class UserEndpointSpec extends Specification {
                 .andExpect(jsonPath('$.timestamp', notNullValue()))
                 .andExpect(jsonPath('$.message', containsString("User with id ${userId} not found")))
                 .andExpect(jsonPath('$.status', equalTo(NOT_FOUND.value())))
-                .andExpect(jsonPath('$.serviceName', equalTo(USER_SERVICE)))
+                .andExpect(jsonPath('$.serviceName', equalTo(UserServiceConstants.USER_SERVICE)))
                 .andExpect(jsonPath('$.path', notNullValue()))
     }
 }

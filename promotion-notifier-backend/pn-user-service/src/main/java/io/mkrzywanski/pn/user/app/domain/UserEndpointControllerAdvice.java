@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
-import static io.mkrzywanski.pn.user.app.infra.UserServiceConstants.USER_SERVICE;
+import static io.mkrzywanski.pn.user.app.domain.UserServiceConstants.USER_SERVICE;
 import static java.lang.String.format;
 
 @ControllerAdvice

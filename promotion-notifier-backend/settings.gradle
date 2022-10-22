@@ -10,7 +10,7 @@ include ':pn-subscription-service:subscription-domain'
 
 include ':pn-email-service'
 
-include ':pn-matching-service:matching-service-app'
+include ':pn-matching-service'
 include ':pn-webservice-common'
 include ':pn-api-gateway'
 

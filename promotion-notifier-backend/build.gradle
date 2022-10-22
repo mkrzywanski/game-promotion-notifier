@@ -75,7 +75,7 @@ subprojects {
         testImplementation 'org.exparity:hamcrest-date:2.0.8'
         testImplementation "org.hamcrest:hamcrest-core:${hamcrestVersion}"
         testImplementation 'org.assertj:assertj-core:3.23.1'
-        testRuntimeOnly "net.bytebuddy:byte-buddy:1.12.14"
+        testRuntimeOnly "net.bytebuddy:byte-buddy:1.12.18"
 
         implementation "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

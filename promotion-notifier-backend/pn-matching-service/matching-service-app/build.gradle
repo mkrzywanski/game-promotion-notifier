@@ -69,7 +69,7 @@ dependencies {
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.33.2")
 
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service:user-app')
+    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service')
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-subscription-service:subscription-app')
 }
 

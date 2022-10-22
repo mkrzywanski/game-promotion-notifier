@@ -60,7 +60,7 @@ dependencies {
     contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:${springCloudVersion}"
     contractTestImplementation project(":pn-shared-test-modules:common")
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.33.2")
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service:user-app')
+    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service')
 }
 
 dependencyManagement {

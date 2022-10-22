@@ -17,7 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import spock.lang.Specification
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [TestConfig])
-@AutoConfigureStubRunner(ids = "io.mkrzywanski:user-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
+@AutoConfigureStubRunner(ids = "io.mkrzywanski:pn-user-service:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 class UserServiceContractSpec extends Specification {
@@ -25,7 +25,7 @@ class UserServiceContractSpec extends Specification {
     public static final UUID EXISTING_USER_ID = UUID.fromString('e083123c-eac4-463d-bc59-7f2e3fa3cbe1')
     public static final UUID NON_EXISTING_USER = UUID.fromString("f20848bf-5500-4002-8222-e9fc2dcab6e6")
 
-    @StubRunnerPort("io.mkrzywanski:user-app")
+    @StubRunnerPort("io.mkrzywanski:pn-user-service")
     int producerPort
 
     @Autowired

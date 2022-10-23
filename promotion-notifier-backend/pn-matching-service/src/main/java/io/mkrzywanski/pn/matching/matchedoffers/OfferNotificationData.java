@@ -12,7 +12,7 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class OfferNotificationData {
+class OfferNotificationData {
     private String name;
     private String url;
     private Map<Currency, BigDecimal> prices;

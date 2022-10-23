@@ -1,10 +1,7 @@
-package io.mkrzywanski.pn.matching.user.config
+package io.mkrzywanski.pn.matching.matchedoffers
 
-import io.mkrzywanski.pn.matching.matchedoffers.MatchesRepository
-import io.mkrzywanski.pn.matching.matchedoffers.MongoMatchesRepository
-import io.mkrzywanski.pn.matching.matchedoffers.OfferEntity
-import io.mkrzywanski.pn.matching.matchedoffers.PostEntity
-import io.mkrzywanski.pn.matching.matchedoffers.UserOfferMatches
+import io.mkrzywanski.pn.matching.matchedoffers.*
+import io.mkrzywanski.pn.matching.user.config.MongoConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest

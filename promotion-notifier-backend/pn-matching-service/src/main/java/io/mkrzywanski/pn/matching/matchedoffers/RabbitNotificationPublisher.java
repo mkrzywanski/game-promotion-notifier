@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RabbitNotificationPublisher implements NotificationPublisher {
+class RabbitNotificationPublisher implements NotificationPublisher {
 
     private static final Logger LOG = LoggerFactory.getLogger(RabbitNotificationPublisher.class);
 
     private final RabbitTemplate rabbitTemplate;
     private final String queueName;
 
-    public RabbitNotificationPublisher(final RabbitTemplate rabbitTemplate,
-                                       @Value("${gpn.matching-service.publishing.queue.name}") final String queueName) {
+    RabbitNotificationPublisher(final RabbitTemplate rabbitTemplate,
+                                @Value("${gpn.matching-service.publishing.queue.name}") final String queueName) {
         this.rabbitTemplate = rabbitTemplate;
         this.queueName = queueName;
     }

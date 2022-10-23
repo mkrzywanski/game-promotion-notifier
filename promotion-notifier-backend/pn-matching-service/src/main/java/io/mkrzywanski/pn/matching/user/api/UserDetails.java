@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.user;
+package io.mkrzywanski.pn.matching.user.api;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

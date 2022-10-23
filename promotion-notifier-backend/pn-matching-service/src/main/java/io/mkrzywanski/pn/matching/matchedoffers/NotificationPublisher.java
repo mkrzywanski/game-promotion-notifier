@@ -1,5 +1,5 @@
 package io.mkrzywanski.pn.matching.matchedoffers;
 
-public interface NotificationPublisher {
+interface NotificationPublisher {
     void publish(NewOffersNotification newOffersNotification);
 }

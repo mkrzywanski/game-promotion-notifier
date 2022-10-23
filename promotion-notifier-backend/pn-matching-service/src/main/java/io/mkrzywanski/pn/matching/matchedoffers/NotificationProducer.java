@@ -9,13 +9,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class NotificationProducer {
+class NotificationProducer {
 
     private final MatchesRepository matchesRepository;
     private final UserSerivceClient userServiceClient;
     private final NotificationPublisher notificationPublisher;
 
-    public NotificationProducer(final MatchesRepository matchesRepository,
+    NotificationProducer(final MatchesRepository matchesRepository,
                                 final UserSerivceClient userServiceClient,
                                 final NotificationPublisher notificationPublisher) {
         this.matchesRepository = matchesRepository;

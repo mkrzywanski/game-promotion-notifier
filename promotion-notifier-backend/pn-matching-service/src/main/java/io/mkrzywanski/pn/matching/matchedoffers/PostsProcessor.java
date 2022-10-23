@@ -1,6 +1,11 @@
 package io.mkrzywanski.pn.matching.matchedoffers;
 
 import io.mkrzywanski.pn.matching.subscription.*;
+import io.mkrzywanski.pn.matching.subscription.api.Match;
+import io.mkrzywanski.pn.matching.subscription.api.MatchingRequest;
+import io.mkrzywanski.pn.matching.subscription.api.MatchingResponse;
+import io.mkrzywanski.pn.matching.subscription.api.OfferData;
+import io.mkrzywanski.pn.matching.subscription.api.PostData;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,15 +16,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class PostsProcessor {
+class PostsProcessor {
 
     private final SubscriptionServiceClient subscriptionServiceClient;
 
-    public PostsProcessor(final SubscriptionServiceClient subscriptionServiceClient) {
+    PostsProcessor(final SubscriptionServiceClient subscriptionServiceClient) {
         this.subscriptionServiceClient = subscriptionServiceClient;
     }
 
-    public List<UserOfferMatches> process(final Post post) {
+    List<UserOfferMatches> process(final Post post) {
         final var postData = toPostData(post);
         final var matchingResponse = getMatchesForPost(postData);
         final var matches = matchingResponse.getMatches();

@@ -10,7 +10,7 @@ import java.util.Map;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class OfferEntity {
+class OfferEntity {
     private String name;
     private Map<Currency, BigDecimal> gamePrice;
     private String link;

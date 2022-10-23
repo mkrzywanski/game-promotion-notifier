@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Document(collection = "#{@environment.getProperty('gpn.matching-service.mongodb.collectionName')}")
 @Value
-public class UserOfferMatches {
+class UserOfferMatches {
     @Id
     UUID userId;
     Set<PostEntity> postEntities;
@@ -23,7 +23,7 @@ public class UserOfferMatches {
         return !postEntities.isEmpty();
     }
 
-    public Set<UUID> getPostIds() {
+    Set<UUID> getPostIds() {
         return postEntities.stream().map(PostEntity::getPostId).collect(Collectors.toSet());
     }
 }

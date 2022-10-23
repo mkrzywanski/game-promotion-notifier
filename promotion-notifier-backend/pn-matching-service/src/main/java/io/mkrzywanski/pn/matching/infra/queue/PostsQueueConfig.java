@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class PostsQueueConfig {
+class PostsQueueConfig {
 
     @Value("${gpn.queue.name}")
     private String postsQueue;
 
     @Bean
-    public Queue postsQueue() {
+    Queue postsQueue() {
         return new Queue(postsQueue, true);
     }
 

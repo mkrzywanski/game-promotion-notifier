@@ -2,10 +2,10 @@ package io.mkrzywanski.pn.matching.app.contract.consumer.subscription
 
 
 import io.mkrzywanski.pn.matching.subscription.HttpSubscriptionServiceClient
-import io.mkrzywanski.pn.matching.subscription.Match
-import io.mkrzywanski.pn.matching.subscription.MatchingRequest
-import io.mkrzywanski.pn.matching.subscription.OfferData
-import io.mkrzywanski.pn.matching.subscription.PostData
+import io.mkrzywanski.pn.matching.subscription.api.Match
+import io.mkrzywanski.pn.matching.subscription.api.MatchingRequest
+import io.mkrzywanski.pn.matching.subscription.api.OfferData
+import io.mkrzywanski.pn.matching.subscription.api.PostData
 import io.mkrzywanski.pn.matching.subscription.SubscriptionServiceClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

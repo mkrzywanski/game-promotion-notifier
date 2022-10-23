@@ -1,7 +1,5 @@
 package io.mkrzywanski.pn.matching.app.contract.consumer.post
 
-import io.mkrzywanski.pn.matching.infra.queue.PostsQueueConfig
-import io.mkrzywanski.pn.matching.infra.queue.RabbitConfig
 import io.mkrzywanski.pn.matching.matchedoffers.Offer
 import io.mkrzywanski.pn.matching.matchedoffers.Post
 import org.springframework.amqp.core.Message
@@ -15,6 +13,7 @@ import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRun
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
 import org.springframework.cloud.contract.verifier.messaging.MessageVerifier
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
@@ -31,7 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.BDDAssertions.then
 import static org.awaitility.Awaitility.await
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [TestConfig, RabbitConfig, PostsQueueConfig])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [TestConfig])
+@ComponentScan("io.mkrzywanski.pn.matching.infra.queue")
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:scrapper-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 class PostConsumingContractSpec extends Specification {

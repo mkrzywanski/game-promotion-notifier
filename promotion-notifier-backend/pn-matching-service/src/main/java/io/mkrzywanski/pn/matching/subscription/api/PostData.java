@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.matching.subscription;
+package io.mkrzywanski.pn.matching.subscription.api;
 
 import lombok.Value;
 

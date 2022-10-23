@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class NotificationsQueueConfig {
+class NotificationsQueueConfig {
 
     @Value("${gpn.matching-service.publishing.queue.name}")
     private String notificationQueue;
 
     @Bean
-    public Queue notificationsQueue() {
+    Queue notificationsQueue() {
         return new Queue(notificationQueue, true);
     }
 

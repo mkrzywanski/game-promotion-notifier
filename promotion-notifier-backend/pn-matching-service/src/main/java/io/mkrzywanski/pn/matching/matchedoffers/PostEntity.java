@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @EqualsAndHashCode
-public class PostEntity {
+class PostEntity {
     private UUID postId;
     private String link;
     private Set<OfferEntity> offerEntities;

@@ -4,11 +4,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NewPostsConsumer {
+class NewPostsConsumer {
 
     private final PostProcessingService postProcessingService;
 
-    public NewPostsConsumer(final PostProcessingService postProcessingService) {
+    NewPostsConsumer(final PostProcessingService postProcessingService) {
         this.postProcessingService = postProcessingService;
     }
 

@@ -1,7 +1,6 @@
 package io.mkrzywanski.pn.matching.app.contract.consumer.user
 
-import io.mkrzywanski.pn.matching.infra.http.ClientCommunicationException
-
+import io.mkrzywanski.pn.matching.user.ClientCommunicationException
 import io.mkrzywanski.pn.matching.user.HttpUserServiceClient
 import io.mkrzywanski.pn.matching.user.UserSerivceClient
 import org.springframework.beans.factory.annotation.Autowired

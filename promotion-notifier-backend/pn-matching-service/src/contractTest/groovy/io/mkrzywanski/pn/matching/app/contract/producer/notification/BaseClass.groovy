@@ -6,7 +6,7 @@ import io.mkrzywanski.pn.matching.matchedoffers.NewOffersNotification
 import io.mkrzywanski.pn.matching.matchedoffers.OfferNotificationData
 import io.mkrzywanski.pn.matching.matchedoffers.PostNotificationData
 import io.mkrzywanski.pn.matching.matchedoffers.RabbitNotificationPublisher
-import io.mkrzywanski.pn.matching.user.UserDetails
+import io.mkrzywanski.pn.matching.user.api.UserDetails
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

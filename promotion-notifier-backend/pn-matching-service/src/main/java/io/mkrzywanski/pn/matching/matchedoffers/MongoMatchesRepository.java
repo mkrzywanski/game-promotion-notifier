@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @Component
-public class MongoMatchesRepository implements MatchesRepository {
+class MongoMatchesRepository implements MatchesRepository {
 
     private final String collectionName;
     private final MongoTemplate mongoTemplate;
 
-    public MongoMatchesRepository(final MongoTemplate mongoTemplate,
+    MongoMatchesRepository(final MongoTemplate mongoTemplate,
                                   @Value("${gpn.matching-service.mongodb.collectionName}") final String collectionName) {
         this.mongoTemplate = mongoTemplate;
         this.collectionName = collectionName;

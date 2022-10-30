@@ -1,7 +1,7 @@
 package io.mkrzywanski.pn.scrapper.app.adapters.persistance;
 
 import io.mkrzywanski.gpn.scrapper.domain.post.GameOffer;
-import io.mkrzywanski.gpn.scrapper.domain.post.GamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.GamePrice;
 import lombok.Value;
 
 import java.util.UUID;

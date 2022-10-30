@@ -48,36 +48,36 @@ public class GameHunterScrappingService {
             }
             LOGGER.info("Scrapped page {} . Posts {}", pageNumber, scrappedPosts);
             final Set<Hash> scrappedPostHashes = extractHashes(scrappedPosts);
-            final List<Hash> alreadySavedPosts = postRepository.findByHashIn(scrappedPostHashes);
+            final List<Hash> alreadySavedPostHashes = postRepository.findByHashIn(scrappedPostHashes);
 
             newPostHashes = new HashSet<>(scrappedPostHashes);
-            alreadySavedPosts.forEach(newPostHashes::remove);
+            alreadySavedPostHashes.forEach(newPostHashes::remove);
 
             LOGGER.info("New post hashes {}", newPostHashes);
-            LOGGER.info("Already saved post hashes {}", alreadySavedPosts);
+            LOGGER.info("Already saved post hashes {}", alreadySavedPostHashes);
 
             final List<Post> newPostsFromCurrentPage = scrappedPosts.stream()
-                    .filter(post -> !alreadySavedPosts.contains(post.getHash()))
+                    .filter(post -> !alreadySavedPostHashes.contains(post.getHash()))
                     .toList();
 
             LOGGER.info("New posts to be saved from page {} : {}", pageNumber, newPostsFromCurrentPage);
             allNewPosts.addAll(newPostsFromCurrentPage);
 
-            final boolean currentPageIsPartiallyScrapped = alreadySavedPosts.size() > 0;
+            final boolean currentPageIsPartiallyScrapped = alreadySavedPostHashes.size() > 0;
             if (currentPageIsPartiallyScrapped) {
                 break;
             }
 
             pageNumber++;
 
-        } while (true);
+        } while (!Thread.currentThread().isInterrupted());
 
         final Set<Post> distinctByHash = allNewPosts.stream()
                 .filter(distinctByKey(Post::getHash))
                 .collect(Collectors.toSet());
 
         postRepository.saveAll(distinctByHash);
-        postTransactionalOutboxRepository.put(new HashSet<>(distinctByHash));
+        postTransactionalOutboxRepository.put(distinctByHash);
     }
 
     private Set<Hash> extractHashes(final List<Post> scrappedPosts) {
@@ -95,7 +95,6 @@ public class GameHunterScrappingService {
     }
 
     private static <T> Predicate<T> distinctByKey(final Function<? super T, ?> keyExtractor) {
-
         final Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }

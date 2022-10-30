@@ -1,4 +1,4 @@
-package io.mkrzywanski.gpn.scrapper.domain.post;
+package io.mkrzywanski.gpn.scrapper.domain.post.price;
 
 import java.math.BigDecimal;
 import java.util.Currency;

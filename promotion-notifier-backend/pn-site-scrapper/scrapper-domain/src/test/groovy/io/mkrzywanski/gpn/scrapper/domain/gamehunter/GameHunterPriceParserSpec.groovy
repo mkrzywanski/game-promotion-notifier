@@ -1,8 +1,8 @@
 package io.mkrzywanski.gpn.scrapper.domain.gamehunter
 
-import io.mkrzywanski.gpn.scrapper.domain.post.CompositeGamePrice
-import io.mkrzywanski.gpn.scrapper.domain.post.Currencies
-import io.mkrzywanski.gpn.scrapper.domain.post.EmptyGamePrice
+import io.mkrzywanski.gpn.scrapper.domain.post.price.CompositeGamePrice
+import io.mkrzywanski.gpn.scrapper.domain.post.price.Currencies
+import io.mkrzywanski.gpn.scrapper.domain.post.price.EmptyGamePrice
 import io.mkrzywanski.gpn.scrapper.domain.post.NumberGamePrice
 import spock.lang.Specification
 

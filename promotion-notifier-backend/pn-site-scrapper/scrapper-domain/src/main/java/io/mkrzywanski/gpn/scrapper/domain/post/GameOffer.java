@@ -1,5 +1,6 @@
 package io.mkrzywanski.gpn.scrapper.domain.post;
 
+import io.mkrzywanski.gpn.scrapper.domain.post.price.GamePrice;
 import lombok.Value;
 
 import java.util.UUID;

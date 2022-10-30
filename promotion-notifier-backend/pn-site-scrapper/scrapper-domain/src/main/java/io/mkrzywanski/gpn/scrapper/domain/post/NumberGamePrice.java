@@ -1,5 +1,8 @@
 package io.mkrzywanski.gpn.scrapper.domain.post;
 
+import io.mkrzywanski.gpn.scrapper.domain.post.price.Currencies;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.GamePrice;
+
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Map;

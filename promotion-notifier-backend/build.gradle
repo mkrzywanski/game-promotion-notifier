@@ -3,7 +3,7 @@ buildscript {
         keycloakVersion = '18.0.0'
         lombokVersion = '1.18.24'
         springVersion = '5.3.23'
-        groovyVersion = '3.0.12'
+        groovyVersion = '3.0.13'
         springBootVersion = '2.7.5'
         springDepenedcyMgmtVersion = '1.1.0'
         springCloudVersion = '3.1.4'

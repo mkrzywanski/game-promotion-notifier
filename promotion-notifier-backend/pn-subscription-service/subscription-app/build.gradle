@@ -49,7 +49,7 @@ dependencies {
     implementation "io.micrometer:micrometer-registry-prometheus"
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.33.2")
+    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.34.0")
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.spockframework', name: 'spock-spring'
@@ -62,7 +62,7 @@ dependencies {
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
     contractTestImplementation("com.jayway.jsonpath:json-path:2.7.0")
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.33.2")
+    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.34.0")
     contractTestImplementation 'com.c4-soft.springaddons:spring-security-oauth2-test-addons:4.3.2'
     contractTestImplementation "org.keycloak:keycloak-spring-boot-starter:${keycloakVersion}"
 

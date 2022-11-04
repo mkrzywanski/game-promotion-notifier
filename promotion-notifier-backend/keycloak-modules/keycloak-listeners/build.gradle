@@ -49,7 +49,7 @@ dependencies {
 
     testImplementation project(':pn-shared-test-modules:keycloak-test-container')
     testImplementation "org.testcontainers:selenium:1.17.5"
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.5.3'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.6.0'
     testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.6.0'
     testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:2.35.0"
     testImplementation 'com.jayway.jsonpath:json-path-assert:2.7.0'

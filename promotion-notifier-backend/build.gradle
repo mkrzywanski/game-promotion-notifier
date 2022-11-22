@@ -70,7 +70,7 @@ subprojects {
 
         testImplementation platform("org.spockframework:spock-bom:2.1-groovy-3.0")
         testImplementation "org.spockframework:spock-core"
-        testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.10.1'
+        testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.11.1'
 
         testImplementation 'org.exparity:hamcrest-date:2.0.8'
         testImplementation "org.hamcrest:hamcrest-core:${hamcrestVersion}"

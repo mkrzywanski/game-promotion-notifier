@@ -20,7 +20,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}" apply false
     id 'io.spring.dependency-management' version "${springDepenedcyMgmtVersion}" apply false
     id 'org.springframework.cloud.contract' version "${springCloudVersion}" apply false
-    id 'com.google.cloud.tools.jib' version '3.3.0' apply false
+    id 'com.google.cloud.tools.jib' version '3.3.1' apply false
     id "io.freefair.lombok" version "6.5.1"
 }
 

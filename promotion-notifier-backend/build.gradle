@@ -6,7 +6,7 @@ buildscript {
         groovyVersion = '3.0.14'
         springBootVersion = '2.7.6'
         springDepenedcyMgmtVersion = '1.1.0'
-        springCloudVersion = '3.1.4'
+        springCloudVersion = '4.0.0'
         testcontainersVersion = '1.17.6'
         awaitilityVersion = '4.2.0'
         wiremockVersion = '2.27.2'

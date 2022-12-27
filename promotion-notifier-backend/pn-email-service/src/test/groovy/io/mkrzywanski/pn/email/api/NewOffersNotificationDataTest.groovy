@@ -4,8 +4,8 @@ package io.mkrzywanski.pn.email.api
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import javax.validation.Validation
-import javax.validation.Validator
+import jakarta.validation.Validation
+import jakarta.validation.Validator
 
 import static io.mkrzywanski.pn.email.data.NewOffersNotificationDataObjectMother.*
 import static io.mkrzywanski.pn.email.data.PostDataObjectMother.*

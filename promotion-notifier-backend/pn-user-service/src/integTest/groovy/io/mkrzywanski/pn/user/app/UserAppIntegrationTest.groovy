@@ -7,18 +7,21 @@ import io.mkrzywanski.pn.user.app.domain.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest(classes = [IntegrationTestConfig])
+@SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = IntegrationTestConfig)
 class UserAppIntegrationTest extends Specification {
 
     @Autowired
@@ -37,7 +40,7 @@ class UserAppIntegrationTest extends Specification {
     def "should create user"() {
         given: "request"
         def userId = UUID.fromString("cf02f0da-243b-4fd4-8a91-3d0401c9c54d")
-        def createUserRequest = new CreateUserRequest(userId, "name", "lastName","username", "email@google.com")
+        def createUserRequest = new CreateUserRequest(userId, "name", "lastName", "username", "email@google.com")
         def request = post("/v1/users")
                 .content(json(createUserRequest))
                 .contentType(APPLICATION_JSON_VALUE)

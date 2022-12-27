@@ -5,27 +5,14 @@ import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.cloud.contract.verifier.converter.YamlContract;
-import org.springframework.cloud.contract.verifier.messaging.MessageVerifier;
+import org.springframework.cloud.contract.verifier.messaging.MessageVerifierSender;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 record SimpleMessageVerifier(
-        RabbitTemplate rabbitTemplate) implements MessageVerifier<Message> {
-
-
-    @Override
-    public Message receive(final String destination, final long timeout, final TimeUnit timeUnit,
-                           final YamlContract contract) {
-        return null;
-    }
-
-    @Override
-    public Message receive(final String destination, final YamlContract contract) {
-        return null;
-    }
+        RabbitTemplate rabbitTemplate) implements MessageVerifierSender<Message> {
 
     @Override
     public void send(final Message message, final String destination, final YamlContract contract) {

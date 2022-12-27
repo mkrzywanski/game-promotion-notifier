@@ -14,6 +14,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.mail.MailProperties
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 import java.time.Duration
@@ -26,7 +27,8 @@ import static io.mkrzywanski.pn.email.matchers.MimeMessageSubjectMatcher.hasSubj
 import static org.awaitility.Awaitility.*
 import static org.hamcrest.MatcherAssert.assertThat
 
-@SpringBootTest(classes = IntegrationTestConfig)
+@SpringBootTest
+@ContextConfiguration(classes = IntegrationTestConfig)
 class EmailSendingSpec extends Specification {
 
     @Autowired

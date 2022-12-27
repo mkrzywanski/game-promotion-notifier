@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository
 import org.springframework.security.oauth2.core.AuthorizationGrantType
 import org.springframework.stereotype.Component
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.RabbitMQContainer
@@ -35,8 +36,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*
 import static org.assertj.core.api.Assertions.assertThat
 import static org.awaitility.Awaitility.await
 
-@SpringBootTest(classes = [MongoConfig, TestConfig, TestNotificationConsumer, MatchingServiceApp])
+@SpringBootTest
 @AutoConfigureWireMock(port = 0)
+@ContextConfiguration(classes = [MongoConfig, TestConfig, TestNotificationConsumer, MatchingServiceApp])
 class PostsConsumerToNotificationProductionSpec extends Specification {
 
     private static final String RABBIT_USERNAME = "test"

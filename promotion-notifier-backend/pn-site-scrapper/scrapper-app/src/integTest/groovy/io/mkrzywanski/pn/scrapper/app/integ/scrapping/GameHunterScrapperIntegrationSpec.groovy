@@ -7,22 +7,22 @@ import io.mkrzywanski.pn.scrapper.app.adapters.persistance.PostMongoModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.time.ZonedDateTime
 
 import static com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.responseDefinition
 import static com.github.tomakehurst.wiremock.client.WireMock.get
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
-
-import java.time.ZonedDateTime
-
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.hasItem
 import static org.hamcrest.Matchers.hasItems
 
-@SpringBootTest(classes = [ScrappingITConfig], properties = ["gpn.scheduling.scrapping.cron=*/2 * * * * *"])
+@SpringBootTest(properties = ["gpn.scheduling.scrapping.cron=*/2 * * * * *"])
+@ContextConfiguration(classes = ScrappingITConfig)
 class GameHunterScrapperIntegrationSpec extends Specification {
 
     @Autowired

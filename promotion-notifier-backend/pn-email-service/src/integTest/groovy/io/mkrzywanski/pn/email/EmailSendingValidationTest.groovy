@@ -12,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.stereotype.Component
+import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 import java.util.concurrent.CopyOnWriteArrayList
 
-@SpringBootTest(classes = [IntegrationTestConfig])
+@SpringBootTest
+@ContextConfiguration(classes = IntegrationTestConfig)
 class EmailSendingValidationTest extends Specification {
 
     @MockBean

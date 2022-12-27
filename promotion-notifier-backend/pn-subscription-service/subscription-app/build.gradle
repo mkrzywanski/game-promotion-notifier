@@ -52,7 +52,9 @@ dependencies {
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'org.spockframework', name: 'spock-spring'
+    testImplementation('org.spockframework:spock-spring') {
+        exclude group: "org.codehaus.groovy", module: "groovy"
+    }
     testImplementation 'org.springframework.security:spring-security-test'
 
     integTestImplementation "org.testcontainers:elasticsearch:${testcontainersVersion}"

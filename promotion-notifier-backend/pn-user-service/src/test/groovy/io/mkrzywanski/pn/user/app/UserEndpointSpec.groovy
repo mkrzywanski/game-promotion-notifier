@@ -1,13 +1,18 @@
-package io.mkrzywanski.pn.user.app.adapters.web
+package io.mkrzywanski.pn.user.app
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.mkrzywanski.pn.user.app.domain.UserEndpoint
 import io.mkrzywanski.pn.user.app.domain.UserFacade
 import io.mkrzywanski.pn.user.app.domain.UserServiceConstants
+import io.mkrzywanski.pn.user.app.infra.JacksonConfig
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
@@ -17,7 +22,9 @@ import static org.hamcrest.Matchers.*
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
+@ContextConfiguration(classes = [JacksonConfig])
 @WebMvcTest
+@ComponentScan("io.mkrzywanski.pn.user.app.domain")
 class UserEndpointSpec extends Specification {
 
     @Autowired

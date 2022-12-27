@@ -3,7 +3,7 @@ package io.mkrzywanski.pn.matching.user;
 import io.mkrzywanski.pn.matching.user.api.UserDetails;
 import io.mkrzywanski.pn.webservice.common.error.ErrorResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -33,7 +33,7 @@ class HttpUserServiceClient implements UserSerivceClient {
         return webclient.get()
                 .uri(finalUrl)
                 .retrieve()
-                .onStatus(HttpStatus::isError, HttpUserServiceClient::handleError)
+                .onStatus(HttpStatusCode::isError, HttpUserServiceClient::handleError)
                 .bodyToMono(UserDetails.class)
                 .block();
     }

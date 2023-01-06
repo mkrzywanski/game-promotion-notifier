@@ -1,4 +1,9 @@
 dependencies {
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
+    implementation 'com.jayway.jsonpath:json-path:2.7.0'
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: "${wiremockVersion}"
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.4.2'
+    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+
+
 }

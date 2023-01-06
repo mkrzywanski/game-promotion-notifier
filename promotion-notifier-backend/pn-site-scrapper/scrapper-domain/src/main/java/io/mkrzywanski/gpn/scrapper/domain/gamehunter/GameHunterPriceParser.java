@@ -1,6 +1,10 @@
 package io.mkrzywanski.gpn.scrapper.domain.gamehunter;
 
-import io.mkrzywanski.gpn.scrapper.domain.post.*;
+import io.mkrzywanski.gpn.scrapper.domain.post.NumberGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.CompositeGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.EmptyGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.FreeGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.GamePrice;
 
 import java.util.Collection;
 import java.util.HashSet;

@@ -1,6 +1,10 @@
 package io.mkrzywanski.pn.scrapper.app.adapters.persistance;
 
 import io.mkrzywanski.gpn.scrapper.domain.post.*;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.CompositeGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.EmptyGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.FreeGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.GamePrice;
 
 import java.util.Map;
 import java.util.Optional;

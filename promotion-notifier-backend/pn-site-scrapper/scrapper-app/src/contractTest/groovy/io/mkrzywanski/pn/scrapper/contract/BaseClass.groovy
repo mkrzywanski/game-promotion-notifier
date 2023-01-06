@@ -1,6 +1,7 @@
 package io.mkrzywanski.pn.scrapper.contract
 
 import io.mkrzywanski.gpn.scrapper.domain.post.*
+import io.mkrzywanski.gpn.scrapper.domain.post.price.Currencies
 import io.mkrzywanski.pn.scrapper.app.adapters.publishing.QueuePostPublisher
 import io.mkrzywanski.pn.scrapper.app.infra.QueueConfig
 import org.springframework.amqp.rabbit.annotation.RabbitListener

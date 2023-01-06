@@ -1,9 +1,9 @@
 package io.mkrzywanski.pn.scrapper.app.adapters.persistance;
 
-import io.mkrzywanski.gpn.scrapper.domain.post.CompositeGamePrice;
-import io.mkrzywanski.gpn.scrapper.domain.post.EmptyGamePrice;
-import io.mkrzywanski.gpn.scrapper.domain.post.FreeGamePrice;
-import io.mkrzywanski.gpn.scrapper.domain.post.GamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.CompositeGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.EmptyGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.FreeGamePrice;
+import io.mkrzywanski.gpn.scrapper.domain.post.price.GamePrice;
 import io.mkrzywanski.gpn.scrapper.domain.post.NumberGamePrice;
 
 import java.math.BigDecimal;

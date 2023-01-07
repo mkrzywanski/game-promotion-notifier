@@ -2,7 +2,7 @@ package io.mkrzywanski.pn.email.domain;
 
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Currency;
 

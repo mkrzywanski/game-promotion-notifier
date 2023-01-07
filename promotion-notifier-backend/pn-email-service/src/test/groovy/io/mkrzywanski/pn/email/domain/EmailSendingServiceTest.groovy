@@ -5,7 +5,7 @@ import org.springframework.mail.MailSendException
 import org.springframework.mail.javamail.JavaMailSender
 import spock.lang.Specification
 
-import javax.mail.internet.MimeMessage
+import jakarta.mail.internet.MimeMessage
 
 class EmailSendingServiceTest extends Specification {
 

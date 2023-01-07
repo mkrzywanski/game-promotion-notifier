@@ -15,7 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.StubTrigger
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
-import org.springframework.cloud.contract.verifier.messaging.MessageVerifier
+import org.springframework.cloud.contract.verifier.messaging.MessageVerifierReceiver
+import org.springframework.cloud.contract.verifier.messaging.MessageVerifierSender
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ActiveProfiles
@@ -92,7 +93,7 @@ class TestConfig {
     }
 
     @Bean
-    MessageVerifier<Message> testMessageVerifier(final RabbitTemplate rabbitTemplate) {
+    MessageVerifierSender<Message> testMessageVerifier(final RabbitTemplate rabbitTemplate) {
         new SimpleMessageVerifier(rabbitTemplate)
     }
 }

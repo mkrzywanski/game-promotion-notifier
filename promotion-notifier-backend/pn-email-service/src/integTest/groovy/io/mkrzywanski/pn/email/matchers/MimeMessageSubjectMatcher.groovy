@@ -3,7 +3,7 @@ package io.mkrzywanski.pn.email.matchers
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
-import javax.mail.internet.MimeMessage
+import jakarta.mail.internet.MimeMessage
 
 class MimeMessageSubjectMatcher extends TypeSafeMatcher<MimeMessage> {
 

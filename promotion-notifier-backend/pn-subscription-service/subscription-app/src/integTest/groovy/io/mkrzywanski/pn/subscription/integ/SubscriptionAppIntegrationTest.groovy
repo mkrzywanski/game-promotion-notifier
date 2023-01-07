@@ -15,6 +15,7 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder
 import org.springframework.data.elasticsearch.core.query.StringQuery
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -27,8 +28,9 @@ import static org.hamcrest.Matchers.notNullValue
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest(classes = IntegrationTestConfig)
+@SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = IntegrationTestConfig)
 class SubscriptionAppIntegrationTest extends Specification {
 
     @Autowired
@@ -46,10 +48,11 @@ class SubscriptionAppIntegrationTest extends Specification {
     private final def postId = UUID.fromString("b5e6a983-d94a-400e-9672-4560657838e0")
     private final def userId = UUID.fromString("e48fde73-4eca-499b-b649-8263ada90995")
     private final def offerId = UUID.fromString('fb1fdfc4-6dfe-4e52-b41c-67d63274ec25')
+    private final def matchAllQuery = new StringQuery("{\"match_all\": {}}")
+    private final def subscriptionsIndex = IndexCoordinates.of("subscriptions")
 
     void cleanup() {
-        def query = new StringQuery("{\"match_all\": {}}")
-        elasticsearchOperations.delete(query, SubscriptionElasticModel, IndexCoordinates.of("subscriptions"))
+        elasticsearchOperations.delete(matchAllQuery, SubscriptionElasticModel, subscriptionsIndex)
     }
 
     def "should match new post offers to existing subscriptions"() {
@@ -81,7 +84,6 @@ class SubscriptionAppIntegrationTest extends Specification {
         def token = keyCloakAccess.getUserToken()
         def subscriptionRequest = new CreateSubscriptionRequest(userId, Set.of("Rainbow Six"))
         def requestJson = objectMapper.writeValueAsString(subscriptionRequest)
-
 
         def request = post("/v1/subscriptions", requestJson).header("Authorization", "Bearer ${token}")
         when:
@@ -116,7 +118,7 @@ class SubscriptionAppIntegrationTest extends Specification {
         def subscriptionId = UUID.randomUUID()
         def subscriptionElasticModel = new SubscriptionElasticModel(userId, Set.of("rainbow"))
         def query = new IndexQueryBuilder().withId(subscriptionId.toString()).withObject(subscriptionElasticModel).build()
-        elasticsearchOperations.index(query, IndexCoordinates.of("subscriptions"))
+        elasticsearchOperations.index(query, subscriptionsIndex)
         subscriptionElasticModel
     }
 }

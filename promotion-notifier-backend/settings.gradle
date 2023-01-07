@@ -19,4 +19,5 @@ include ':pn-shared-test-modules:embedded-keycloak-spring-configuration'
 include ':pn-shared-test-modules:testcontainers-extended'
 
 include ':keycloak-modules:keycloak-listeners'
+include ':keycloak-modules:keycloak-listeners-contract-tests'
 include ':pn-shared-test-modules:common'

@@ -54,12 +54,8 @@ dependencies {
     testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:2.35.0"
     testImplementation 'com.jayway.jsonpath:json-path-assert:2.7.0'
     testImplementation project(":pn-shared-test-modules:common")
-    testImplementation group: 'org.spockframework', name: 'spock-spring'
     testImplementation 'com.github.stefanbirkner:system-lambda:1.2.1'
-
-    contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:${springCloudVersion}"
     contractTestImplementation project(":pn-shared-test-modules:common")
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service')
 }
 
@@ -67,6 +63,10 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
     }
+}
+
+tasks.withType(Test).all {
+    jvmArgs += '--add-opens=java.base/java.util=ALL-UNNAMED'
 }
 
 tasks.register('contractTest', Test) {

@@ -5,8 +5,8 @@ import io.mkrzywanski.pn.email.data.PriceObjectMother
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import javax.validation.Validation
-import javax.validation.Validator
+import jakarta.validation.Validation
+import jakarta.validation.Validator
 
 import static io.mkrzywanski.pn.email.data.OfferDataObjectMother.*
 

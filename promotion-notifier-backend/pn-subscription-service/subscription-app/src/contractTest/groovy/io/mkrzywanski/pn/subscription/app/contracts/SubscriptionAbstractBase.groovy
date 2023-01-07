@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification;
@@ -16,9 +17,11 @@ import spock.lang.Specification;
 @SpringBootTest(classes = [TestConfig], webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ActiveProfiles("test")
 @PackageScope
+@ContextConfiguration
 abstract class SubscriptionAbstractBase extends Specification {
+
     @Autowired
-    protected WebApplicationContext context;
+    protected WebApplicationContext context
 
     @Autowired
     protected FilterChainProxy springSecurityFilterChain

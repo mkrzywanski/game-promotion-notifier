@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.verifier.converter.YamlContract
-import org.springframework.cloud.contract.verifier.messaging.MessageVerifier
+import org.springframework.cloud.contract.verifier.messaging.MessageVerifierReceiver
 import org.springframework.cloud.contract.verifier.messaging.boot.AutoConfigureMessageVerifier
 import org.springframework.cloud.contract.verifier.messaging.internal.ContractVerifierMessage
 import org.springframework.cloud.contract.verifier.messaging.internal.ContractVerifierMessaging
@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.messaging.Message
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.RabbitMQContainer
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit
         TestConfig.class
 ], properties = "stubrunner.amqp.mockConnection=false")
 @AutoConfigureMessageVerifier
+@ContextConfiguration
 abstract class BaseClass extends Specification {
 
     private static final String RABBIT_USERNAME = "test"
@@ -78,22 +80,9 @@ class TestConfig {
         return new RabbitMessageVerifier()
     }
 
-    @Bean
-    ContractVerifierMessaging<Message<?>> rabbitContractVerifierMessaging(final RabbitMessageVerifier messageVerifier) {
-        new ContractVerifierMessaging<Message<?>>(messageVerifier) {
-            @Override
-            protected ContractVerifierMessage convert(final Message<?> message) {
-                if (message == null) {
-                    null
-                }
-                new ContractVerifierMessage(message.getPayload(), message.getHeaders())
-            }
-
-        }
-    }
 }
 
-class RabbitMessageVerifier implements MessageVerifier<Message<?>> {
+class RabbitMessageVerifier implements MessageVerifierReceiver<Message<?>> {
 
     private final BlockingQueue<Message<?>> queue = new LinkedBlockingQueue<>()
 
@@ -116,13 +105,4 @@ class RabbitMessageVerifier implements MessageVerifier<Message<?>> {
         return receive(destination, 1, TimeUnit.SECONDS, contract)
     }
 
-    @Override
-    void send(final Message message, final String destination, final YamlContract contract) {
-
-    }
-
-    @Override
-    void send(final Object payload, final Map headers, final String destination, final YamlContract contract) {
-
-    }
 }

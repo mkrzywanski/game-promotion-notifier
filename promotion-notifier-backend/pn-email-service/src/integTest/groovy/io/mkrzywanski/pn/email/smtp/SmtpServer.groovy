@@ -3,7 +3,7 @@ package io.mkrzywanski.pn.email.smtp
 import com.icegreen.greenmail.util.GreenMail
 import com.icegreen.greenmail.util.ServerSetup
 
-import javax.mail.internet.MimeMessage
+import jakarta.mail.internet.MimeMessage
 
 class SmtpServer implements AutoCloseable {
 

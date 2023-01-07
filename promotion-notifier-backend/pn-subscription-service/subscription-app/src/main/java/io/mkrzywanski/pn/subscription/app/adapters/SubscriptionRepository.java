@@ -1,14 +1,20 @@
 package io.mkrzywanski.pn.subscription.app.adapters;
 
-import io.mkrzywanski.pn.subscription.*;
-import org.elasticsearch.index.query.Operator;
+import co.elastic.clients.elasticsearch._types.query_dsl.Operator;
+import io.mkrzywanski.pn.subscription.Match;
+import io.mkrzywanski.pn.subscription.MatchingRequest;
+import io.mkrzywanski.pn.subscription.Offer;
+import io.mkrzywanski.pn.subscription.Post;
+import io.mkrzywanski.pn.subscription.SubscriptionCreateInfo;
+import io.mkrzywanski.pn.subscription.SubscriptionId;
+import io.mkrzywanski.pn.subscription.SubscriptionMatchingResult;
+import org.springframework.data.elasticsearch.client.elc.NativeQuery;
+import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 
 import java.util.Set;
 import java.util.UUID;
@@ -16,7 +22,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 public class SubscriptionRepository implements io.mkrzywanski.pn.subscription.SubscriptionRepository {
 
@@ -59,7 +64,7 @@ public class SubscriptionRepository implements io.mkrzywanski.pn.subscription.Su
 
     private Function<Offer, Stream<Match>> toMatches(final UUID postId) {
         return offer -> {
-            final NativeSearchQuery query = getQueryForOfferText(offer.getText());
+            final NativeQuery query = getQueryForOfferText(offer.getText());
             return operations.search(query, SubscriptionElasticModel.class, indexCoordinates)
                     .stream()
                     .map(toMatch(postId, offer));
@@ -67,10 +72,10 @@ public class SubscriptionRepository implements io.mkrzywanski.pn.subscription.Su
     }
 
     //this can be optimized to use bulk api to peform several queries in one request
-    private NativeSearchQuery getQueryForOfferText(final String text) {
-        return new NativeSearchQueryBuilder()
-                .withQuery(matchQuery("subscriptions", text).operator(Operator.AND))
-                .build();
+    private NativeQuery getQueryForOfferText(final String text) {
+        final NativeQueryBuilder nativeQueryBuilder = new NativeQueryBuilder()
+                .withQuery(org.springframework.data.elasticsearch.client.elc.QueryBuilders.matchQueryAsQuery("subscriptions", text, Operator.And, 0f));
+        return new NativeQuery(nativeQueryBuilder);
     }
 
     private Function<SearchHit<SubscriptionElasticModel>, Match> toMatch(final UUID postId, final Offer offer) {

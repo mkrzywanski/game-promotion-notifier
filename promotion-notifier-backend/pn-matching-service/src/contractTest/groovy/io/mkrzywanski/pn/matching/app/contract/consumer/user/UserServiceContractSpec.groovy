@@ -12,10 +12,12 @@ import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.web.reactive.function.client.WebClient
 import spock.lang.Specification
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [TestConfig])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = [TestConfig])
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:pn-user-service:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
 @EnableAutoConfiguration

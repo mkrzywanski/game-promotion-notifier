@@ -1,16 +1,18 @@
 package io.mkrzywanski.pn.matching.matchedoffers
 
-import io.mkrzywanski.pn.matching.matchedoffers.*
+
 import io.mkrzywanski.pn.matching.user.config.MongoConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
-@SpringBootTest(classes = [MongoConfig, MongoMatchesRepository])
+@SpringBootTest
 @EnableMongoRepositories
 @EnableAutoConfiguration
+@ContextConfiguration(classes = [MongoConfig, MongoMatchesRepository])
 class MongoConcurrentSpec extends Specification {
 
     @Autowired

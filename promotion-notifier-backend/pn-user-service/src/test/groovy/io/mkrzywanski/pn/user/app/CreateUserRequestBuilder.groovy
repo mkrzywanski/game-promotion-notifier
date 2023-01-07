@@ -1,4 +1,4 @@
-package io.mkrzywanski.pn.user.app.adapters.web
+package io.mkrzywanski.pn.user.app
 
 import groovy.transform.PackageScope
 import io.mkrzywanski.pn.user.app.api.CreateUserRequest

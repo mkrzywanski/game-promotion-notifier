@@ -11,11 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.StubTrigger
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
-import org.springframework.cloud.contract.verifier.messaging.MessageVerifier
+import org.springframework.cloud.contract.verifier.messaging.MessageVerifierSender
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.RabbitMQContainer
@@ -30,7 +31,8 @@ import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.BDDAssertions.then
 import static org.awaitility.Awaitility.await
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [TestConfig])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@ContextConfiguration(classes = [TestConfig])
 @ComponentScan("io.mkrzywanski.pn.matching.infra.queue")
 @AutoConfigureStubRunner(ids = "io.mkrzywanski:scrapper-app:+:stubs", stubsMode = StubRunnerProperties.StubsMode.CLASSPATH)
 @ActiveProfiles("test")
@@ -87,7 +89,7 @@ class TestConfig {
     }
 
     @Bean
-    MessageVerifier<Message> testMessageVerifier(final RabbitTemplate rabbitTemplate) {
+    MessageVerifierSender<org.springframework.messaging.Message<?>> testMessageVerifier(final RabbitTemplate rabbitTemplate) {
         return new SimpleMessageVerifier(rabbitTemplate)
     }
 }

@@ -6,3 +6,9 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_11
 }
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+    implementation group: 'org.hamcrest', name: 'hamcrest', version : '2.2'
+
+}

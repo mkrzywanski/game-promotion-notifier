@@ -24,7 +24,7 @@ class TestConfig {
         JwtDecoder jwtDecoder = new JwtDecoder() {
             @Override
             Jwt decode(final String token) throws JwtException {
-                return new Jwt("aaa", Instant.now(), Instant.now().plusSeconds(10), Map.of("alg", "none"), Map.of(JwtClaimNames.SUB, "testUser"))
+                return new Jwt("aaa", Instant.now(), Instant.now().plusSeconds(10), Map.of("alg", "none"), Map.of(JwtClaimNames.SUB, "testUser", "scp", "profile"))
             }
         }
 

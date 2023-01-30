@@ -4,7 +4,6 @@ pull_request_rules:
         - and :
             - author=dependabot[bot]
             - check-success=build
-            - check-success=codecov/project
             - check-success=sonatype-lift
     actions:
       merge:

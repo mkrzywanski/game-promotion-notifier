@@ -4,7 +4,7 @@ buildscript {
         lombokVersion = '1.18.26'
         springVersion = '6.0.7'
         groovyVersion = '4.0.0'
-        springBootVersion = '3.0.4'
+        springBootVersion = '3.0.5'
         springDepenedcyMgmtVersion = '1.1.0'
         springCloudVersion = '4.0.1'
         testcontainersVersion = '1.17.6'

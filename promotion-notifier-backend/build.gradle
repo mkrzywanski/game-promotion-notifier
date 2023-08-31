@@ -9,7 +9,7 @@ buildscript {
         springCloudVersion = '4.0.4'
         testcontainersVersion = '1.19.0'
         awaitilityVersion = '4.2.0'
-        wiremockVersion = '2.27.2'
+        wiremockVersion = '3.0.0'
         baseDockerImage = 'openjdk:17.0.1-slim'
         hamcrestVersion = '2.2'
         getStubsJarFromProject = this.&getStubsJarFromProject

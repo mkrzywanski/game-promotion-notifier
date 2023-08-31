@@ -58,7 +58,7 @@ dependencies {
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
 
-    integTestImplementation group: 'com.github.tomakehurst', name: 'wiremock-jre8-standalone', version: "2.35.0"
+    integTestImplementation group: 'com.github.tomakehurst', name: 'wiremock-jre8-standalone', version: "3.0.0"
     integTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
     integTestImplementation project(":pn-shared-test-modules:testcontainers-extended")
 

@@ -64,9 +64,9 @@ dependencies {
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
     //newer wiremock than Spring Cloud Contract to resolve opentest4j runtime issues
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
+    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:3.0.0")
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
+    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:3.0.0")
 
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
     contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service')

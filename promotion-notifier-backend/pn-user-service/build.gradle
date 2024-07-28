@@ -69,7 +69,7 @@ checkstyleContractTest {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 

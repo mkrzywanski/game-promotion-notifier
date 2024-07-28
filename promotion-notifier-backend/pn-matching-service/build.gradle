@@ -15,27 +15,17 @@ sourceSets {
             resources.srcDirs = ["${projectDir}/src/integTest/resources"]
         }
     }
-//    contractTest {
-//        groovy {
-//            srcDirs = ["${projectDir}/src/contractTest/groovy"]
-//            compileClasspath += sourceSets.main.output
-//            runtimeClasspath += sourceSets.main.output
-//            resources.srcDirs = ["${projectDir}/src/contractTest/resources"]
-//        }
-//    }
 }
 
 configurations {
     integTestImplementation.extendsFrom testImplementation
     integTestRuntimeOnly.extendsFrom testRuntimeOnly
 
-//    contractTestImplementation.extendsFrom testImplementation
-//    contractTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
@@ -56,21 +46,19 @@ dependencies {
     testImplementation group: 'org.awaitility', name: 'awaitility', version: "${awaitilityVersion}"
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
+    testImplementation "com.github.dasniko:testcontainers-keycloak:${keycloakTestcontainersVersion}"
 
-    integTestImplementation 'org.keycloak:keycloak-admin-client:18.0.0'
+    integTestImplementation "org.keycloak:keycloak-admin-client:${keycloakVersion}"
     integTestImplementation project(":pn-shared-test-modules:testcontainers-extended")
-    integTestImplementation "org.springframework.cloud:spring-cloud-contract-wiremock:${springCloudVersion}"
+    integTestImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
     integTestImplementation project(":pn-shared-test-modules:embedded-keycloak-spring-configuration")
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
-    //newer wiremock than Spring Cloud Contract to resolve opentest4j runtime issues
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
-    contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
     contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
 
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service')
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-subscription-service:subscription-app')
+    contractTestRuntimeOnly getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
+    contractTestRuntimeOnly getStubsJarFromProject(':pn-user-service')
+    contractTestRuntimeOnly getStubsJarFromProject(':pn-subscription-service:subscription-app')
 }
 
 tasks.register('integrationTest', Test) {
@@ -108,23 +96,6 @@ contracts {
     baseClassForTests = "io.mkrzywanski.pn.matching.app.contract.producer.notification.BaseClass"
     testFramework = TestFramework.SPOCK
 }
-
-//tasks.register('contractTest', Test) {
-//    useJUnitPlatform()
-//    description = 'Runs contract tests.'
-//    group = 'verification'
-//
-//    testClassesDirs = sourceSets.contractTest.output.classesDirs
-//    classpath = sourceSets.contractTest.runtimeClasspath
-//    testLogging {
-//
-//        events("passed", "skipped", "failed")
-//        showStackTraces = true
-//        exceptionFormat = 'full'
-//    }
-//}
-//
-//tasks.findByName('integrationTest').dependsOn('contractTest')
 
 idea {
     module {

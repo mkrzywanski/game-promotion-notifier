@@ -9,6 +9,5 @@ java {
 }
 
 dependencies {
-    api "org.testcontainers:testcontainers:${testcontainersVersion}"
     api "org.keycloak:keycloak-admin-client:${keycloakVersion}"
 }

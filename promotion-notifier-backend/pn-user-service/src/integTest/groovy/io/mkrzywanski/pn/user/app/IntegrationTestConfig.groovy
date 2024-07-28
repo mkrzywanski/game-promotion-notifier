@@ -2,6 +2,7 @@ package io.mkrzywanski.pn.user.app
 
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.context.annotation.Bean
@@ -15,7 +16,8 @@ import javax.sql.DataSource
 
 @Configuration
 @Import([UserServiceApplication])
-@EnableConfigurationProperties(TestDatabaseProperties.class)
+//@EnableConfigurationProperties(TestDatabaseProperties.class)
+@ConfigurationPropertiesScan
 class IntegrationTestConfig {
 
     private static final POSTGRES_IMAGE_TAG = "13"

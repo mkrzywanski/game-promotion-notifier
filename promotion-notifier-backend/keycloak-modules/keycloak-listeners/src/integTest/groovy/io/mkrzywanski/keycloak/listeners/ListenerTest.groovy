@@ -1,8 +1,12 @@
 package io.mkrzywanski.keycloak.listeners
 
 import com.github.tomakehurst.wiremock.client.WireMock
-import io.mkrzywanski.keycloak.listeners.UserServicePropertiesProvider
-import io.mkrzywanski.shared.keycloak.*
+import dasniko.testcontainers.keycloak.KeycloakContainer
+import io.mkrzywanski.shared.keycloak.KeyCloakAccess
+import io.mkrzywanski.shared.keycloak.KeyCloakProperties
+import io.mkrzywanski.shared.keycloak.KeycloakClient
+import io.mkrzywanski.shared.keycloak.KeycloakUser
+import org.keycloak.admin.client.Keycloak
 import org.keycloak.admin.client.KeycloakBuilder
 import org.keycloak.admin.client.resource.RealmResource
 import org.keycloak.representations.idm.ClientRepresentation
@@ -30,6 +34,7 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await
 
 class ListenerTest extends Specification {
 
+    static def VALID_REDIRECT_URI = "http://localhost:5555"
     def network = Network.newNetwork()
     def properties = keyCloakProperties()
     def keycloak = keyCloakContainer(properties, network)
@@ -51,9 +56,10 @@ class ListenerTest extends Specification {
         wiremockClient = new WireMock("localhost", wiremock.getFirstMappedPort())
 
         keycloak.withEnv(UserServicePropertiesProvider.USER_SERVICE_URL_ENV, "http://wiremock:8080")
+        keycloak.portBindings = List.of("8080:8080")
         keycloak.start()
         access = keycloak(properties, keycloak)
-        setupKeycloak(properties, keycloak.getFirstMappedPort())
+        setupKeycloak(properties, keycloak.keycloakAdminClient)
 
         selenium.start()
         driver = new RemoteWebDriver(selenium.getSeleniumAddress(), new ChromeOptions())
@@ -104,8 +110,10 @@ class ListenerTest extends Specification {
     }
 
     def registrationIsPerformed() {
-        driver.navigate().to("http://keycloak:8080/auth/realms/${properties.testRealm}/protocol/openid-connect/auth?response_type=code&client_id=${properties.client.clientId}&scope=openid&redirect_uri=http://localhost:5555")
+        driver.navigate().to("http://keycloak:8080/realms/${properties.testRealm}/protocol/openid-connect/auth?response_type=code&client_id=${properties.client.clientId}&scope=openid&redirect_uri=${VALID_REDIRECT_URI}")
+
         driver.findElement(By.linkText("Register")).click()
+
         driver.findElement(By.id("firstName")).sendKeys("test")
         driver.findElement(By.id("lastName")).sendKeys("test")
         driver.findElement(By.id("email")).sendKeys("test@test.pl")
@@ -115,10 +123,10 @@ class ListenerTest extends Specification {
         driver.findElement(By.cssSelector("input[type='submit']")).submit()
     }
 
-    KeyCloakContainer keyCloakContainer(final KeyCloakProperties keyCloakProperties, final Network network) {
+    KeycloakContainer keyCloakContainer(final KeyCloakProperties keyCloakProperties, final Network network) {
         def listenerJarPath = new File("build/libs").listFiles().first().path
-        new KeyCloakContainer(keyCloakProperties.adminUser)
-                .withCopyFileToContainer(MountableFile.forHostPath(listenerJarPath, 0744), "/opt/jboss/keycloak/standalone/deployments/user-registered-listener.jar")
+        new KeycloakContainer()
+                .withCopyFileToContainer(MountableFile.forHostPath(listenerJarPath, 0744), "/opt/keycloak/providers/user-registered-listener.jar")
                 .withNetwork(network)
                 .withNetworkAliases("keycloak")
     }
@@ -130,14 +138,8 @@ class ListenerTest extends Specification {
         new KeyCloakProperties(client, KeyCloakProperties.ADMIN_CLI_CLIENT, user, admin, "test")
     }
 
-    KeyCloakAccess keycloak(KeyCloakProperties keyCloakProperties, KeyCloakContainer keyCloakContainer) {
-        def adminAccess = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${keyCloakContainer.getFirstMappedPort()}/auth")
-                .realm("master")
-                .clientId(keyCloakProperties.adminCliClient.clientId)
-                .username(keyCloakProperties.adminUser.username)
-                .password(keyCloakProperties.adminUser.password)
-                .build()
+    KeyCloakAccess keycloak(KeyCloakProperties keyCloakProperties, KeycloakContainer keyCloakContainer) {
+        def adminAccess = keyCloakContainer.keycloakAdminClient
         def userAccess = KeycloakBuilder.builder()
                 .serverUrl("http://localhost:${keyCloakContainer.getFirstMappedPort()}/auth")
                 .realm(keyCloakProperties.testRealm)
@@ -149,15 +151,7 @@ class ListenerTest extends Specification {
         new KeyCloakAccess(adminAccess, userAccess)
     }
 
-    static def setupKeycloak(KeyCloakProperties keyCloakProperties,
-                             int port) {
-        def keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${port}/auth")
-                .realm("master")
-                .clientId(keyCloakProperties.adminCliClient.clientId)
-                .username(keyCloakProperties.adminUser.username)
-                .password(keyCloakProperties.adminUser.password)
-                .build()
+    static def setupKeycloak(KeyCloakProperties keyCloakProperties, Keycloak keycloak) {
 
         def realm = testRealm(keyCloakProperties.testRealm)
         keycloak.realms().create(realm)
@@ -199,6 +193,8 @@ class ListenerTest extends Specification {
         clientRepresentation.directAccessGrantsEnabled = true
         clientRepresentation.standardFlowEnabled = true
         clientRepresentation.serviceAccountsEnabled = true
+        clientRepresentation.implicitFlowEnabled = true
+        clientRepresentation.redirectUris = List.of(VALID_REDIRECT_URI)
         clientRepresentation
     }
 }

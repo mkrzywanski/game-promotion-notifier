@@ -1,6 +1,8 @@
-package io.mkrzywanski.shared.keycloak.spring;
+package io.mkrzywanski.shared.keycloak.spring
+
+import dasniko.testcontainers.keycloak.KeycloakContainer
 import io.mkrzywanski.shared.keycloak.KeyCloakAccess;
-import io.mkrzywanski.shared.keycloak.KeyCloakContainer;
+
 import io.mkrzywanski.shared.keycloak.KeyCloakProperties;
 import io.mkrzywanski.shared.keycloak.KeycloakClient;
 import io.mkrzywanski.shared.keycloak.KeycloakUser
@@ -16,10 +18,13 @@ import org.springframework.context.annotation.Configuration
 class KeycloakContainerConfiguration {
 
     @Bean
-    KeyCloakContainer keyCloakContainer(final KeyCloakProperties keyCloakProperties) {
-        KeyCloakContainer keyCloakContainer = new KeyCloakContainer(keyCloakProperties.adminUser)
+    KeycloakContainer keyCloakContainer(final KeyCloakProperties keyCloakProperties) {
+        KeycloakContainer keyCloakContainer = new KeycloakContainer()
+                .withAdminUsername("admin")
+                .withAdminPassword("admin")
+        keyCloakContainer.setPortBindings(List.of("8080:8080"))
         keyCloakContainer.start()
-        setupKeycloak(keyCloakProperties, keyCloakContainer.getFirstMappedPort())
+        setupKeycloak(keyCloakProperties, keyCloakContainer)
         keyCloakContainer
     }
 
@@ -32,16 +37,10 @@ class KeycloakContainerConfiguration {
     }
 
     @Bean
-    KeyCloakAccess keycloak(KeyCloakProperties keyCloakProperties, KeyCloakContainer keyCloakContainer) {
-        def adminAccess = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${keyCloakContainer.getFirstMappedPort()}/auth")
-                .realm("master")
-                .clientId(keyCloakProperties.adminCliClient.clientId)
-                .username(keyCloakProperties.adminUser.username)
-                .password(keyCloakProperties.adminUser.password)
-                .build()
+    KeyCloakAccess keycloak(KeyCloakProperties keyCloakProperties, KeycloakContainer keyCloakContainer) {
+        def adminAccess = keyCloakContainer.keycloakAdminClient
         def userAccess = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${keyCloakContainer.getFirstMappedPort()}/auth")
+                .serverUrl(keyCloakContainer.authServerUrl)
                 .realm(keyCloakProperties.testRealm)
                 .clientId(keyCloakProperties.client.clientId)
                 .clientSecret(keyCloakProperties.client.clientSecret)
@@ -51,15 +50,8 @@ class KeycloakContainerConfiguration {
         new KeyCloakAccess(adminAccess, userAccess)
     }
 
-    static def setupKeycloak(KeyCloakProperties keyCloakProperties,
-                             int port) {
-        def keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:${port}/auth")
-                .realm("master")
-                .clientId(keyCloakProperties.adminCliClient.clientId)
-                .username(keyCloakProperties.adminUser.username)
-                .password(keyCloakProperties.adminUser.password)
-                .build()
+    static def setupKeycloak(KeyCloakProperties keyCloakProperties, KeycloakContainer keycloakContainer) {
+        def keycloak = keycloakContainer.keycloakAdminClient;
 
         def realm = testRealm(keyCloakProperties.testRealm)
         keycloak.realms().create(realm)

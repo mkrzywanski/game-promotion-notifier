@@ -23,15 +23,15 @@ configurations {
 dependencies {
     testImplementation project(':pn-shared-test-modules:keycloak-test-container')
     contractTestImplementation group: 'org.spockframework', name: 'spock-spring'
-    contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:${springCloudVersion}"
+    contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
     contractTestImplementation project(":keycloak-modules:keycloak-listeners")
     contractTestImplementation project(":pn-shared-test-modules:common")
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service')
+    contractTestRuntimeOnly getStubsJarFromProject(':pn-user-service')
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 

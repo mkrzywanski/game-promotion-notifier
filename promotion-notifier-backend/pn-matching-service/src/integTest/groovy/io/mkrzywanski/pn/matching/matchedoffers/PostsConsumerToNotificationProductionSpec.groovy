@@ -1,10 +1,11 @@
 package io.mkrzywanski.pn.matching.matchedoffers
 
 import com.github.tomakehurst.wiremock.WireMockServer
+import dasniko.testcontainers.keycloak.KeycloakContainer
 import io.mkrzywanski.pn.matching.MatchingServiceApp
 
 import io.mkrzywanski.pn.matching.user.config.MongoConfig
-import io.mkrzywanski.shared.keycloak.KeyCloakContainer
+
 import io.mkrzywanski.shared.keycloak.KeyCloakProperties
 import io.mkrzywanski.shared.keycloak.spring.KeycloakContainerConfiguration
 import org.springframework.amqp.rabbit.annotation.RabbitListener
@@ -146,12 +147,12 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
 @Import(KeycloakContainerConfiguration)
 class TestConfig {
     @Bean
-    ClientRegistrationRepository clientRegistrationRepository(KeyCloakProperties keyCloakProperties, KeyCloakContainer keyCloakContainer) {
+    ClientRegistrationRepository clientRegistrationRepository(KeyCloakProperties keyCloakProperties, KeycloakContainer keyCloakContainer) {
         ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("pn-matching-service")
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .clientId(keyCloakProperties.client.clientId)
                 .clientSecret(keyCloakProperties.client.clientSecret)
-                .tokenUri("http://localhost:${keyCloakContainer.firstMappedPort}/auth/realms/${keyCloakProperties.testRealm}/protocol/openid-connect/token")
+                .tokenUri("http://localhost:${keyCloakContainer.firstMappedPort}/realms/${keyCloakProperties.testRealm}/protocol/openid-connect/token")
                 .build()
         new InMemoryClientRegistrationRepository(clientRegistration)
     }

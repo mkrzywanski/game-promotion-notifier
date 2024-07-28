@@ -7,6 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-interface JpaUserRepository extends JpaRepository<UserEntity, Long> {
+public interface JpaUserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> getByUniqueId(UUID uniqueId);
 }

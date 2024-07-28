@@ -2,14 +2,10 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 
 plugins {
+    id 'java'
     id 'com.bmuschko.docker-remote-api' version '9.3.2'
-    id "nebula.java-cross-compile" version "6.2.0"
     id 'io.spring.dependency-management'
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_11
+    id 'groovy'
 }
 
 sourceSets {
@@ -44,24 +40,23 @@ dependencies {
     implementation("org.keycloak:keycloak-server-spi:${keycloakVersion}")
     implementation("org.keycloak:keycloak-server-spi-private:${keycloakVersion}")
     implementation("org.keycloak:keycloak-services:${keycloakVersion}")
-    testImplementation 'com.squareup.okhttp3:okhttp:4.11.0'
-    testImplementation 'com.squareup.okhttp3:okhttp-urlconnection:4.11.0'
 
     testImplementation project(':pn-shared-test-modules:keycloak-test-container')
-    testImplementation "org.testcontainers:selenium:1.19.0"
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.12.1'
-    testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.12.1'
+    testImplementation "com.github.dasniko:testcontainers-keycloak:${keycloakTestcontainersVersion}"
+    testImplementation "org.testcontainers:selenium:${testcontainersVersion}"
+    testImplementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+    testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}"
     testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:2.35.0"
     testImplementation 'com.jayway.jsonpath:json-path-assert:2.7.0'
     testImplementation project(":pn-shared-test-modules:common")
     testImplementation 'com.github.stefanbirkner:system-lambda:1.2.1'
+
     contractTestImplementation project(":pn-shared-test-modules:common")
-    contractTestRuntimeClasspath getStubsJarFromProject(':pn-user-service')
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 

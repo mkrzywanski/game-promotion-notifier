@@ -74,7 +74,7 @@ public class SubscriptionRepository implements io.mkrzywanski.pn.subscription.Su
     //this can be optimized to use bulk api to peform several queries in one request
     private NativeQuery getQueryForOfferText(final String text) {
         final NativeQueryBuilder nativeQueryBuilder = new NativeQueryBuilder()
-                .withQuery(org.springframework.data.elasticsearch.client.elc.QueryBuilders.matchQueryAsQuery("subscriptions", text, Operator.And, 0f));
+                .withQuery(org.springframework.data.elasticsearch.client.elc.Queries.matchQueryAsQuery("subscriptions", text, Operator.And, 0f));
         return new NativeQuery(nativeQueryBuilder);
     }
 

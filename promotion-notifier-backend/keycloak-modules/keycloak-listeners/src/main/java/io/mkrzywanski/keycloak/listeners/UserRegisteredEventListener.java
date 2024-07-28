@@ -1,17 +1,16 @@
 package io.mkrzywanski.keycloak.listeners;
 
+import org.jboss.logging.Logger;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 class UserRegisteredEventListener implements EventListenerProvider {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserRegisteredEventListener.class);
+    private static final Logger LOG = Logger.getLogger(UserRegisteredEventListener.class);
 
     private final UserServiceClient userServiceClient;
 

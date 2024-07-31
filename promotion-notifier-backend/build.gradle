@@ -69,15 +69,9 @@ subprojects {
         testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
         testImplementation "org.spockframework:spock-core"
         testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.15.1'
-
-//        // https://mvnrepository.com/artifact/org.mockito/mockito-core
-//        testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.12.0'
-        // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
-//        testRuntimeOnly group: 'net.bytebuddy', name: 'byte-buddy', version: '1.14.18'
-
         testImplementation 'org.exparity:hamcrest-date:2.0.8'
         testImplementation "org.hamcrest:hamcrest-core:${hamcrestVersion}"
-        testImplementation 'org.assertj:assertj-core:3.24.2'
+        testImplementation 'org.assertj:assertj-core'
 
         implementation "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

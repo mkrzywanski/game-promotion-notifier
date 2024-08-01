@@ -54,7 +54,7 @@ dependencies {
     integTestImplementation project(":pn-shared-test-modules:embedded-keycloak-spring-configuration")
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
+    contractTestImplementation "org.wiremock:wiremock-standalone:${wiremockVersion}"
 
     contractTestRuntimeOnly getStubsJarFromProject(':pn-site-scrapper:scrapper-app')
     contractTestRuntimeOnly getStubsJarFromProject(':pn-user-service')

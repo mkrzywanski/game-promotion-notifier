@@ -32,7 +32,7 @@ dependencies {
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: "${wiremockVersion}"
+    testImplementation "org.wiremock:wiremock-standalone:${wiremockVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.spockframework:spock-spring'
@@ -40,7 +40,7 @@ dependencies {
 
     contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
     contractTestImplementation project(":pn-shared-test-modules:common")
-    contractTestImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
+    contractTestImplementation("org.wiremock:wiremock-standalone${wiremockVersion}")
     contractTestRuntimeOnly getStubsJarFromProject(':pn-subscription-service:subscription-app')
     
 }

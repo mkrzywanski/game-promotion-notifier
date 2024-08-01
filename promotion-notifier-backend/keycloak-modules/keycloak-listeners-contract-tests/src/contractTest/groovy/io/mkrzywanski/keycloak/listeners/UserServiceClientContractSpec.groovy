@@ -1,7 +1,6 @@
 package io.mkrzywanski.keycloak.listeners
 
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerPort
@@ -27,7 +26,7 @@ class UserServiceClientContractSpec extends Specification {
         def userId = "db3ca7f3-7c8b-48ab-8245-4126a1389daf"
 
         when:
-        def result = userServiceClient.notifyUserCreated(UserCreatedEventData.create(getDetails(), userId))
+        def result = userServiceClient.notifyUserCreated(UserCreatedEvent.create(getDetails(), userId))
 
         then:
         result == Result.SUCCESS

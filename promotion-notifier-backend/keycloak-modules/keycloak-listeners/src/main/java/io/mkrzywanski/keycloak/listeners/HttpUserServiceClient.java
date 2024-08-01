@@ -27,7 +27,7 @@ class HttpUserServiceClient implements UserServiceClient {
 
     //TODO think what to do in case of failure? Should we make retries or maybe use queue instead of HTTP
     @Override
-    public Result notifyUserCreated(final UserCreatedEventData eventData) {
+    public Result notifyUserCreated(final UserCreatedEvent eventData) {
         LOG.info("Trying to notify user created");
         LOG.info("Url " + url);
 
@@ -45,7 +45,7 @@ class HttpUserServiceClient implements UserServiceClient {
         }
     }
 
-    private String toJson(final UserCreatedEventData eventData) {
+    private String toJson(final UserCreatedEvent eventData) {
         try {
             return objectMapper.writeValueAsString(eventData);
         } catch (final JsonProcessingException e) {

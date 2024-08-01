@@ -9,7 +9,7 @@ buildscript {
         springCloudVersion = '2023.0.2'
         testcontainersVersion = '1.19.8'
         awaitilityVersion = '4.2.0'
-        wiremockVersion = '3.0.1'
+        wiremockVersion = '3.9.1'
         baseDockerImage = 'azul/zulu-openjdk:21-latest'
         hamcrestVersion = '2.2'
         seleniumVersion = '4.12.1'

@@ -23,7 +23,7 @@ class UserRegisteredEventListener implements EventListenerProvider {
         if (EventType.REGISTER == event.getType()) {
             final String userId = event.getUserId();
             final Map<String, String> details = event.getDetails();
-            userServiceClient.notifyUserCreated(UserCreatedEventData.create(details, userId));
+            userServiceClient.notifyUserCreated(UserCreatedEvent.create(details, userId));
         }
     }
 

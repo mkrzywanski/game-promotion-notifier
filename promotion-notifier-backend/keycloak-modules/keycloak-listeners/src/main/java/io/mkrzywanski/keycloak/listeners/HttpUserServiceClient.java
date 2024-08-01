@@ -2,6 +2,7 @@ package io.mkrzywanski.keycloak.listeners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import java.io.IOException;
@@ -30,16 +31,16 @@ class HttpUserServiceClient implements UserServiceClient {
         LOG.info("Trying to notify user created");
         LOG.info("Url " + url);
 
-        String json = toJson(eventData);
-        HttpRequest request = HttpRequest.newBuilder()
+        final var json = toJson(eventData);
+        final var request = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .header("Content-Type", "application/json")
                 .uri(URI.create(url + "/v1/users"))
                 .build();
         try {
-            HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return send.statusCode() == 201 ? Result.SUCCESS : Result.FAILURE;
-        } catch (IOException | InterruptedException e) {
+            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.statusCode() == Response.Status.CREATED.getStatusCode() ? Result.SUCCESS : Result.FAILURE;
+        } catch (final IOException | InterruptedException e) {
             return Result.FAILURE;
         }
     }
@@ -47,7 +48,7 @@ class HttpUserServiceClient implements UserServiceClient {
     private String toJson(final UserCreatedEventData eventData) {
         try {
             return objectMapper.writeValueAsString(eventData);
-        } catch (JsonProcessingException e) {
+        } catch (final JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }

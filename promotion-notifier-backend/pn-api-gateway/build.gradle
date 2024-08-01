@@ -40,7 +40,6 @@ dependencies {
 
     contractTestImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
     contractTestImplementation project(":pn-shared-test-modules:common")
-    contractTestImplementation("org.wiremock:wiremock-standalone:${wiremockVersion}")
     contractTestRuntimeOnly getStubsJarFromProject(':pn-subscription-service:subscription-app')
     
 }

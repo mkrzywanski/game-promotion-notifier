@@ -3,7 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     api project(':pn-shared-test-modules:keycloak-test-container')
     implementation "org.springframework:spring-context"
     implementation "com.github.dasniko:testcontainers-keycloak:${keycloakTestcontainersVersion}"

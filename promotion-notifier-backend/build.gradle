@@ -38,6 +38,10 @@ allprojects {
         mavenCentral()
         mavenLocal()
     }
+
+    dependencies {
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+    }
 }
 
 subprojects {

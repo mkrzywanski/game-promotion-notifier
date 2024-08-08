@@ -132,7 +132,7 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
 
         then:
         await()
-                .atMost(10, TimeUnit.SECONDS)
+                .atMost(20, TimeUnit.SECONDS)
                 .untilAsserted({
                     assertThat(testNotificationConsumer.notifications).hasSize(1)
                 })

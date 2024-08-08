@@ -95,6 +95,8 @@ tasks.register('integrationTest', Test) {
     }
 }
 
+tasks.findByName('integrationTest').dependsOn('jar')
+
 idea {
     module {
         sourceDirs -= project.sourceSets.integTest.groovy.srcDirs

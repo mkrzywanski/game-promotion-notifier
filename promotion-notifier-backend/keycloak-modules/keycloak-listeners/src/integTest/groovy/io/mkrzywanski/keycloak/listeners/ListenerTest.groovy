@@ -37,7 +37,7 @@ class ListenerTest extends Specification {
     static def VALID_REDIRECT_URI = "http://localhost:5555"
     def network = Network.newNetwork()
     def properties = keyCloakProperties()
-    def keycloak = keyCloakContainer(properties, network)
+    def keycloak = keyCloakContainer(network)
     def access
 
     def wiremock = new GenericContainer("wiremock/wiremock:2.32.0")
@@ -123,7 +123,7 @@ class ListenerTest extends Specification {
         driver.findElement(By.cssSelector("input[type='submit']")).submit()
     }
 
-    KeycloakContainer keyCloakContainer(final KeyCloakProperties keyCloakProperties, final Network network) {
+    KeycloakContainer keyCloakContainer(final Network network) {
         def listenerJarPath = new File("build/libs").listFiles().first().path
         new KeycloakContainer()
                 .withCopyFileToContainer(MountableFile.forHostPath(listenerJarPath, 0744), "/opt/keycloak/providers/user-registered-listener.jar")

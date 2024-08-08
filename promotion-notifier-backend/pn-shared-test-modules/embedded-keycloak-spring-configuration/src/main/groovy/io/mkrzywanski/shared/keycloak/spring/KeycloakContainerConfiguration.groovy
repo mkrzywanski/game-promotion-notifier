@@ -22,7 +22,6 @@ class KeycloakContainerConfiguration {
         KeycloakContainer keyCloakContainer = new KeycloakContainer()
                 .withAdminUsername("admin")
                 .withAdminPassword("admin")
-        keyCloakContainer.setPortBindings(List.of("8080:8080"))
         keyCloakContainer.start()
         setupKeycloak(keyCloakProperties, keyCloakContainer)
         keyCloakContainer

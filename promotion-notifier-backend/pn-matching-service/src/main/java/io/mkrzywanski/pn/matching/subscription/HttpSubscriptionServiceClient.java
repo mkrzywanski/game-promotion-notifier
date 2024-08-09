@@ -2,11 +2,13 @@ package io.mkrzywanski.pn.matching.subscription;
 
 import io.mkrzywanski.pn.matching.subscription.api.MatchingRequest;
 import io.mkrzywanski.pn.matching.subscription.api.MatchingResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Slf4j
 @Component
 class HttpSubscriptionServiceClient implements SubscriptionServiceClient {
 
@@ -21,6 +23,7 @@ class HttpSubscriptionServiceClient implements SubscriptionServiceClient {
 
     @Override
     public MatchingResponse match(final MatchingRequest matchingRequest) {
+        log.info("Performing matching request {}", matchingRequest);
         return webclient.post()
                 .uri(baseUrl + "/v1/subscriptions/match")
                 .contentType(MediaType.APPLICATION_JSON)

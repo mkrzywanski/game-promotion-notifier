@@ -13,6 +13,9 @@ gpn:
       queue:
         name: "notifications"
 spring:
+  rabbitmq:
+    publisher-returns: true
+    publisher-confirms: true
   data:
     mongodb:
       database: posts

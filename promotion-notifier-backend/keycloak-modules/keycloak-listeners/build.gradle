@@ -3,7 +3,7 @@ import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 
 plugins {
     id 'java'
-    id 'com.bmuschko.docker-remote-api' version '9.3.2'
+    id 'com.bmuschko.docker-remote-api' version '9.4.0'
     id 'io.spring.dependency-management'
     id 'groovy'
 }

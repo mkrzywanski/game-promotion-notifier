@@ -58,7 +58,7 @@ dependencies {
     testImplementation "org.testcontainers:rabbitmq:${testcontainersVersion}"
     testImplementation "org.testcontainers:spock:${testcontainersVersion}"
 
-    integTestImplementation group: 'com.github.tomakehurst', name: 'wiremock-jre8-standalone', version: "2.35.0"
+    integTestImplementation "com.github.tomakehurst:wiremock-jre8-standalone:${wiremockVersion}"
     integTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
     integTestImplementation project(":pn-shared-test-modules:testcontainers-extended")
 
@@ -69,7 +69,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
@@ -95,9 +95,9 @@ idea {
     }
 }
 
-bootJar {
-    classifier = 'boot'
-}
+//bootJar {
+//    classifier = 'boot'
+//}
 
 checkstyleContractTest {
     enabled = false

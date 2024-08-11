@@ -1,40 +1,55 @@
 package io.mkrzywanski.keycloak.listeners;
 
-import org.apache.http.HttpStatus;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.core.Response;
+import org.jboss.logging.Logger;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 class HttpUserServiceClient implements UserServiceClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HttpUserServiceClient.class);
+    private static final Logger LOG = Logger.getLogger(HttpUserServiceClient.class);
 
+    private final ObjectMapper objectMapper;
     private final String url;
-    private final Client resteasyClient;
+    private final HttpClient client;
 
     HttpUserServiceClient(final String url) {
         this.url = url;
-        this.resteasyClient = ResteasyClientBuilder.newBuilder()
-                .build();
+        this.client = HttpClient.newHttpClient();
+        this.objectMapper = new ObjectMapper();
     }
 
     //TODO think what to do in case of failure? Should we make retries or maybe use queue instead of HTTP
     @Override
-    public Result notifyUserCreated(final UserCreatedEventData eventData) {
+    public Result notifyUserCreated(final UserCreatedEvent eventData) {
         LOG.info("Trying to notify user created");
         LOG.info("Url " + url);
-        final Response response = resteasyClient.target(url + "/v1/users").request()
-                .post(Entity.entity(eventData, MediaType.APPLICATION_JSON_TYPE));
-        LOG.info("User service response : " + response.getStatus());
-        if (response.getStatus() == HttpStatus.SC_CREATED) {
-            return Result.SUCCESS;
-        } else {
+
+        final var json = toJson(eventData);
+        final var request = HttpRequest.newBuilder()
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .header("Content-Type", "application/json")
+                .uri(URI.create(url + "/v1/users"))
+                .build();
+        try {
+            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.statusCode() == Response.Status.CREATED.getStatusCode() ? Result.SUCCESS : Result.FAILURE;
+        } catch (final IOException | InterruptedException e) {
             return Result.FAILURE;
+        }
+    }
+
+    private String toJson(final UserCreatedEvent eventData) {
+        try {
+            return objectMapper.writeValueAsString(eventData);
+        } catch (final JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 

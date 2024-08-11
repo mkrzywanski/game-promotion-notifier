@@ -1,0 +1,4 @@
+spring:
+    elasticsearch:
+      client:
+        certificate: base64 cert goes here

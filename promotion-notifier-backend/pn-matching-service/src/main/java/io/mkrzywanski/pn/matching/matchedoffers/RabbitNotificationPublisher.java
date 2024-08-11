@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-class RabbitNotificationPublisher implements NotificationPublisher {
+public class RabbitNotificationPublisher implements NotificationPublisher {
 
     private static final Logger LOG = LoggerFactory.getLogger(RabbitNotificationPublisher.class);
 

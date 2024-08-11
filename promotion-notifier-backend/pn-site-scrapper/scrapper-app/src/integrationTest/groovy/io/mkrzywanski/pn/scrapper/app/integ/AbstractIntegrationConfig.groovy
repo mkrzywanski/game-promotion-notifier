@@ -1,10 +1,10 @@
-package io.mkrzywanski.pn.scrapper.app.integ;
+package io.mkrzywanski.pn.scrapper.app.integ
 
 import com.mongodb.ConnectionString
 import io.mkrzywanski.pn.scrapper.app.infra.MongoDbTransactionConfig
 import io.mkrzywanski.pn.testcontainers.ContainerCommandWaitStrategy
-import org.awaitility.Awaitility
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
 import org.springframework.context.annotation.Bean
@@ -12,11 +12,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.core.env.Environment
 import org.testcontainers.containers.GenericContainer
-import org.testcontainers.containers.wait.strategy.Wait
-
-import java.time.Duration
-import java.time.temporal.ChronoUnit
-import java.util.concurrent.TimeUnit
 
 @Configuration
 @EnableAutoConfiguration
@@ -27,7 +22,7 @@ abstract class AbstractIntegrationConfig {
     protected Environment environment
 
     @Bean
-    GenericContainer<?> mongoDBContainer() {
+    GenericContainer<? extends GenericContainer> mongoDBContainer() {
         def database = environment.getProperty("spring.data.mongodb.database")
         def username = environment.getProperty("spring.data.mongodb.username")
         def password = environment.getProperty("spring.data.mongodb.password")
@@ -50,7 +45,7 @@ abstract class AbstractIntegrationConfig {
     }
 
     @Bean
-    MongoClientSettingsBuilderCustomizer mongoSettingsCustomizer(final GenericContainer<?> mongoDBContainer) {
+    MongoClientSettingsBuilderCustomizer mongoSettingsCustomizer(@Qualifier("mongoDBContainer") final GenericContainer<? extends GenericContainer> mongoDBContainer) {
         def database = environment.getProperty("spring.data.mongodb.database")
         def connectionString = new ConnectionString("mongodb://localhost:${mongoDBContainer.firstMappedPort}/${database}?replicaSet=replicaset")
         return (settings) -> settings.applyConnectionString(connectionString)

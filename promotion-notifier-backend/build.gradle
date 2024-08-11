@@ -1,17 +1,18 @@
 buildscript {
     ext {
-        keycloakVersion = '18.0.0'
-        lombokVersion = '1.18.28'
-        springVersion = '6.0.11'
-        groovyVersion = '4.0.0'
-        springBootVersion = '3.1.3'
-        springDepenedcyMgmtVersion = '1.1.3'
-        springCloudVersion = '4.0.4'
-        testcontainersVersion = '1.19.0'
+        keycloakVersion = '25.0.1'
+        keycloakTestcontainersVersion = '3.4.0'
+        lombokVersion = '1.18.34'
+        groovyVersion = '4.0.22'
+        springBootVersion = '3.3.2'
+        springDepenedcyMgmtVersion = '1.1.6'
+        springCloudVersion = '2023.0.2'
+        testcontainersVersion = '1.19.8'
         awaitilityVersion = '4.2.0'
-        wiremockVersion = '3.0.1'
-        baseDockerImage = 'openjdk:17.0.1-slim'
+        wiremockVersion = '2.35.2'
+        baseDockerImage = 'azul/zulu-openjdk:21-latest'
         hamcrestVersion = '2.2'
+        seleniumVersion = '4.12.1'
         getStubsJarFromProject = this.&getStubsJarFromProject
     }
 }
@@ -19,8 +20,8 @@ buildscript {
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}" apply false
     id 'io.spring.dependency-management' version "${springDepenedcyMgmtVersion}" apply false
-    id 'org.springframework.cloud.contract' version "${springCloudVersion}" apply false
-    id 'com.google.cloud.tools.jib' version '3.3.1' apply false
+    id 'org.springframework.cloud.contract' version "4.1.3" apply false
+    id 'com.google.cloud.tools.jib' version '3.4.3' apply false
     id "io.freefair.lombok" version "8.3"
 }
 
@@ -31,11 +32,15 @@ allprojects {
 
     group = 'io.mkrzywanski'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_21
 
     repositories {
         mavenCentral()
         mavenLocal()
+    }
+
+    dependencies {
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     }
 }
 
@@ -44,7 +49,6 @@ subprojects {
     apply plugin: 'groovy'
     apply plugin: 'checkstyle'
     apply plugin: 'maven-publish'
-
 
     test {
         useJUnitPlatform()
@@ -64,16 +68,14 @@ subprojects {
     }
 
     dependencies {
-        implementation group: 'org.apache.groovy', name: 'groovy', version: '4.0.0'
+        implementation "org.apache.groovy:groovy:${groovyVersion}"
 
         testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
         testImplementation "org.spockframework:spock-core"
         testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.15.1'
-
         testImplementation 'org.exparity:hamcrest-date:2.0.8'
         testImplementation "org.hamcrest:hamcrest-core:${hamcrestVersion}"
-        testImplementation 'org.assertj:assertj-core:3.24.2'
-        testRuntimeOnly "net.bytebuddy:byte-buddy:1.14.7"
+        testImplementation 'org.assertj:assertj-core'
 
         implementation "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
@@ -100,10 +102,10 @@ task codeCoverageReport(type: JacocoReport) {
     }
 
     reports {
-        xml.enabled true
+        xml.required = true
         xml.destination file("${buildDir}/reports/jacoco/report.xml")
-        html.enabled false
-        csv.enabled false
+        html.required = false
+        csv.required =  false
     }
 }
 
@@ -114,3 +116,4 @@ codeCoverageReport.dependsOn {
 def getStubsJarFromProject(String projectName) {
     project(projectName).getTasksByName('verifierStubsJar', false).first().outputs.files
 }
+

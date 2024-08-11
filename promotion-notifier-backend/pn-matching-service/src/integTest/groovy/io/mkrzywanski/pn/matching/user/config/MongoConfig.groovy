@@ -3,6 +3,7 @@ package io.mkrzywanski.pn.matching.user.config
 import com.mongodb.ConnectionString
 import io.mkrzywanski.pn.testcontainers.ContainerCommandWaitStrategy
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.core.env.Environment
@@ -14,7 +15,7 @@ class MongoConfig {
     protected Environment environment
 
     @Bean
-    GenericContainer<?> mongoDBContainer() {
+    GenericContainer<? extends GenericContainer> mongoDBContainer() {
         def database = environment.getProperty("spring.data.mongodb.database")
         def username = environment.getProperty("spring.data.mongodb.username")
         def password = environment.getProperty("spring.data.mongodb.password")
@@ -38,7 +39,7 @@ class MongoConfig {
     }
 
     @Bean
-    MongoClientSettingsBuilderCustomizer mongoSettingsCustomizer(final GenericContainer<?> mongoDBContainer) {
+    MongoClientSettingsBuilderCustomizer mongoSettingsCustomizer(@Qualifier("mongoDBContainer") final GenericContainer<? extends GenericContainer> mongoDBContainer) {
         def database = environment.getProperty("spring.data.mongodb.database")
         def connectionString = new ConnectionString("mongodb://localhost:${mongoDBContainer.firstMappedPort}/${database}?replicaSet=replicaset")
         return (settings) -> settings.applyConnectionString(connectionString)

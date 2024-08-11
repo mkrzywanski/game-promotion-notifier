@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableRabbit
-class RabbitConfig {
+public class RabbitConfig {
 
     @Bean
     RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {

@@ -13,6 +13,10 @@ gpn:
       queue:
         name: "notifications"
 spring:
+  rabbitmq:
+    host: 127.0.0.1
+    publisher-returns: true
+    publisher-confirms: true
   data:
     mongodb:
       database: posts

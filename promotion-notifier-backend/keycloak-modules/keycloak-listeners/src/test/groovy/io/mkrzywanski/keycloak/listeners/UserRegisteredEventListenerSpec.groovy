@@ -21,7 +21,7 @@ class UserRegisteredEventListenerSpec extends Specification {
         userRegisteredEventListener.onEvent(event)
 
         then:
-        1 * userServiceClient.notifyUserCreated(UserCreatedEventData.create(event.details, event.userId))
+        1 * userServiceClient.notifyUserCreated(UserCreatedEvent.create(event.details, event.userId))
     }
 
     def "should do nothing when event is different then register"() {

@@ -1,7 +1,8 @@
 package io.mkrzywanski.pn.subscription.integ
 
+import dasniko.testcontainers.keycloak.KeycloakContainer
 import io.mkrzywanski.pn.subscription.app.SubscriptionServiceApp
-import io.mkrzywanski.shared.keycloak.KeyCloakContainer
+
 import io.mkrzywanski.shared.keycloak.KeyCloakProperties
 import io.mkrzywanski.shared.keycloak.spring.KeycloakContainerConfiguration
 import org.springframework.context.annotation.Bean
@@ -42,8 +43,8 @@ class IntegrationTestConfig extends ElasticsearchConfiguration {
     }
 
     @Bean
-    SupplierJwtDecoder jwtDecoderByIssuerUri(KeyCloakContainer keyCloakContainer, KeyCloakProperties keyCloakProperties) {
-        return new SupplierJwtDecoder(() -> JwtDecoders.fromIssuerLocation("http://localhost:${keyCloakContainer.firstMappedPort}/auth/realms/${keyCloakProperties.testRealm}"))
+    SupplierJwtDecoder jwtDecoderByIssuerUri(KeycloakContainer keyCloakContainer, KeyCloakProperties keyCloakProperties) {
+        return new SupplierJwtDecoder(() -> JwtDecoders.fromIssuerLocation("http://localhost:${keyCloakContainer.firstMappedPort}/realms/${keyCloakProperties.testRealm}"))
     }
 
     @Override

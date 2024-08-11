@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
-class NewOffersNotification {
+public class NewOffersNotification {
     private UserDetails userDetails;
     private List<PostNotificationData> postNotificationData;
 }

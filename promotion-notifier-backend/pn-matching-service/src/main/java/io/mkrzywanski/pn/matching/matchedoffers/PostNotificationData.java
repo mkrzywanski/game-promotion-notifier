@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-class PostNotificationData {
+public class PostNotificationData {
     private String link;
     private List<OfferNotificationData> offerNotificationData;
 }

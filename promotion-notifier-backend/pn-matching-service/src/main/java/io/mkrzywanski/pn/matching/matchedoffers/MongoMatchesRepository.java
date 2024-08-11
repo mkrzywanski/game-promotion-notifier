@@ -1,5 +1,6 @@
 package io.mkrzywanski.pn.matching.matchedoffers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
+@Slf4j
 @Component
 class MongoMatchesRepository implements MatchesRepository {
 
@@ -36,6 +38,7 @@ class MongoMatchesRepository implements MatchesRepository {
             final var update = new Update().addToSet("postEntities").each(userOfferMatches1.getPostEntities());
             final var upsert = mongoTemplate.upsert(byUserIdQuery, update, UserOfferMatches.class);
             final long matchedCount = upsert.getMatchedCount();
+            log.info("Upsert done {}", matchedCount);
         }
     }
 

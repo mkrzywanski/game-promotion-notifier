@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
-class UserEntity {
+public class UserEntity {
 
     @Id
     @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)

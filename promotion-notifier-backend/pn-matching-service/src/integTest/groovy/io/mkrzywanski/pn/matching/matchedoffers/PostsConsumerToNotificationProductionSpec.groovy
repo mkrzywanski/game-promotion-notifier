@@ -8,7 +8,6 @@ import io.mkrzywanski.pn.matching.user.config.MongoConfig
 
 import io.mkrzywanski.shared.keycloak.KeyCloakProperties
 import io.mkrzywanski.shared.keycloak.spring.KeycloakContainerConfiguration
-import lombok.extern.slf4j.Slf4j
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.annotation.RabbitListener
@@ -34,7 +33,6 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.TimeUnit
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*
 import static org.assertj.core.api.Assertions.assertThat

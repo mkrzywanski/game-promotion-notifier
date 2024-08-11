@@ -47,7 +47,7 @@ dependencies {
     testImplementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
     testImplementation "org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}"
     testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:${wiremockVersion}"
-    testImplementation 'com.jayway.jsonpath:json-path-assert:2.7.0'
+    testImplementation 'com.jayway.jsonpath:json-path-assert:2.9.0'
     testImplementation project(":pn-shared-test-modules:common")
     testImplementation 'com.github.stefanbirkner:system-lambda:1.2.1'
 

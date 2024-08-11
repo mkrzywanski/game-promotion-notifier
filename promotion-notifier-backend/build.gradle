@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        keycloakVersion = '25.0.1'
+        keycloakVersion = '25.0.2'
         keycloakTestcontainersVersion = '3.4.0'
         lombokVersion = '1.18.34'
         groovyVersion = '4.0.22'

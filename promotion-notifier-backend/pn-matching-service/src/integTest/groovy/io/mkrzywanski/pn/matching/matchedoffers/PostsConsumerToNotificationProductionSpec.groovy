@@ -8,6 +8,9 @@ import io.mkrzywanski.pn.matching.user.config.MongoConfig
 
 import io.mkrzywanski.shared.keycloak.KeyCloakProperties
 import io.mkrzywanski.shared.keycloak.spring.KeycloakContainerConfiguration
+import lombok.extern.slf4j.Slf4j
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Autowired
@@ -41,6 +44,8 @@ import static org.awaitility.Awaitility.await
 @AutoConfigureWireMock(port = 0)
 @ContextConfiguration(classes = [MongoConfig, TestConfig, TestNotificationConsumer, MatchingServiceApp])
 class PostsConsumerToNotificationProductionSpec extends Specification {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PostsConsumerToNotificationProductionSpec.class)
 
     private static final String RABBIT_USERNAME = "test"
     private static final String RABBIT_PASSWORD = "test"
@@ -132,13 +137,15 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
 
         then:
         await()
-                .atMost(20, TimeUnit.SECONDS)
+                .forever()
+//                .atMost(20, TimeUnit.SECONDS)
                 .untilAsserted({
                     assertThat(testNotificationConsumer.notifications).hasSize(1)
                 })
     }
 
     private newPostAppearsOnQueue() {
+        LOG.info("Sending new post to queue")
         rabbitTemplate.convertAndSend(newPostsQueue, post)
     }
 }

@@ -15,6 +15,14 @@ public class RabbitConfig {
     RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
         final var rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
+        rabbitTemplate.setMandatory(true);
+        rabbitTemplate.setChannelTransacted(true);
+        rabbitTemplate.setReturnsCallback(returned -> {
+            System.out.println("Returned : " + returned);
+        });
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            System.out.println("ack :" + ack);
+        });
         return rabbitTemplate;
     }
 

@@ -58,7 +58,7 @@ dependencies {
     integTestImplementation "org.testcontainers:postgresql:${testcontainersVersion}"
 
     contractTestImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
-    contractTestImplementation("com.jayway.jsonpath:json-path:2.8.0")
+    contractTestImplementation("com.jayway.jsonpath:json-path:2.9.0")
     contractTestImplementation "com.github.tomakehurst:wiremock-jre8-standalone:${wiremockVersion}"
 }
 

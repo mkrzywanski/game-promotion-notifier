@@ -12,7 +12,7 @@ buildscript {
         wiremockVersion = '2.35.2'
         baseDockerImage = 'azul/zulu-openjdk:21-latest'
         hamcrestVersion = '2.2'
-        seleniumVersion = '4.12.1'
+        seleniumVersion = '4.23.1'
         getStubsJarFromProject = this.&getStubsJarFromProject
     }
 }

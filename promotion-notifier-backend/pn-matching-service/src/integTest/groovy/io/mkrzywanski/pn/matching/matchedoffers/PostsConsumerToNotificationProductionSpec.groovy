@@ -29,6 +29,7 @@ import org.testcontainers.utility.DockerImageName
 import spock.lang.Specification
 
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.TimeUnit
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*
 import static org.assertj.core.api.Assertions.assertThat
@@ -131,8 +132,8 @@ class PostsConsumerToNotificationProductionSpec extends Specification {
 
         then:
         await()
-                .forever()
-//                .atMost(20, TimeUnit.SECONDS)
+//                .forever()
+                .atMost(20, TimeUnit.SECONDS)
                 .untilAsserted({
                     assertThat(testNotificationConsumer.notifications).hasSize(1)
                 })

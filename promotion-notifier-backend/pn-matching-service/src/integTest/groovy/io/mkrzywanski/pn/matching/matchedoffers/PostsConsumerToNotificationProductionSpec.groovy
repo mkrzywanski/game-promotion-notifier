@@ -3,14 +3,13 @@ package io.mkrzywanski.pn.matching.matchedoffers
 import com.github.tomakehurst.wiremock.WireMockServer
 import dasniko.testcontainers.keycloak.KeycloakContainer
 import io.mkrzywanski.pn.matching.MatchingServiceApp
-
 import io.mkrzywanski.pn.matching.user.config.MongoConfig
-
 import io.mkrzywanski.shared.keycloak.KeyCloakProperties
 import io.mkrzywanski.shared.keycloak.spring.KeycloakContainerConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.annotation.RabbitListener
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -25,11 +24,8 @@ import org.springframework.security.oauth2.client.registration.InMemoryClientReg
 import org.springframework.security.oauth2.core.AuthorizationGrantType
 import org.springframework.stereotype.Component
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.RabbitMQContainer
 import org.testcontainers.utility.DockerImageName
-import spock.lang.Shared
 import spock.lang.Specification
 
 import java.util.concurrent.CopyOnWriteArrayList
@@ -40,29 +36,29 @@ import static org.awaitility.Awaitility.await
 
 @SpringBootTest
 @AutoConfigureWireMock(port = 0)
-@ContextConfiguration(classes = [MongoConfig, TestConfig, TestNotificationConsumer, MatchingServiceApp])
+@ContextConfiguration(classes = [MongoConfig, TestConfig, TestNotificationConsumer, RabbitMQIntegConfig, MatchingServiceApp])
 class PostsConsumerToNotificationProductionSpec extends Specification {
 
     private static final Logger LOG = LoggerFactory.getLogger(PostsConsumerToNotificationProductionSpec.class)
-
-    private static final String RABBIT_USERNAME = "test"
-    private static final String RABBIT_PASSWORD = "test"
-    private static final String RABBIT_MQ_IMAGE = "bitnami/rabbitmq:3.8.18"
-    private static final DockerImageName RABBIT_IMAGE = DockerImageName.parse(RABBIT_MQ_IMAGE)
-            .asCompatibleSubstituteFor("rabbitmq")
-
-    @Shared
-    private static RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer(RABBIT_IMAGE)
-            .withEnv("RABBITMQ_USERNAME", RABBIT_USERNAME)
-            .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD)
-
-    @DynamicPropertySource
-    private static void rabbitProperties(final DynamicPropertyRegistry registry) {
-        RABBIT_MQ_CONTAINER.start()
-        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort)
-        registry.add("spring.rabbitmq.username", { -> RABBIT_USERNAME })
-        registry.add("spring.rabbitmq.password", { -> RABBIT_PASSWORD })
-    }
+//
+//    private static final String RABBIT_USERNAME = "test"
+//    private static final String RABBIT_PASSWORD = "test"
+//    private static final String RABBIT_MQ_IMAGE = "bitnami/rabbitmq:3.8.18"
+//    private static final DockerImageName RABBIT_IMAGE = DockerImageName.parse(RABBIT_MQ_IMAGE)
+//            .asCompatibleSubstituteFor("rabbitmq")
+//
+//    @Shared
+//    private static RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer(RABBIT_IMAGE)
+//            .withEnv("RABBITMQ_USERNAME", RABBIT_USERNAME)
+//            .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD)
+//
+//    @DynamicPropertySource
+//    private static void rabbitProperties(final DynamicPropertyRegistry registry) {
+//        RABBIT_MQ_CONTAINER.start()
+//        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort)
+//        registry.add("spring.rabbitmq.username", { -> RABBIT_USERNAME })
+//        registry.add("spring.rabbitmq.password", { -> RABBIT_PASSWORD })
+//    }
 
     @Value('${gpn.queue.name}')
     private String newPostsQueue
@@ -174,3 +170,48 @@ class TestNotificationConsumer {
     }
 
 }
+
+@Configuration
+class RabbitMQIntegConfig {
+
+    private static final String RABBIT_USERNAME = "test"
+    private static final String RABBIT_PASSWORD = "test"
+
+    private static final RABBIT_MQ_IMAGE = "bitnami/rabbitmq:3.8.18"
+    public static final DockerImageName RABBIT_IMAGE = DockerImageName.parse(RABBIT_MQ_IMAGE)
+            .asCompatibleSubstituteFor("rabbitmq")
+
+
+    @Bean(destroyMethod = "")
+    RabbitMQContainer rabbitMQContainer() {
+        RabbitMQContainer rabbitMQContainer = new RabbitMQContainer(RABBIT_IMAGE)
+                .withEnv("RABBITMQ_USERNAME", RABBIT_USERNAME)
+                .withEnv("RABBITMQ_PASSWORD", RABBIT_PASSWORD)
+        rabbitMQContainer.start()
+        rabbitMQContainer
+    }
+
+//    @Bean
+//    CachingConnectionFactoryConfigurer connectionFactoryCustomizer(RabbitMQContainer container) {
+//        (factory) -> {
+//            factory.setUsername(RABBIT_USERNAME)
+//            factory.setPassword(RABBIT_PASSWORD)
+//            factory.setPort(container.getAmqpPort())
+//            factory.setHost("localhost")
+//        }
+//
+//    }
+
+    @Bean
+    CachingConnectionFactory connectionFactory() {
+
+        def factory = new CachingConnectionFactory("localhost", rabbitMQContainer().firstMappedPort)
+        factory.setUsername(RABBIT_USERNAME)
+        factory.setPassword(RABBIT_PASSWORD)
+
+        factory
+
+    }
+
+}
+
